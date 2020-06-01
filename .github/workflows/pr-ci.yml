@@ -1,6 +1,6 @@
 # Continuous integration workflow
 
-name: CI
+name: Continous Integration
 
 # Controls when the action will run. Triggers the workflow pull request for the master branch
 on:
