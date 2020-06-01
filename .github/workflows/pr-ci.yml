@@ -19,9 +19,9 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    # Runs npm ci to install everything on continuous integration mode.
+    # Runs npm i to install node modules
     - name: NPM install
-      run: npm ci
+      run: npm i
     
     # Runs Linter
     - name: Lint
