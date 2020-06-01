@@ -22,3 +22,7 @@ jobs:
     # Runs npm ci to install everything on continuous integration mode.
     - name: NPM install
       run: npm ci
+    
+    # Runs Linter
+    - name: Lint
+      run: npm run lint
