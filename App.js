@@ -1,19 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
+import MediaCarousel from './src/components/MediaCarousel';
 
 export default function App() {
 	return (
-		<View style={styles.container}>
-			<Text>Open up App.js to start working on your app!</Text>
-		</View>
+		<ScrollView style={styles.container}>
+			<MediaCarousel title="Mejor valoradas" buttonLabel="Ver más +" />
+			<MediaCarousel title="Según su popularidad" buttonLabel="Ver más +" width={130} height={250} />
+			<MediaCarousel title="Llegaron al cine!" buttonLabel="Ver más +" width={130} height={250} />
+		</ScrollView>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
+		backgroundColor: '#1F2D3D'
+	}
 });
