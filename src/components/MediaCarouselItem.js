@@ -1,10 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, Text, ImageBackground } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
-    container: {
-        marginRight: 16
-    },
     title: {
         fontSize: 15,
         backgroundColor: 'rgba(0,0,0,.5)',
@@ -13,17 +11,24 @@ const styles = StyleSheet.create({
     },
     image: {
         flex: 1,
+        marginRight: 16,
         resizeMode: "cover",
         justifyContent: "flex-end",
     }
 });
 
-export default function MediaCarouselItem({ title, imageUrl, width, height }) {
+export default function MediaCarouselItem(props) {
+    const { id, title, imageUrl, width, height, navigation } = props
+
+    const goToDetails = () => {
+        navigation.push('MediaDetails', { id: id })
+    }
+
     return (
-        <View style={{...styles.container, width: width, height: height}}>
-            <ImageBackground style={styles.image} source={{ uri: imageUrl }}>
+        <TouchableWithoutFeedback onPress={goToDetails}>
+            <ImageBackground style={{ ...styles.image, width: width, height: height }} source={{ uri: imageUrl }}>
                 <Text style={styles.title}>{title}</Text>
             </ImageBackground>
-        </View>
+        </TouchableWithoutFeedback>
     );
 }

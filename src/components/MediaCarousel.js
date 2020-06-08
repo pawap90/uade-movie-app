@@ -31,7 +31,9 @@ const DATA = [
     }
 ];
 
-export default function App({ title, buttonLabel, width = 175, height = 300 }) {
+export default function MediaCarousel(props) {
+    const { title, buttonLabel, width = 175, height = 300, navigation } = props
+    
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -42,7 +44,7 @@ export default function App({ title, buttonLabel, width = 175, height = 300 }) {
                 <FlatList
                     data={DATA}
                     horizontal={true}
-                    renderItem={({ item }) => <MediaCarouselItem title={item.title} imageUrl={item.imageUrl} width={width} height={height} />}
+                    renderItem={({ item }) => <MediaCarouselItem id={item.id} title={item.title} imageUrl={item.imageUrl} width={width} height={height} navigation={navigation} />}
                     keyExtractor={item => item.id}
                 />
             </SafeAreaView>
