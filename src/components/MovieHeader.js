@@ -1,10 +1,11 @@
 import React from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 import Tag from '../components/Tag'
+import DateHelper from '../helper/dateHelper';
 
 export default function MovieHeader(props) {
 
-    const { title, releaseDate, description, genres, languages } = props
+    const { title, releaseDate, summary, genres, languages } = props
 
     return (
         <View style={styles.container}>
@@ -14,8 +15,8 @@ export default function MovieHeader(props) {
                 ))}
             </View>
             <Text style={styles.title}>{title}</Text>
-            <Text style={styles.releaseDate}>{releaseDate}</Text>
-            <Text numberOfLines={4} style={styles.description}>{description}</Text>
+            <Text style={styles.releaseDate}>{DateHelper.format(releaseDate)}</Text>
+            <Text numberOfLines={4} style={styles.summary}>{summary}</Text>
             <View style={styles.languages}>
                 {languages?.map((language, i) => (
                     <Tag text={language} backgroundColor="#4C5B6A" textColor="#C1C5C9"/>
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
         color: '#C1C5C9',
         marginBottom: 12
     },
-    description: {
+    summary: {
         color: '#C1C5C9',
         marginBottom: 8
     }

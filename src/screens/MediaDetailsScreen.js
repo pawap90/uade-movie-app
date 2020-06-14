@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Text, ScrollView, StyleSheet, Image } from 'react-native';
+import { ScrollView, StyleSheet, Image, Text } from 'react-native';
 import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
 import MovieHeader from '../components/MovieHeader';
+import MovieDbService from '../services/MovieDbService';
 
 MediaDetailsScreen.propTypes = {
 	route: PropTypes.object,
@@ -17,29 +18,24 @@ export default function MediaDetailsScreen(props) {
 	const [movie, setMovie] = useState({})
 
 	useEffect(() => {
-		const getMovieDetails = () => {
-			return {
-				genres: ['Drama', 'Acción'],
-				title: 'Jurassic Park',
-				releaseDate: '12/10/1990',
-				description: 'lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet ',
-				imageUrl: 'https://m.media-amazon.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_.jpg',
-				languages: ['English', 'Spanish']
-			}
+		const getMovieDetails = async () => {
+			const result = await MovieDbService.getMovie(123)
+			setMovie(result)
 		}
-		setMovie(getMovieDetails())
+		getMovieDetails()
 	}, [])
 
 	return (
 		<ScrollView style={BaseStyles.container}>
-			<Image style={styles.image} source={{ uri: movie.imageUrl }}></Image>
+			<Image style={styles.image} source={{ uri: "https://m.media-amazon.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_.jpg" }}></Image>
 			<MovieHeader
 				genres={movie.genres} 
 				title={movie.title}
 				releaseDate={movie.releaseDate}
-				description={movie.description}
+				summary={movie.summary}
 				languages={movie.languages}>
 			</MovieHeader>
+			<Text style={{color: "#fff"}}>{JSON.stringify(movie)}</Text>
 		</ScrollView>
 	);
 }
