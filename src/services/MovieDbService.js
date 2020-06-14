@@ -1,3 +1,5 @@
+'use strict';
+
 import { MOVIEDB_API_BASE_URL, MOVIEDB_API_KEY } from 'react-native-dotenv';
 import SearchResultItemModel from '../models/SearchResultItemModel';
 import SearchResultModel from '../models/SearchResultModel';

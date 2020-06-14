@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Class to represent a search result item.
  * Can be used to represent a movie result or a series resul.

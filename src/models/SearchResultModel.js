@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Class to represent a page of search results.
  */
