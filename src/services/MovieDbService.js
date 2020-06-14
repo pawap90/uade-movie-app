@@ -69,6 +69,40 @@ export default class MovieDbService {
 	}
 
 	/**
+	 * Search series by query. 
+	 * @returns {SearchResultModel} Paginated results and total result count.
+	 * @param {Number} page Page number
+	 * @param {String} query Search query
+	 */
+	static async searchSeries(page, query) {
+		const endpoint = `${MOVIEDB_API_BASE_URL}/search/tv?api_key=${MOVIEDB_API_KEY}&page=${page}&query=${query}`;
+
+		// Get response.
+		const response = await fetch(endpoint);
+		const responseJson = await response.json();
+
+		// Parse results to model.
+		const searchResultItems = await Promise.all(responseJson.results.map(async r => {
+			return new SearchResultItemModel(
+				r.id,
+				r.name,
+				await this.getImageUrl(r.poster_path, 'w500'),
+				await Promise.all(r.genre_ids.map(async gid => {
+					return this.getGenre(gid);
+				})),
+				new Date(r.first_air_date).getFullYear(),
+				r.overview,
+				'series'
+			);
+		}));
+
+		const searchResult = new SearchResultModel(responseJson.total_results, searchResultItems);
+
+		return searchResult;
+	}
+
+
+	/**
      * Get genre from cache by id.
 	 * Fills cache if empty
      * @param {String} id Genre identifier.
