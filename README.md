@@ -21,3 +21,12 @@ npm run lint-fix
 ```sh
 npm run lint
 ```
+
+# Local setup
+Add a `.env` file on the root folder with the following content:
+```
+MOVIEDB_API_KEY=<your-moviedb-api-key>
+MOVIEDB_API_BASE_URL=https://api.themoviedb.org/3
+```
+
+> Replace `your-moviedb-api-key` with a valid API Key.
