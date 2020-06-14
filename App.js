@@ -6,6 +6,7 @@ import MediaDetailsScreen from './src/screens/MediaDetailsScreen';
 import BaseStyles from './src/BaseStyles';
 import { Text } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import SearchScreen from './src/screens/SearchScreen';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ const App = () => {
 			<Stack.Navigator initialRouteName="Home" screenOptions={screenOptions}>
 				<Stack.Screen name="Home" component={HomeScreen} />
 				<Stack.Screen name="MediaDetails" component={MediaDetailsScreen} />
+				<Stack.Screen name="Search" component={SearchScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
