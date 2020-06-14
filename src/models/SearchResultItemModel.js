@@ -3,7 +3,7 @@
  * Can be used to represent a movie result or a series resul.
  */
 export default class SearchResultItemModel {
-    /**
+	/**
      * Constructor
      * @param {String} id Item identifier
      * @param {String} title Title
@@ -13,13 +13,13 @@ export default class SearchResultItemModel {
      * @param {String} summary Summary
      * @param {String} type Type of item (by default 'movie')
      */
-    constructor(id, title, imagePath, genres, year, summary, type='movie') {
-        this.id = id;
-        this.title = title;
-        this.imagePath = imagePath;
-        this.genres = genres;
-        this.year = year;
-        this.summary = summary;
-        this.type = type;
-    }
+	constructor(id, title, imagePath, genres, year, summary, type='movie') {
+		this.id = id;
+		this.title = title;
+		this.imagePath = imagePath;
+		this.genres = genres;
+		this.year = year;
+		this.summary = summary;
+		this.type = type;
+	}
 }
