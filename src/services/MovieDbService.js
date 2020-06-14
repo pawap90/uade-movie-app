@@ -25,7 +25,7 @@ export default class MovieDbService {
 		const movie = new MovieModel(
 			responseJson.id,
 			responseJson.original_title,
-			await this.getImageUrl(r.poster_path, 'w500'),
+			await this.getImageUrl(responseJson.poster_path, 'w500'),
 			responseJson.genres.map(g => {
 				return g.name;
 			}),
@@ -112,4 +112,4 @@ const saveConfigurationInCache = async () => {
 
 		configurationCache = responseJson;
 	}
-}
+};
