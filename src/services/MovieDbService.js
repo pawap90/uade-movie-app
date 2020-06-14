@@ -74,9 +74,9 @@ export default class MovieDbService {
      * @param {String} id Genre identifier.
      */
 	static async getGenre(id) {
-		await saveGenresInCache();
+		const genres = await getGenres();
 
-		return genresCache.find(g => g.id == id).name;
+		return genres.find(g => g.id == id).name;
 	}
 
 	/**
@@ -86,16 +86,16 @@ export default class MovieDbService {
 	 * @param {String} size Size code (Eg: w500, w300).
 	 */
 	static async getImageUrl(path, size) {
-		await saveConfigurationInCache();
+		const configuration = await getConfiguration();
 
-		return `${configurationCache.images.base_url}${size}/${path}`;
+		return `${configuration.images.base_url}${size}/${path}`;
 	}
 }
 
 /**
  * Get movie genres and store them in cache (if cache is empty).
  */
-const saveGenresInCache = async () => {
+const getGenres = async () => {
 	if (!genresCache) {
 		const endpoint = `${MOVIEDB_API_BASE_URL}/genre/movie/list?api_key=${MOVIEDB_API_KEY}`;
 
@@ -104,12 +104,13 @@ const saveGenresInCache = async () => {
 
 		genresCache = responseJson.genres;
 	}
+	return genresCache;
 };
 
 /**
  * Get configuration and store it in cache (if cache is empty).
  */
-const saveConfigurationInCache = async () => {
+const getConfiguration = async () => {
 	if (!configurationCache) {
 		const endpoint = `${MOVIEDB_API_BASE_URL}/configuration?api_key=${MOVIEDB_API_KEY}`;
 
@@ -118,4 +119,5 @@ const saveConfigurationInCache = async () => {
 
 		configurationCache = responseJson;
 	}
+	return configurationCache;
 };
