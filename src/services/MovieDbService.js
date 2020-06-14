@@ -70,7 +70,7 @@ export default class MovieDbService {
 
 	/**
      * Get genre from cache by id.
-     * Important: Make sure to fill cache first.
+	 * Fills cache if empty
      * @param {String} id Genre identifier.
      */
 	static async getGenre(id) {
@@ -79,6 +79,12 @@ export default class MovieDbService {
 		return genresCache.find(g => g.id == id).name;
 	}
 
+	/**
+	 * Builds an image complete url.
+	 * Fills cache if empty
+	 * @param {String} path Image path
+	 * @param {String} size Size code (Eg: w500, w300).
+	 */
 	static async getImageUrl(path, size) {
 		await saveConfigurationInCache();
 
