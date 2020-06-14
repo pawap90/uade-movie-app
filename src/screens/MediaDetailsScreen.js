@@ -27,7 +27,7 @@ export default function MediaDetailsScreen(props) {
 
 	return (
 		<ScrollView style={BaseStyles.container}>
-			<Image style={styles.image} source={{ uri: "https://m.media-amazon.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_.jpg" }}></Image>
+			<Image style={styles.image} source={{ uri: movie.imagePath }}></Image>
 			<MovieHeader
 				genres={movie.genres} 
 				title={movie.title}

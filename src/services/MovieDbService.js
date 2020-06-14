@@ -30,7 +30,10 @@ export default class MovieDbService {
 				return g.name;
 			}),
 			new Date(responseJson.release_date),
-			responseJson.overview
+			responseJson.overview,
+			responseJson.spoken_languages.map(sl => {
+				return sl.name
+			})
 		);
 
 		return movie;
