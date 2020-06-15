@@ -5,7 +5,8 @@ import SearchResultItemModel from '../models/SearchResultItemModel';
 import SearchResultModel from '../models/SearchResultModel';
 import MovieModel from '../models/MovieModel';
 
-let genresCache = null;
+let movieGenresCache = null;
+let seriesGenresCache = null;
 let configurationCache = null;
 
 export default class MovieDbService {
@@ -56,7 +57,7 @@ export default class MovieDbService {
 				r.title,
 				await this.getImageUrl(r.poster_path, 'w500'),
 				await Promise.all(r.genre_ids.map(async gid => {
-					return this.getGenre(gid);
+					return this.getMovieGenre(gid);
 				})),
 				new Date(r.release_date).getFullYear(),
 				r.overview
@@ -88,7 +89,7 @@ export default class MovieDbService {
 				r.name,
 				await this.getImageUrl(r.poster_path, 'w500'),
 				await Promise.all(r.genre_ids.map(async gid => {
-					return this.getGenre(gid);
+					return this.getSeriesGenre(gid);
 				})),
 				new Date(r.first_air_date).getFullYear(),
 				r.overview,
@@ -101,14 +102,24 @@ export default class MovieDbService {
 		return searchResult;
 	}
 
-
 	/**
-     * Get genre from cache by id.
+     * Get movie genre from cache by id.
 	 * Fills cache if empty
      * @param {String} id Genre identifier.
      */
-	static async getGenre(id) {
-		const genres = await getGenres();
+	static async getMovieGenre(id) {
+		const genres = await getMovieGenres();
+
+		return genres.find(g => g.id == id).name;
+	}
+
+	/**
+     * Get series genre from cache by id.
+	 * Fills cache if empty
+     * @param {String} id Genre identifier.
+     */
+	static async getSeriesGenre(id) {
+		const genres = await getSeriesGenres();
 
 		return genres.find(g => g.id == id).name;
 	}
@@ -129,16 +140,31 @@ export default class MovieDbService {
 /**
  * Get movie genres and store them in cache (if cache is empty).
  */
-const getGenres = async () => {
-	if (!genresCache) {
+const getMovieGenres = async () => {
+	if (!movieGenresCache) {
 		const endpoint = `${MOVIEDB_API_BASE_URL}/genre/movie/list?api_key=${MOVIEDB_API_KEY}`;
 
 		const response = await fetch(endpoint);
 		const responseJson = await response.json();
 
-		genresCache = responseJson.genres;
+		movieGenresCache = responseJson.genres;
 	}
-	return genresCache;
+	return movieGenresCache;
+};
+
+/**
+ * Get series genres and store them in cache (if cache is empty).
+ */
+const getSeriesGenres = async () => {
+	if (!seriesGenresCache) {
+		const endpoint = `${MOVIEDB_API_BASE_URL}/genre/tv/list?api_key=${MOVIEDB_API_KEY}`;
+
+		const response = await fetch(endpoint);
+		const responseJson = await response.json();
+
+		seriesGenresCache = responseJson.genres;
+	}
+	return seriesGenresCache;
 };
 
 /**
