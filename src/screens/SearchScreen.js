@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import MovieDbService from '../services/MovieDbService';
 import MediaTypeSwitch from '../components/MediaTypeSwitch';
 import BaseStyles from '../BaseStyles';
+import { FlatList } from 'react-native-gesture-handler';
+import MediaSummaryCard from '../components/MediaSummaryCard';
 
 SearchScreen.propTypes = {
 	navigation: PropTypes.object
@@ -39,13 +41,24 @@ export default function SearchScreen(props) {
 				<Text style={styles.title}>Resultados</Text>
 				<Text style={styles.totalResults}>{`${searchResult.total} items`}</Text>
 			</View>
+			<FlatList
+				data={searchResult.results}
+				renderItem={({ item }) =>
+					<MediaSummaryCard
+						id={item.id}
+						title={item.title}
+						imageUrl={item.imagePath}
+						genres={item.genres}
+						year={item.year}
+						summary={item.summary}
+					/>}
+				keyExtractor={item => item.id}
+			/>
 		</ScrollView>
 	);
 
 
 }
-
-
 
 const styles = StyleSheet.create({
 	container: {
