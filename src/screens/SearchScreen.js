@@ -37,7 +37,7 @@ export default function SearchScreen(props) {
 
 	useEffect(() => {
 		search();
-	}, [page])
+	}, [page, mediaType])
 
 	const search = async () => {
 		let searchResult = {};
@@ -81,7 +81,7 @@ export default function SearchScreen(props) {
 			<View style={styles.header}>
 				<Text style={styles.title}>Resultados</Text>
 				<Text style={styles.totalResults}>{
-					`${resultHeader.total} ${resultHeader.total == 1 ? MEDIA_TYPE[mediaType].textSingular : MEDIA_TYPE[mediaType].textPlural} page ${page} loaded ${resultItems.length}`
+					`${resultHeader.total} ${resultHeader.total == 1 ? MEDIA_TYPE[mediaType].textSingular : MEDIA_TYPE[mediaType].textPlural}`
 				}</Text>
 			</View>
 			<FlatList
@@ -98,7 +98,7 @@ export default function SearchScreen(props) {
 					/>}
 				keyExtractor={item => item.id.toString()}
 				onEndReachedThreshold={0.1}
-				onEndReached={nextPage}
+				onEndReached={() => { resultItems.length > 0 && nextPage(); }}
 			/>
 		</View>
 	);
