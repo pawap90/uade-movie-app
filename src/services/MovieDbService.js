@@ -218,11 +218,11 @@ export default class MovieDbService {
 	}
 
 	/**
-     * Get upcoming series.
+     * Get airing today series.
      * @param {Number} page Page number.
      */
-	static async getUpcomingSeries(page = 1) {
-		const endpoint = `${MOVIEDB_API_BASE_URL}/tv/upcoming?page=${page}&api_key=${MOVIEDB_API_KEY}`;
+	static async getAiringTodaySeries(page = 1) {
+		const endpoint = `${MOVIEDB_API_BASE_URL}/tv/airing_today?page=${page}&api_key=${MOVIEDB_API_KEY}`;
 
 		// Get response.
 		const response = await fetch(endpoint);
