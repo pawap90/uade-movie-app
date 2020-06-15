@@ -292,7 +292,7 @@ export default class MovieDbService {
 			return new SearchResultItemModel(
 				r.id,
 				r.name,
-				await this.getImageUrl(r.poster_path, 'w500'),
+				await this.getImageUrl(r.poster_path, 'w300'),
 				await Promise.all(r.genre_ids.map(async gid => {
 					return this.getSeriesGenre(gid);
 				})),
