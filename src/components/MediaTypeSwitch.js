@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { TouchableWithoutFeedback, View, StyleSheet, Text } from 'react-native';
-import Constants from 'expo-constants';
 import PropTypes from 'prop-types';
 
 MediaTypeSwitch.propTypes = {
