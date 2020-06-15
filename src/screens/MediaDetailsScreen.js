@@ -5,7 +5,7 @@ import MovieHeader from '../components/MovieHeader';
 import MovieDbService from '../services/MovieDbService';
 import CommentsCarousel from '../components/CommentsCarousel';
 import MediaCarousel from '../components/MediaCarousel';
-import imagePlaceholder from '../../assets/image-placeholder.png'
+import imagePlaceholder from '../../assets/image-placeholder.png';
 
 MediaDetailsScreen.propTypes = {
 	route: PropTypes.object,

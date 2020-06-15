@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 MediaTypeSwitch.propTypes = {
 	defaultType: PropTypes.string,
 	onClickMovie: PropTypes.func,
-	onClickSeries: PropTypes.func
+	onClickSeries: PropTypes.func,
+	style: PropTypes.object
 };
 
 export default function MediaTypeSwitch(props) {
@@ -21,18 +22,22 @@ export default function MediaTypeSwitch(props) {
 		else {
 			onClickSeries();
 		}
-	}
+	};
 
 	return (
 		<View style={[styles.container, style]}>
 			<TouchableWithoutFeedback
-				onPress={() => { switchType('movie') }}>
+				onPress={() => {
+					switchType('movie'); 
+				}}>
 				<View style={[selectedType === 'movie' ? styles.buttonActive : styles.buttonIdle, styles.buttonLeft]}>
 					<Text style={styles.buttonLabel}>Películas</Text>
 				</View>
 			</TouchableWithoutFeedback >
 			<TouchableWithoutFeedback
-				onPress={() => { switchType('series') }}>
+				onPress={() => {
+					switchType('series'); 
+				}}>
 				<View style={[selectedType === 'series' ? styles.buttonActive : styles.buttonIdle, styles.buttonRight]}>
 					<Text style={styles.buttonLabel} >Series</Text>
 				</View>

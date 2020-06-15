@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 import PropTypes from 'prop-types';
 import MovieDbService from '../services/MovieDbService';
@@ -9,7 +9,8 @@ import { FlatList } from 'react-native-gesture-handler';
 import MediaSummaryCard from '../components/MediaSummaryCard';
 
 SearchScreen.propTypes = {
-	navigation: PropTypes.object
+	navigation: PropTypes.object,
+	route: PropTypes.object
 };
 
 const MEDIA_TYPE = {
@@ -23,7 +24,7 @@ const MEDIA_TYPE = {
 		textSingular: 'serie',
 		textPlural: 'series'
 	}
-}
+};
 
 export default function SearchScreen(props) {
 	const { route } = props;
@@ -37,7 +38,7 @@ export default function SearchScreen(props) {
 
 	useEffect(() => {
 		search();
-	}, [page, mediaType])
+	}, [page, mediaType]);
 
 	const search = async () => {
 		let searchResult = {};
@@ -51,19 +52,19 @@ export default function SearchScreen(props) {
 
 		setResultHeader(searchResult);
 		setResultItems([...resultItems, ...searchResult.results]);
-	}
+	};
 
 	const changeMediaType = async (mediaType) => {
 		setMediaType(mediaType);
 		resetSearch();
-	}
+	};
 
 	const resetSearch = () => {
 		setResultItems([]);
 		setResultHeader({ total: 0 });
 		setEndReached(false);
 		setPage(1);
-	}
+	};
 
 	const nextPage = useCallback(() => {
 		if (endReached)
@@ -75,8 +76,12 @@ export default function SearchScreen(props) {
 	return (
 		<View style={BaseStyles.container}>
 			<MediaTypeSwitch
-				onClickMovie={() => { changeMediaType(MEDIA_TYPE.movies.key); }}
-				onClickSeries={() => { changeMediaType(MEDIA_TYPE.series.key) }}
+				onClickMovie={() => {
+					changeMediaType(MEDIA_TYPE.movies.key); 
+				}}
+				onClickSeries={() => {
+					changeMediaType(MEDIA_TYPE.series.key); 
+				}}
 			/>
 			<View style={styles.header}>
 				<Text style={styles.title}>Resultados</Text>
@@ -98,7 +103,9 @@ export default function SearchScreen(props) {
 					/>}
 				keyExtractor={item => item.id.toString()}
 				onEndReachedThreshold={0.1}
-				onEndReached={() => { resultItems.length > 0 && nextPage(); }}
+				onEndReached={() => {
+					resultItems.length > 0 && nextPage(); 
+				}}
 			/>
 		</View>
 	);

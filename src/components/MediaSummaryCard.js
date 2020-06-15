@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { TouchableWithoutFeedback, View, StyleSheet, Text, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import Tag from './Tag';
-import imagePlaceholder from '../../assets/image-placeholder.png'
+import imagePlaceholder from '../../assets/image-placeholder.png';
 
 MediaSummaryCard.propTypes = {
 	id: PropTypes.number,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
 	genres: {
 		display: 'flex',
 		flexDirection: 'row',
-		flexWrap: "wrap"
+		flexWrap: 'wrap'
 	},
 	title: {
 		fontSize: 18,

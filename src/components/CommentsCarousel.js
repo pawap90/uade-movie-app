@@ -1,6 +1,11 @@
 import React from 'react';
 import { SafeAreaView, FlatList, StyleSheet, Text, View } from 'react-native';
 import CommentsCarouselItem from './CommentsCarouselItem';
+import PropTypes from 'prop-types';
+
+CommentsCarousel.propTypes = {
+	style: PropTypes.object
+};
 
 export default function CommentsCarousel(props) {
 	const { style } = props;

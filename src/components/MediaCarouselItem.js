@@ -3,7 +3,7 @@ import { StyleSheet, Text, ImageBackground } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
-import imagePlaceholder from '../../assets/image-placeholder.png'
+import imagePlaceholder from '../../assets/image-placeholder.png';
 
 MediaCarouselItem.propTypes = {
 	id: PropTypes.number,

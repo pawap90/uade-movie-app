@@ -1,6 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text } from 'react-native';
-import Constants from 'expo-constants';
+import { View, FlatList, StyleSheet, Text } from 'react-native';
 import MediaCarouselItem from './MediaCarouselItem';
 import PropTypes from 'prop-types';
 
@@ -9,7 +8,8 @@ MediaCarousel.propTypes = {
 	buttonLabel: PropTypes.string,
 	width: PropTypes.number,
 	height: PropTypes.number,
-	items: PropTypes.arrayOf < PropTypes.object > []
+	items: PropTypes.arrayOf < PropTypes.object > [],
+	style: PropTypes.object
 };
 
 export default function MediaCarousel(props) {
