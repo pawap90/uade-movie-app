@@ -42,6 +42,7 @@ export default function SearchScreen(props) {
 				<Text style={styles.totalResults}>{`${searchResult.total} items`}</Text>
 			</View>
 			<FlatList
+				style={styles.list}
 				data={searchResult.results}
 				renderItem={({ item }) =>
 					<MediaSummaryCard
@@ -78,5 +79,8 @@ const styles = StyleSheet.create({
 		color: '#FFFFFF',
 		opacity: 0.7,
 		fontSize: 18
+	},
+	list: {
+		marginBottom: 20
 	}
 });

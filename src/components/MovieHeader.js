@@ -23,7 +23,7 @@ export default function MovieHeader(props) {
 		<View style={styles.container}>
 			<View style={styles.genres}>
 				{genres.map((genre) => (
-					<Tag key={genre} text={genre} backgroundColor="#E6D53F" textColor="#34424F" />
+					<Tag key={genre} text={genre} backgroundColor="#E6D53F" color="#34424F" />
 				))}
 			</View>
 			<Text style={styles.title}>{title}</Text>
@@ -31,7 +31,7 @@ export default function MovieHeader(props) {
 			<Text numberOfLines={4} style={styles.summary}>{summary}</Text>
 			<View style={styles.languages}>
 				{languages.map((language) => (
-					<Tag key={language} text={language} backgroundColor="#4C5B6A" textColor="#C1C5C9" />
+					<Tag key={language} text={language} backgroundColor="#4C5B6A" color="#C1C5C9" />
 				))}
 			</View>
 			<View style={styles.footer}>

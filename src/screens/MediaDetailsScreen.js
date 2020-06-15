@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Image } from 'react-native';
-import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
 import MovieHeader from '../components/MovieHeader';
 import MovieDbService from '../services/MovieDbService';
 import CommentsCarousel from '../components/CommentsCarousel';
 import MediaCarousel from '../components/MediaCarousel';
+import imagePlaceholder from '../../assets/image-placeholder.png'
 
 MediaDetailsScreen.propTypes = {
 	route: PropTypes.object,
@@ -34,7 +34,7 @@ export default function MediaDetailsScreen(props) {
 
 	return (
 		<ScrollView style={styles.container}>
-			<Image style={styles.image} source={{ uri: movie.imagePath }}></Image>
+			<Image style={styles.image} source={movie.imagePath != null ? { uri: movie.imagePath } : imagePlaceholder}></Image>
 			<MovieHeader
 				genres={movie.genres}
 				title={movie.title}
@@ -43,7 +43,7 @@ export default function MediaDetailsScreen(props) {
 				languages={movie.languages}>
 			</MovieHeader>
 			<CommentsCarousel style={styles.carousel} />
-			<MediaCarousel style={styles.carousel} title="Peliculas similares" items={similarMedia} width={125} height={200} />
+			{similarMedia.length > 0 && <MediaCarousel style={styles.carousel} title="Peliculas similares" items={similarMedia} width={125} height={200} />}
 		</ScrollView>
 	);
 }
