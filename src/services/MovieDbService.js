@@ -133,7 +133,7 @@ export default class MovieDbService {
 			responseJson.results.map(async serie =>
 				new MovieModel(
 					serie.id,
-					serie.original_title,
+					serie.original_name,
 					serie.poster_path ? await this.getImageUrl(serie.poster_path, 'w300') : null
 				)
 			)
@@ -183,7 +183,7 @@ export default class MovieDbService {
 			responseJson.results.map(async serie =>
 				new MovieModel(
 					serie.id,
-					serie.original_title,
+					serie.original_name,
 					serie.poster_path ? await this.getImageUrl(serie.poster_path, 'w300') : null
 				)
 			)
@@ -233,7 +233,7 @@ export default class MovieDbService {
 			responseJson.results.map(async serie =>
 				new MovieModel(
 					serie.id,
-					serie.original_title,
+					serie.original_name,
 					serie.poster_path ? await this.getImageUrl(serie.poster_path, 'w300') : null
 				)
 			)
