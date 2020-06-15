@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 
 import PropTypes from 'prop-types';
@@ -12,37 +12,80 @@ SearchScreen.propTypes = {
 	navigation: PropTypes.object
 };
 
+const MEDIA_TYPE = {
+	movies: {
+		key: 'movies',
+		textSingular: 'película',
+		textPlural: 'películas'
+	},
+	series: {
+		key: 'series',
+		textSingular: 'serie',
+		textPlural: 'series'
+	}
+}
+
 export default function SearchScreen(props) {
 	const { route } = props;
 	const { searchTerm = 'jurassic' } = route.params;
 
-	const page = 1;
-
-	const [searchResult, setSearchResult] = useState({});
+	const [resultHeader, setResultHeader] = useState({ total: 0 });
+	const [resultItems, setResultItems] = useState([]);
+	const [page, setPage] = useState(1);
+	const [endReached, setEndReached] = useState(false);
+	const [mediaType, setMediaType] = useState(MEDIA_TYPE.movies.key);
 
 	useEffect(() => {
-		searchMovies(page, searchTerm)
-	}, [])
+		search();
+	}, [page])
 
-	const searchMovies = async (page, searchTerm) => {
-		const result = await MovieDbService.searchMovies(page, searchTerm);
-		setSearchResult(result);
+	const search = async () => {
+		let searchResult = {};
+		if (mediaType === MEDIA_TYPE.movies.key)
+			searchResult = await MovieDbService.searchMovies(page, searchTerm);
+		else
+			searchResult = await MovieDbService.searchSeries(page, searchTerm);
+
+		if (searchResult && searchResult.results && searchResult.results.length < 20)
+			setEndReached(true);
+
+		setResultHeader(searchResult);
+		setResultItems([...resultItems, ...searchResult.results]);
 	}
 
-	const searchSeries = async (page, searchTerm) => {
-		const result = await MovieDbService.searchSeries(page, searchTerm);
-		setSearchResult(result);
+	const changeMediaType = asynnpmc (mediaType) => {
+		setMediaType(mediaType);
+		resetSearch();
 	}
+
+	const resetSearch = () => {
+		setResultItems([]);
+		setResultHeader({ total: 0 });
+		setEndReached(false);
+		setPage(1);
+	}
+
+	const nextPage = useCallback(() => {
+		if (endReached)
+			return;
+
+		setPage(page + 1);
+	});
 
 	return (
-		<ScrollView style={BaseStyles.container}>
-			<MediaTypeSwitch onClickMovie={() => { searchMovies(1, searchTerm) }} onClickSeries={() => { searchSeries(1, searchTerm) }}></MediaTypeSwitch>
+		<View style={BaseStyles.container}>
+			<MediaTypeSwitch
+				onClickMovie={() => { changeMediaType(MEDIA_TYPE.movies.key); }}
+				onClickSeries={() => { changeMediaType(MEDIA_TYPE.series.key) }}
+			/>
 			<View style={styles.header}>
 				<Text style={styles.title}>Resultados</Text>
-				<Text style={styles.totalResults}>{`${searchResult.total} items`}</Text>
+				<Text style={styles.totalResults}>{
+					`${resultHeader.total} ${resultHeader.total == 1 ? MEDIA_TYPE[mediaType].textSingular : MEDIA_TYPE[mediaType].textPlural} page ${page} loaded ${resultItems.length}`
+				}</Text>
 			</View>
 			<FlatList
-				data={searchResult.results}
+				data={resultItems}
 				renderItem={({ item }) =>
 					<MediaSummaryCard
 						id={item.id}
@@ -53,8 +96,10 @@ export default function SearchScreen(props) {
 						summary={item.summary}
 					/>}
 				keyExtractor={item => item.id}
+				onEndReachedThreshold={0.1}
+				onEndReached={nextPage}
 			/>
-		</ScrollView>
+		</View>
 	);
 }
 
