@@ -25,15 +25,220 @@ export default class MovieDbService {
 		const movie = new MovieModel(
 			responseJson.id,
 			responseJson.original_title,
-			await this.getImageUrl(responseJson.poster_path, 'w500'),
+			await this.getImageUrl(responseJson.poster_path, 'w300'),
 			responseJson.genres.map(g => {
 				return g.name;
 			}),
 			new Date(responseJson.release_date),
-			responseJson.overview
+			responseJson.overview,
+			responseJson.spoken_languages.map(sl => {
+				return sl.name;
+			})
 		);
 
 		return movie;
+	}
+
+	/**
+     * Get similar movies by movie id.
+     * @param {Number} id Movie identifier.
+     * @param {Number} page Page number.
+     */
+	static async getSimilarMovies(id, page = 1) {
+		const endpoint = `${MOVIEDB_API_BASE_URL}/movie/${id}/similar?page=${page}&api_key=${MOVIEDB_API_KEY}`;
+
+		// Get response.
+		const response = await fetch(endpoint);
+		const responseJson = await response.json();
+
+		// Parse results to model
+		const movies = await Promise.all(
+			responseJson.results.map(async movie =>
+				new MovieModel(
+					movie.id,
+					movie.original_title,
+					await this.getImageUrl(movie.poster_path, 'w185')
+				)
+			)
+		);
+
+		return movies;
+	}
+
+	/**
+     * Get similar series by serie id.
+     * @param {Number} id Serie identifier.
+     * @param {Number} page Page number.
+     */
+	static async getSimilarSeries(id, page = 1) {
+		const endpoint = `${MOVIEDB_API_BASE_URL}/tv/${id}/similar?page=${page}&api_key=${MOVIEDB_API_KEY}`;
+
+		// Get response.
+		const response = await fetch(endpoint);
+		const responseJson = await response.json();
+
+		// Parse results to model
+		const movies = await Promise.all(
+			responseJson.results.map(async serie =>
+				new MovieModel(
+					serie.id,
+					serie.original_name,
+					await this.getImageUrl(serie.poster_path, 'w185')
+				)
+			)
+		);
+
+		return movies;
+	}
+
+	/**
+     * Get top rated movies.
+     * @param {Number} page Page number.
+     */
+	static async getTopRatedMovies(page = 1) {
+		const endpoint = `${MOVIEDB_API_BASE_URL}/movie/top_rated?page=${page}&api_key=${MOVIEDB_API_KEY}`;
+
+		// Get response.
+		const response = await fetch(endpoint);
+		const responseJson = await response.json();
+
+		// Parse results to model
+		const movies = await Promise.all(
+			responseJson.results.map(async movie =>
+				new MovieModel(
+					movie.id,
+					movie.original_title,
+					await this.getImageUrl(movie.poster_path, 'w300')
+				)
+			)
+		);
+
+		return movies;
+	}
+
+	/**
+     * Get top rated series.
+     * @param {Number} page Page number.
+     */
+	static async getTopRatedSeries(page = 1) {
+		const endpoint = `${MOVIEDB_API_BASE_URL}/tv/top_rated?page=${page}&api_key=${MOVIEDB_API_KEY}`;
+
+		// Get response.
+		const response = await fetch(endpoint);
+		const responseJson = await response.json();
+
+		// Parse results to model
+		const series = await Promise.all(
+			responseJson.results.map(async movie =>
+				new MovieModel(
+					movie.id,
+					movie.original_title,
+					await this.getImageUrl(movie.poster_path, 'w300')
+				)
+			)
+		);
+
+		return series;
+	}
+
+	/**
+     * Get popular movies.
+     * @param {Number} page Page number.
+     */
+	static async getPopularMovies(page = 1) {
+		const endpoint = `${MOVIEDB_API_BASE_URL}/movie/popular?page=${page}&api_key=${MOVIEDB_API_KEY}`;
+
+		// Get response.
+		const response = await fetch(endpoint);
+		const responseJson = await response.json();
+
+		// Parse results to model
+		const movies = await Promise.all(
+			responseJson.results.map(async movie =>
+				new MovieModel(
+					movie.id,
+					movie.original_title,
+					await this.getImageUrl(movie.poster_path, 'w300')
+				)
+			)
+		);
+
+		return movies;
+	}
+
+	/**
+     * Get popular series.
+     * @param {Number} page Page number.
+     */
+	static async getPopularSeries(page = 1) {
+		const endpoint = `${MOVIEDB_API_BASE_URL}/tv/popular?page=${page}&api_key=${MOVIEDB_API_KEY}`;
+
+		// Get response.
+		const response = await fetch(endpoint);
+		const responseJson = await response.json();
+
+		// Parse results to model
+		const series = await Promise.all(
+			responseJson.results.map(async movie =>
+				new MovieModel(
+					movie.id,
+					movie.original_title,
+					await this.getImageUrl(movie.poster_path, 'w300')
+				)
+			)
+		);
+
+		return series;
+	}
+
+	/**
+     * Get upcoming movies.
+     * @param {Number} page Page number.
+     */
+	static async getUpcomingMovies(page = 1) {
+		const endpoint = `${MOVIEDB_API_BASE_URL}/movie/upcoming?page=${page}&api_key=${MOVIEDB_API_KEY}`;
+
+		// Get response.
+		const response = await fetch(endpoint);
+		const responseJson = await response.json();
+
+		// Parse results to model
+		const movies = await Promise.all(
+			responseJson.results.map(async movie =>
+				new MovieModel(
+					movie.id,
+					movie.original_title,
+					await this.getImageUrl(movie.poster_path, 'w300')
+				)
+			)
+		);
+
+		return movies;
+	}
+
+	/**
+     * Get upcoming series.
+     * @param {Number} page Page number.
+     */
+	static async getUpcomingSeries(page = 1) {
+		const endpoint = `${MOVIEDB_API_BASE_URL}/tv/upcoming?page=${page}&api_key=${MOVIEDB_API_KEY}`;
+
+		// Get response.
+		const response = await fetch(endpoint);
+		const responseJson = await response.json();
+
+		// Parse results to model
+		const series = await Promise.all(
+			responseJson.results.map(async movie =>
+				new MovieModel(
+					movie.id,
+					movie.original_title,
+					await this.getImageUrl(movie.poster_path, 'w300')
+				)
+			)
+		);
+
+		return series;
 	}
 
 	/**
@@ -54,7 +259,7 @@ export default class MovieDbService {
 			return new SearchResultItemModel(
 				r.id,
 				r.title,
-				await this.getImageUrl(r.poster_path, 'w500'),
+				await this.getImageUrl(r.poster_path, 'w300'),
 				await Promise.all(r.genre_ids.map(async gid => {
 					return this.getGenre(gid);
 				})),
@@ -83,7 +288,7 @@ export default class MovieDbService {
 	 * Builds an image complete url.
 	 * Fills cache if empty
 	 * @param {String} path Image path
-	 * @param {String} size Size code (Eg: w500, w300).
+	 * @param {String} size Size code (Eg: w300, w300).
 	 */
 	static async getImageUrl(path, size) {
 		const configuration = await getConfiguration();

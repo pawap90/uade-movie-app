@@ -12,13 +12,15 @@ export default class MovieModel {
      * @param {Array<String>} genres Array of genres
      * @param {Date} releaseDate Release date
      * @param {String} summary Summary
+     * @param {Array<String>} languages Languages
      */
-	constructor(id, title, imagePath, genres, releaseDate, summary) {
+	constructor(id, title, imagePath, genres, releaseDate, summary, languages) {
 		this.id = id;
 		this.title = title;
 		this.imagePath = imagePath;
 		this.genres = genres;
 		this.releaseDate = releaseDate;
 		this.summary = summary;
+		this.languages = languages;
 	}
 }
