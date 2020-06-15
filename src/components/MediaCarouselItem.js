@@ -3,6 +3,7 @@ import { StyleSheet, Text, ImageBackground } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
+import imagePlaceholder from '../../assets/image-placeholder.png';
 
 MediaCarouselItem.propTypes = {
 	id: PropTypes.number,
@@ -24,7 +25,7 @@ export default function MediaCarouselItem(props) {
 
 	return (
 		<TouchableWithoutFeedback key={id} onPress={goToDetails}>
-			<ImageBackground style={{ ...styles.image, width: width, height: height }} source={{ uri: imageUrl }}>
+			<ImageBackground style={{ ...styles.image, width: width, height: height }} source={imageUrl != null ? { uri: imageUrl } : imagePlaceholder}>
 				<Text style={styles.title}>{title}</Text>
 			</ImageBackground>
 		</TouchableWithoutFeedback>

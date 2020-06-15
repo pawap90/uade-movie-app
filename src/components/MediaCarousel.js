@@ -1,6 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text } from 'react-native';
-import Constants from 'expo-constants';
+import { View, FlatList, StyleSheet, Text } from 'react-native';
 import MediaCarouselItem from './MediaCarouselItem';
 import PropTypes from 'prop-types';
 
@@ -10,14 +9,15 @@ MediaCarousel.propTypes = {
 	width: PropTypes.number,
 	height: PropTypes.number,
 	items: PropTypes.arrayOf<PropTypes.object>[],
-	mediaType: PropTypes.string
+	mediaType: PropTypes.string,
+	style: PropTypes.object
 };
 
 export default function MediaCarousel(props) {
-	const { mediaType, title, buttonLabel, items, width = 175, height = 300 } = props;
+	const { mediaType, title, buttonLabel, items, style, width = 175, height = 300 } = props;
     
 	return (
-		<View style={styles.container}>
+		<View style={[styles.container, style]}>
 			<View style={styles.header}>
 				<Text style={styles.title}>{title}</Text>
 				{buttonLabel && <Text style={styles.button}>{buttonLabel}</Text>}
@@ -34,15 +34,11 @@ export default function MediaCarousel(props) {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		paddingVertical: Constants.statusBarHeight,
-		paddingLeft: Constants.statusBarHeight,
-	},
 	header: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'flex-end',
-		marginBottom: 10
+		marginBottom: 16
 	},
 	title: {
 		color: '#FFFFFF',
@@ -50,7 +46,6 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		fontSize: 16,
-		marginRight: Constants.statusBarHeight,
 		backgroundColor: '#E6D72A',
 		paddingHorizontal: 8,
 		paddingVertical: 6,
