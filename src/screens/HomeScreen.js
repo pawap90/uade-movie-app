@@ -43,8 +43,8 @@ export default function HomeScreen() {
     
 	return (
 		<ScrollView style={BaseStyles.container}>
-			<Button onPress={() => onMediaTypeSelected('movie')}>Movies</Button>
-			<Button onPress={() => onMediaTypeSelected('serie')}>Series</Button>
+			<Button onPress={() => onMediaTypeSelected('movie')} title="Movies"/>
+			<Button onPress={() => onMediaTypeSelected('serie')} title="Series"/>
 			<MediaCarousel title="Mejor valoradas" items={topRatedMedia} buttonLabel="Ver más +" />
 			<MediaCarousel title="Según su popularidad" items={popularMedia} buttonLabel="Ver más +" width={130} height={250} />
 			<MediaCarousel title="Proximamente" items={upcomingMedia} buttonLabel="Ver más +" width={130} height={250} />
