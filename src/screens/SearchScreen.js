@@ -1,41 +1,51 @@
-import React from 'react';
-import { ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 
-import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
 import MovieDbService from '../services/MovieDbService';
+import MediaTypeSwitch from '../components/MediaTypeSwitch';
+import BaseStyles from '../BaseStyles';
 
-HomeScreen.propTypes = {
+SearchScreen.propTypes = {
 	navigation: PropTypes.object
 };
 
 export default function SearchScreen(props) {
 	const { route } = props;
-	const { searchTerm } = route.params;
+	const { searchTerm = 'jurassic' } = route.params;
 
 	const page = 1;
-	// TODO: Get from props
-	searchTerm = 'jurassic';
 
-	const [searchResult, setSearchResult] = useState({})
+	const [searchResult, setSearchResult] = useState({});
 
 	useEffect(() => {
-		const searchMovies = async () => {
-			const result = await MovieDbService.searchMovies(page, searchTerm);
-			setSearchResult(result);
-		}
-		searchMovies()
+		searchMovies(page, searchTerm)
 	}, [])
 
+	const searchMovies = async (page, searchTerm) => {
+		const result = await MovieDbService.searchMovies(page, searchTerm);
+		setSearchResult(result);
+	}
+
+	const searchSeries = async (page, searchTerm) => {
+		const result = await MovieDbService.searchSeries(page, searchTerm);
+		setSearchResult(result);
+	}
+
 	return (
-		<ScrollView style={styles.container}>
+		<ScrollView style={BaseStyles.container}>
+			<MediaTypeSwitch onClickMovie={() => { searchMovies(1, searchTerm) }} onClickSeries={() => { searchSeries(1, searchTerm) }}></MediaTypeSwitch>
 			<View style={styles.header}>
 				<Text style={styles.title}>Resultados</Text>
-				<Text style={styles.totalResults}>{searchResult.total}</Text>
+				<Text style={styles.totalResults}>{`${searchResult.total} items`}</Text>
 			</View>
 		</ScrollView>
 	);
+
+
 }
+
+
 
 const styles = StyleSheet.create({
 	container: {
@@ -46,13 +56,14 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'flex-end',
-		marginBottom: 10,
-		color: '#FFFFFF'
+		marginVertical: 10
 	},
 	title: {
+		color: '#FFFFFF',
 		fontSize: 24
 	},
 	totalResults: {
+		color: '#FFFFFF',
 		opacity: 0.7,
 		fontSize: 18
 	}
