@@ -2,9 +2,11 @@ import React from 'react';
 import { SafeAreaView, FlatList, StyleSheet, Text, View } from 'react-native';
 import CommentsCarouselItem from './CommentsCarouselItem';
 
-export default function CommentsCarousel() {
+export default function CommentsCarousel(props) {
+	const { style } = props;
+
 	return (
-		<View style={styles.container}>
+		<View style={[styles.container, style]}>
 			<Text style={styles.title}>Comentarios</Text>
 			<SafeAreaView>
 				<FlatList
@@ -19,10 +21,6 @@ export default function CommentsCarousel() {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		paddingHorizontal: 24,
-		marginTop: 24
-	},
 	title: {
 		color: '#FFFFFF',
 		fontSize: 24,

@@ -33,7 +33,7 @@ export default function MediaDetailsScreen(props) {
 	}, []);
 
 	return (
-		<ScrollView style={BaseStyles.container}>
+		<ScrollView style={styles.container}>
 			<Image style={styles.image} source={{ uri: movie.imagePath }}></Image>
 			<MovieHeader
 				genres={movie.genres}
@@ -42,18 +42,25 @@ export default function MediaDetailsScreen(props) {
 				summary={movie.summary}
 				languages={movie.languages}>
 			</MovieHeader>
-			<CommentsCarousel />
-			<MediaCarousel title="Peliculas similares" items={similarMedia} width={125} height={200} />
+			<CommentsCarousel style={styles.carousel} />
+			<MediaCarousel style={styles.carousel} title="Peliculas similares" items={similarMedia} width={125} height={200} />
 		</ScrollView>
 	);
 }
 
 const styles = StyleSheet.create({
+	container: {
+		backgroundColor: '#1F2D3D'
+	},
 	image: {
 		width: '100%',
 		height: 300
 	},
 	label: {
 		color: '#FFFFFF'
+	},
+	carousel: {
+		marginVertical: 12,
+		paddingLeft: 24
 	}
 });
