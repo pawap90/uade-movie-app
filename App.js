@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './src/screens/HomeScreen';
 import MediaDetailsScreen from './src/screens/MediaDetailsScreen';
@@ -12,9 +12,10 @@ const Stack = createStackNavigator();
 
 
 const App = () => {
+
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Home" screenOptions={screenOptions}>
+			<Stack.Navigator initialRouteName="Home" screenOptions={setScreenOptions}>
 				<Stack.Screen name="Home" component={HomeScreen} />
 				<Stack.Screen name="MediaDetails" component={MediaDetailsScreen} />
 				<Stack.Screen name="Search" component={SearchScreen} />
@@ -23,20 +24,24 @@ const App = () => {
 	);
 };
 
-const searchButton = () => {
+const setScreenOptions = ({ navigation }) => ({
+	title: 'MovieApp',
+	headerStyle: BaseStyles.header,
+	headerTintColor: '#FFFFFF',
+	headerRight: () => {
+		return searchButton(navigation);
+	}
+})
+
+const searchButton = (navigation) => {
+
 	return (
-		<TouchableWithoutFeedback onPress={() => alert('Ir a la pantalla de búsqueda')}>
+		<TouchableWithoutFeedback onPress={() => navigation.push('Search', { searchTerm: 'jurassic' })}>
 			<Text style={{ paddingHorizontal: 10, color: '#FFFFFF' }}>Buscar</Text>
 		</TouchableWithoutFeedback>
 	);
 };
+
 searchButton.displayName = 'SearchButton';
 
 export default App;
-
-const screenOptions = {
-	title: 'MovieApp',
-	headerStyle: BaseStyles.header,
-	headerTintColor: '#FFFFFF',
-	headerRight: searchButton
-};
