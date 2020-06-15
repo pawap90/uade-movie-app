@@ -14,12 +14,13 @@ export default function HomeScreen() {
 	const [mediaType, setMediaType] = useState('movie');
 	const [topRatedMedia, setTopRatedMedia] = useState([]);
 	const [popularMedia, setPopularMedia] = useState([]);
-	const [upcomingMedia, setUpcomingMedia] = useState([]);
+	const [upcomingMovies, setUpcomingMovies] = useState([]);
+	const [airingTodaySeries, setAiringTodaySeries] = useState([]);
 
 	const onMediaTypeSelected = (type) => {
 		if (mediaType === type)
 			return;
-		
+
 		setMediaType(type);
 	};
 
@@ -32,22 +33,33 @@ export default function HomeScreen() {
 			const results = mediaType === 'movie' ? await MovieDbService.getPopularMovies() : await MovieDbService.getPopularSeries();
 			setPopularMedia(results);
 		};
-		const getUpcomingMedia = async () => {
-			const results = mediaType === 'movie' ? await MovieDbService.getUpcomingMovies() : await MovieDbService.getUpcomingSeries();
-			setUpcomingMedia(results);
+		const getUpcomingMovies = async () => {
+			const results = await MovieDbService.getUpcomingMovies();
+			setUpcomingMovies(results);
 		};
+		const getAiringTodaySeries = async () => {
+			const results = await MovieDbService.getAiringTodaySeries();
+			setAiringTodaySeries(results);
+		};
+
+		mediaType === 'movie' ? getUpcomingMovies() : getAiringTodaySeries();
+
 		getTopRatedMedia();
 		getPopularMedia();
-		getUpcomingMedia();
 	}, [mediaType]);
-    
+
 	return (
 		<ScrollView style={BaseStyles.container}>
-			<Button onPress={() => onMediaTypeSelected('movie')} title="Movies"/>
-			<Button onPress={() => onMediaTypeSelected('serie')} title="Series"/>
+			<Button onPress={() => onMediaTypeSelected('movie')} title="Movies" />
+			<Button onPress={() => onMediaTypeSelected('serie')} title="Series" />
 			<MediaCarousel title="Mejor valoradas" items={topRatedMedia} buttonLabel="Ver más +" />
 			<MediaCarousel title="Según su popularidad" items={popularMedia} buttonLabel="Ver más +" width={130} height={250} />
-			<MediaCarousel title="Proximamente" items={upcomingMedia} buttonLabel="Ver más +" width={130} height={250} />
+			<MediaCarousel
+				title={mediaType === 'movie' ? 'Proximamente' : 'Transmitiéndose hoy'}
+				items={mediaType === 'movie' ? upcomingMovies : airingTodaySeries} 
+				buttonLabel="Ver más +" 
+				width={130} 
+				height={250} />
 		</ScrollView>
 	);
 }
