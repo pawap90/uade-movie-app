@@ -9,11 +9,12 @@ MediaCarousel.propTypes = {
 	buttonLabel: PropTypes.string,
 	width: PropTypes.number,
 	height: PropTypes.number,
-	items: PropTypes.arrayOf<PropTypes.object>[]
+	items: PropTypes.arrayOf<PropTypes.object>[],
+	mediaType: PropTypes.string
 };
 
 export default function MediaCarousel(props) {
-	const { title, buttonLabel, items, width = 175, height = 300 } = props;
+	const { mediaType, title, buttonLabel, items, width = 175, height = 300 } = props;
     
 	return (
 		<View style={styles.container}>
@@ -25,7 +26,7 @@ export default function MediaCarousel(props) {
 				<FlatList
 					data={items}
 					horizontal={true}
-					renderItem={({ item }) => <MediaCarouselItem id={item.id} title={item.title} imageUrl={item.imagePath} width={width} height={height} />}
+					renderItem={({ item }) => <MediaCarouselItem mediaType={mediaType} id={item.id} title={item.title} imageUrl={item.imagePath} width={width} height={height} />}
 					keyExtractor={item => item.id}/>
 			</SafeAreaView>
 		</View>

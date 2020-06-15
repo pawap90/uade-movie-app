@@ -25,7 +25,7 @@ export default class MovieDbService {
 		const movie = new MovieModel(
 			responseJson.id,
 			responseJson.original_title,
-			await this.getImageUrl(responseJson.poster_path, 'w300'),
+			responseJson.poster_path ? await this.getImageUrl(responseJson.poster_path, 'w300') : null,
 			responseJson.genres.map(g => {
 				return g.name;
 			}),
@@ -37,6 +37,35 @@ export default class MovieDbService {
 		);
 
 		return movie;
+	}
+
+	/**
+     * Get a single serie by id.
+     * @param {Number} id Serie identifier.
+     */
+	static async getSerie(id) {
+		const endpoint = `${MOVIEDB_API_BASE_URL}/tv/${id}?api_key=${MOVIEDB_API_KEY}`;
+
+		// Get response.
+		const response = await fetch(endpoint);
+		const responseJson = await response.json();
+
+		// Parse results to model.
+		const serie = new MovieModel(
+			responseJson.id,
+			responseJson.original_name,
+			responseJson.poster_path ? await this.getImageUrl(responseJson.poster_path, 'w300') : null,
+			responseJson.genres.map(g => {
+				return g.name;
+			}),
+			new Date(responseJson.release_date),
+			responseJson.overview,
+			responseJson.spoken_languages.map(sl => {
+				return sl.name;
+			})
+		);
+
+		return serie;
 	}
 
 	/**
