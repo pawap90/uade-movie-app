@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Image, Text } from 'react-native';
+import { ScrollView, StyleSheet, Image } from 'react-native';
 import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
 import MovieHeader from '../components/MovieHeader';
 import MovieDbService from '../services/MovieDbService';
+import CommentsCarousel from '../components/CommentsCarousel';
+import MediaCarousel from '../components/MediaCarousel';
 
 MediaDetailsScreen.propTypes = {
 	route: PropTypes.object,
@@ -12,18 +14,25 @@ MediaDetailsScreen.propTypes = {
 
 export default function MediaDetailsScreen(props) {
 	// Get Media item id from navigator
+	
 	const { route } = props;
 	const { id } = route.params;
-
-	const [movie, setMovie] = useState({})
+	const [mediaType, setMediaType] = useState("movie")
+	const [movie, setMovie] = useState({});
+	const [similarMedia, setSimilarMedia] = useState([]);
 
 	useEffect(() => {
 		const getMovieDetails = async () => {
-			const result = await MovieDbService.getMovie(123)
-			setMovie(result)
+			const result = await MovieDbService.getMovie(id);
+			setMovie(result);
+		};
+		const getSimilarMedia = async () => {
+			const results = mediaType === "movie" ? await MovieDbService.getSimilarMovies(id) : await MovieDbService.getSimilarSeries(id)
+			setSimilarMedia(results)
 		}
-		getMovieDetails()
-	}, [])
+		getMovieDetails();
+		getSimilarMedia();
+	}, []);
 
 	return (
 		<ScrollView style={BaseStyles.container}>
@@ -35,7 +44,8 @@ export default function MediaDetailsScreen(props) {
 				summary={movie.summary}
 				languages={movie.languages}>
 			</MovieHeader>
-			<Text style={{color: "#fff"}}>{JSON.stringify(movie)}</Text>
+			<CommentsCarousel/>
+			<MediaCarousel title="Peliculas similares" items={similarMedia} width={125} height={200}/>
 		</ScrollView>
 	);
 }
