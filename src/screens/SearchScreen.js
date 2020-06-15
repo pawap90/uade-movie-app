@@ -56,8 +56,6 @@ export default function SearchScreen(props) {
 			/>
 		</ScrollView>
 	);
-
-
 }
 
 const styles = StyleSheet.create({
@@ -66,6 +64,7 @@ const styles = StyleSheet.create({
 		padding: 24
 	},
 	header: {
+		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'flex-end',
