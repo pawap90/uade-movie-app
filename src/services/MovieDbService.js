@@ -26,7 +26,7 @@ export default class MovieDbService {
 		const movie = new MovieModel(
 			responseJson.id,
 			responseJson.original_title,
-			await this.getImageUrl(responseJson.poster_path, 'w300'),
+			responseJson.poster_path ? await this.getImageUrl(responseJson.poster_path, 'w300') : null,
 			responseJson.genres.map(g => {
 				return g.name;
 			}),
@@ -58,7 +58,7 @@ export default class MovieDbService {
 				new MovieModel(
 					movie.id,
 					movie.original_title,
-					await this.getImageUrl(movie.poster_path, 'w185')
+					movie.poster_path ? await this.getImageUrl(movie.poster_path, 'w185') : null
 				)
 			)
 		);
@@ -84,7 +84,7 @@ export default class MovieDbService {
 				new MovieModel(
 					serie.id,
 					serie.original_name,
-					await this.getImageUrl(serie.poster_path, 'w185')
+					serie.poster_path ? await this.getImageUrl(serie.poster_path, 'w185') : null
 				)
 			)
 		);
@@ -109,7 +109,7 @@ export default class MovieDbService {
 				new MovieModel(
 					movie.id,
 					movie.original_title,
-					await this.getImageUrl(movie.poster_path, 'w300')
+					movie.poster_path ? await this.getImageUrl(movie.poster_path, 'w300') : null
 				)
 			)
 		);
@@ -130,11 +130,11 @@ export default class MovieDbService {
 
 		// Parse results to model
 		const series = await Promise.all(
-			responseJson.results.map(async movie =>
+			responseJson.results.map(async serie =>
 				new MovieModel(
-					movie.id,
-					movie.original_title,
-					await this.getImageUrl(movie.poster_path, 'w300')
+					serie.id,
+					serie.original_name,
+					serie.poster_path ? await this.getImageUrl(serie.poster_path, 'w300') : null
 				)
 			)
 		);
@@ -159,7 +159,7 @@ export default class MovieDbService {
 				new MovieModel(
 					movie.id,
 					movie.original_title,
-					await this.getImageUrl(movie.poster_path, 'w300')
+					movie.poster_path ? await this.getImageUrl(movie.poster_path, 'w300') : null
 				)
 			)
 		);
@@ -180,11 +180,11 @@ export default class MovieDbService {
 
 		// Parse results to model
 		const series = await Promise.all(
-			responseJson.results.map(async movie =>
+			responseJson.results.map(async serie =>
 				new MovieModel(
-					movie.id,
-					movie.original_title,
-					await this.getImageUrl(movie.poster_path, 'w300')
+					serie.id,
+					serie.original_name,
+					serie.poster_path ? await this.getImageUrl(serie.poster_path, 'w300') : null
 				)
 			)
 		);
@@ -209,7 +209,7 @@ export default class MovieDbService {
 				new MovieModel(
 					movie.id,
 					movie.original_title,
-					await this.getImageUrl(movie.poster_path, 'w300')
+					movie.poster_path ? await this.getImageUrl(movie.poster_path, 'w300') : null
 				)
 			)
 		);
@@ -230,11 +230,11 @@ export default class MovieDbService {
 
 		// Parse results to model
 		const series = await Promise.all(
-			responseJson.results.map(async movie =>
+			responseJson.results.map(async serie =>
 				new MovieModel(
-					movie.id,
-					movie.original_title,
-					await this.getImageUrl(movie.poster_path, 'w300')
+					serie.id,
+					serie.original_name,
+					serie.poster_path ? await this.getImageUrl(serie.poster_path, 'w300') : null
 				)
 			)
 		);
@@ -260,7 +260,7 @@ export default class MovieDbService {
 			return new SearchResultItemModel(
 				r.id,
 				r.title,
-				await this.getImageUrl(r.poster_path, 'w300'),
+				r.poster_path ? await this.getImageUrl(r.poster_path, 'w300') : null,
 				await Promise.all(r.genre_ids.map(async gid => {
 					return this.getMovieGenre(gid);
 				})),
@@ -292,7 +292,7 @@ export default class MovieDbService {
 			return new SearchResultItemModel(
 				r.id,
 				r.name,
-				await this.getImageUrl(r.poster_path, 'w300'),
+				r.poster_path ? await this.getImageUrl(r.poster_path, 'w300') : null,
 				await Promise.all(r.genre_ids.map(async gid => {
 					return this.getSeriesGenre(gid);
 				})),

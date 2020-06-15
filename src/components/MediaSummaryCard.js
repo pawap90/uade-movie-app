@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { TouchableWithoutFeedback, View, StyleSheet, Text, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import Tag from './Tag';
+import imagePlaceholder from '../../assets/image-placeholder.png'
 
 MediaSummaryCard.propTypes = {
 	id: PropTypes.number,
@@ -27,16 +28,23 @@ export default function MediaSummaryCard(props) {
 			key={id}
 			onPress={goToDetails}>
 			<View style={styles.container}>
-				<Image source={{ uri: imageUrl }} style={styles.image} />
+				<Image source={imageUrl != null ? { uri: imageUrl } : imagePlaceholder} style={styles.image} />
 				<View style={styles.cardContent}>
 					<View style={styles.genres}>
 						{genres.map((genre) => (
-							<Tag key={genre} text={genre} backgroundColor="#E6D53F" textColor="#34424F" />
+							<Tag
+								key={genre}
+								text={genre}
+								fontSize={10}
+								paddingHorizontal={6}
+								paddingVertical={3}
+								backgroundColor="#E6D53F"
+								color="#34424F" />
 						))}
 					</View>
-					<Text style={styles.title}>{title}</Text>
+					<Text numberOfLines={2} style={styles.title}>{title}</Text>
 					<Text style={styles.year}>{year}</Text>
-					<Text numberOfLines={4} style={styles.summary}>{summary}</Text>
+					<Text numberOfLines={6} style={styles.summary}>{summary}</Text>
 				</View>
 			</View>
 		</TouchableWithoutFeedback >
@@ -52,16 +60,17 @@ const styles = StyleSheet.create({
 		backgroundColor: '#344250'
 	},
 	image: {
-		height: 200,
+		height: 215,
 		width: 140
 	},
 	cardContent: {
-		padding: 12
+		padding: 12,
+		flex: 1
 	},
 	genres: {
 		display: 'flex',
 		flexDirection: 'row',
-		flexWrap: 'wrap'
+		flexWrap: "wrap"
 	},
 	title: {
 		fontSize: 18,

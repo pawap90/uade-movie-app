@@ -53,7 +53,7 @@ export default function SearchScreen(props) {
 		setResultItems([...resultItems, ...searchResult.results]);
 	}
 
-	const changeMediaType = asynnpmc (mediaType) => {
+	const changeMediaType = async (mediaType) => {
 		setMediaType(mediaType);
 		resetSearch();
 	}
@@ -86,6 +86,7 @@ export default function SearchScreen(props) {
 			</View>
 			<FlatList
 				data={resultItems}
+				style={styles.list}
 				renderItem={({ item }) =>
 					<MediaSummaryCard
 						id={item.id}
@@ -123,5 +124,8 @@ const styles = StyleSheet.create({
 		color: '#FFFFFF',
 		opacity: 0.7,
 		fontSize: 18
+	},
+	list: {
+		marginBottom: 20
 	}
 });
