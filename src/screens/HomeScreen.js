@@ -4,6 +4,7 @@ import MediaCarousel from '../components/MediaCarousel';
 import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
 import MovieDbService from '../services/MovieDbService';
+import MediaTypeSwitch from '../components/MediaTypeSwitch';
 
 HomeScreen.propTypes = {
 	navigation: PropTypes.object
@@ -19,7 +20,7 @@ export default function HomeScreen() {
 	const onMediaTypeSelected = (type) => {
 		if (mediaType === type)
 			return;
-		
+
 		setMediaType(type);
 	};
 
@@ -40,11 +41,10 @@ export default function HomeScreen() {
 		getPopularMedia();
 		getUpcomingMedia();
 	}, [mediaType]);
-    
+
 	return (
 		<ScrollView style={BaseStyles.container}>
-			<Button onPress={() => onMediaTypeSelected('movie')} title="Movies"/>
-			<Button onPress={() => onMediaTypeSelected('serie')} title="Series"/>
+			<MediaTypeSwitch onClickMovie={() => onMediaTypeSelected('movie')} onClickSeries={() => onMediaTypeSelected('serie')}></MediaTypeSwitch>
 			<MediaCarousel title="Mejor valoradas" items={topRatedMedia} buttonLabel="Ver más +" />
 			<MediaCarousel title="Según su popularidad" items={popularMedia} buttonLabel="Ver más +" width={130} height={250} />
 			<MediaCarousel title="Proximamente" items={upcomingMedia} buttonLabel="Ver más +" width={130} height={250} />
