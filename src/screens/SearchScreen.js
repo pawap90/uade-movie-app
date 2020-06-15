@@ -96,7 +96,7 @@ export default function SearchScreen(props) {
 						year={item.year}
 						summary={item.summary}
 					/>}
-				keyExtractor={item => item.id}
+				keyExtractor={item => item.id.toString()}
 				onEndReachedThreshold={0.1}
 				onEndReached={nextPage}
 			/>
