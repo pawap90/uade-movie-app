@@ -15,7 +15,7 @@ MediaCarouselItem.propTypes = {
 export default function MediaCarouselItem(props) {
 	const { id, title, imageUrl, width, height } = props;
 
-	const navigation = useNavigation()
+	const navigation = useNavigation();
 
 	const goToDetails = () => {
 		navigation.push('MediaDetails', { id: id });

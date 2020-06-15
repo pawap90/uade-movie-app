@@ -60,7 +60,7 @@ export default class MovieDbService {
 					await this.getImageUrl(movie.poster_path, 'w185')
 				)
 			)
-		)
+		);
 
 		return movies;
 	}
@@ -86,7 +86,7 @@ export default class MovieDbService {
 					await this.getImageUrl(serie.poster_path, 'w185')
 				)
 			)
-		)
+		);
 
 		return movies;
 	}
@@ -111,7 +111,7 @@ export default class MovieDbService {
 					await this.getImageUrl(movie.poster_path, 'w300')
 				)
 			)
-		)
+		);
 
 		return movies;
 	}
@@ -136,7 +136,7 @@ export default class MovieDbService {
 					await this.getImageUrl(movie.poster_path, 'w300')
 				)
 			)
-		)
+		);
 
 		return series;
 	}
@@ -161,7 +161,7 @@ export default class MovieDbService {
 					await this.getImageUrl(movie.poster_path, 'w300')
 				)
 			)
-		)
+		);
 
 		return movies;
 	}
@@ -186,7 +186,7 @@ export default class MovieDbService {
 					await this.getImageUrl(movie.poster_path, 'w300')
 				)
 			)
-		)
+		);
 
 		return series;
 	}
@@ -211,7 +211,7 @@ export default class MovieDbService {
 					await this.getImageUrl(movie.poster_path, 'w300')
 				)
 			)
-		)
+		);
 
 		return movies;
 	}
@@ -236,7 +236,7 @@ export default class MovieDbService {
 					await this.getImageUrl(movie.poster_path, 'w300')
 				)
 			)
-		)
+		);
 
 		return series;
 	}

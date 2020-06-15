@@ -8,7 +8,8 @@ MediaCarousel.propTypes = {
 	title: PropTypes.string,
 	buttonLabel: PropTypes.string,
 	width: PropTypes.number,
-	height: PropTypes.number
+	height: PropTypes.number,
+	items: PropTypes.arrayOf<PropTypes.object>[]
 };
 
 export default function MediaCarousel(props) {
@@ -56,31 +57,3 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold'
 	}
 });
-
-const DATA = [
-	{
-		id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-		title: 'Jurassic Park',
-		imageUrl: 'https://m.media-amazon.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_.jpg'
-	},
-	{
-		id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-		title: 'Avengers: Endgame',
-		imageUrl: 'https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SY1000_CR0,0,674,1000_AL_.jpg'
-	},
-	{
-		id: '58694a0f-3da1-471f-bd96-145571e29d72',
-		title: 'Game of Thrones',
-		imageUrl: 'https://m.media-amazon.com/images/M/MV5BYTRiNDQwYzAtMzVlZS00NTI5LWJjYjUtMzkwNTUzMWMxZTllXkEyXkFqcGdeQXVyNDIzMzcwNjc@._V1_SY1000_CR0,0,734,1000_AL_.jpg'
-	},
-	{
-		id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f64',
-		title: 'Avengers: Endgame',
-		imageUrl: 'https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SY1000_CR0,0,674,1000_AL_.jpg'
-	},
-	{
-		id: '58694a0f-3da1-471f-bd96-145571e29d76',
-		title: 'Game of Thrones',
-		imageUrl: 'https://m.media-amazon.com/images/M/MV5BYTRiNDQwYzAtMzVlZS00NTI5LWJjYjUtMzkwNTUzMWMxZTllXkEyXkFqcGdeQXVyNDIzMzcwNjc@._V1_SY1000_CR0,0,734,1000_AL_.jpg'
-	}
-];

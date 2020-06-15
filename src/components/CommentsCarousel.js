@@ -32,25 +32,25 @@ const styles = StyleSheet.create({
 
 const DATA = [
 	{
-		id: "1",
+		id: '1',
 		author: 'Kelly Blankenship',
 		score: 4.1,
 		comment: 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit'
 	},
 	{
-		id: "2",
+		id: '2',
 		author: 'Tyla Scott',
 		score: 4.6,
 		comment: 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet'
 	},
 	{
-		id: "3",
+		id: '3',
 		author: 'Jacque Barnard',
 		score: 3.5,
 		comment: 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet'
 	},
 	{
-		id: "4",
+		id: '4',
 		author: 'Norma Edwards',
 		score: 3,
 		comment: 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet'

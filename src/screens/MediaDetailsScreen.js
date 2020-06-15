@@ -13,11 +13,9 @@ MediaDetailsScreen.propTypes = {
 };
 
 export default function MediaDetailsScreen(props) {
-	// Get Media item id from navigator
-	
+
 	const { route } = props;
-	const { id } = route.params;
-	const [mediaType, setMediaType] = useState("movie")
+	const { id, mediaType = 'movie' } = route.params;
 	const [movie, setMovie] = useState({});
 	const [similarMedia, setSimilarMedia] = useState([]);
 
@@ -27,9 +25,9 @@ export default function MediaDetailsScreen(props) {
 			setMovie(result);
 		};
 		const getSimilarMedia = async () => {
-			const results = mediaType === "movie" ? await MovieDbService.getSimilarMovies(id) : await MovieDbService.getSimilarSeries(id)
-			setSimilarMedia(results)
-		}
+			const results = mediaType === 'movie' ? await MovieDbService.getSimilarMovies(id) : await MovieDbService.getSimilarSeries(id);
+			setSimilarMedia(results);
+		};
 		getMovieDetails();
 		getSimilarMedia();
 	}, []);
@@ -38,14 +36,14 @@ export default function MediaDetailsScreen(props) {
 		<ScrollView style={BaseStyles.container}>
 			<Image style={styles.image} source={{ uri: movie.imagePath }}></Image>
 			<MovieHeader
-				genres={movie.genres} 
+				genres={movie.genres}
 				title={movie.title}
 				releaseDate={movie.releaseDate}
 				summary={movie.summary}
 				languages={movie.languages}>
 			</MovieHeader>
-			<CommentsCarousel/>
-			<MediaCarousel title="Peliculas similares" items={similarMedia} width={125} height={200}/>
+			<CommentsCarousel />
+			<MediaCarousel title="Peliculas similares" items={similarMedia} width={125} height={200} />
 		</ScrollView>
 	);
 }
