@@ -5,28 +5,32 @@ import PropTypes from 'prop-types';
 Tag.propTypes = {
 	text: PropTypes.string,
 	backgroundColor: PropTypes.string,
-	textColor: PropTypes.string
+	textColor: PropTypes.string,
+	color: PropTypes.string,
+	paddingHorizontal: PropTypes.string,
+	paddingVertical: PropTypes.string,
+	fontSize: PropTypes.string,
 };
 
 export default function Tag(props) {
-	const { text, backgroundColor, textColor } = props;
+	const { text, backgroundColor, color, paddingHorizontal = 8, paddingVertical = 4, fontSize = 12 } = props;
 	return (
 		<Text style={{
 			...styles.container,
-			backgroundColor: backgroundColor,
-			color: textColor
+			backgroundColor,
+			color,
+			paddingHorizontal,
+			paddingVertical,
+			fontSize
 		}}>{text}</Text>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		paddingHorizontal: 8,
-		paddingVertical: 4,
 		marginRight: 8,
 		marginBottom: 8,
 		borderRadius: 10,
-		fontSize: 12,
 		fontWeight: 'bold'
 	}
 });
