@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Button } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import MediaCarousel from '../components/MediaCarousel';
 import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
@@ -44,10 +44,19 @@ export default function HomeScreen() {
 
 	return (
 		<ScrollView style={BaseStyles.container}>
-			<MediaTypeSwitch onClickMovie={() => onMediaTypeSelected('movie')} onClickSeries={() => onMediaTypeSelected('serie')}></MediaTypeSwitch>
-			<MediaCarousel title="Mejor valoradas" items={topRatedMedia} buttonLabel="Ver más +" />
-			<MediaCarousel title="Según su popularidad" items={popularMedia} buttonLabel="Ver más +" width={130} height={250} />
-			<MediaCarousel title="Proximamente" items={upcomingMedia} buttonLabel="Ver más +" width={130} height={250} />
+			<MediaTypeSwitch style={styles.mediaTypeSwitch} onClickMovie={() => onMediaTypeSelected('movie')} onClickSeries={() => onMediaTypeSelected('serie')}></MediaTypeSwitch>
+			<MediaCarousel style={styles.carousel} title="Mejor valoradas" items={topRatedMedia} buttonLabel="Ver más +" />
+			<MediaCarousel style={styles.carousel} title="Según su popularidad" items={popularMedia} buttonLabel="Ver más +" width={130} height={250} />
+			<MediaCarousel style={styles.carousel} title="Proximamente" items={upcomingMedia} buttonLabel="Ver más +" width={130} height={250} />
 		</ScrollView>
 	);
 }
+
+const styles = StyleSheet.create({
+	mediaTypeSwitch: {
+		marginVertical: 10
+	},
+	carousel: {
+		marginVertical: 12
+	}
+});

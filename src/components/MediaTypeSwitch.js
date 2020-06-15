@@ -9,7 +9,7 @@ MediaTypeSwitch.propTypes = {
 };
 
 export default function MediaTypeSwitch(props) {
-	const { onClickMovie = () => { }, onClickSeries = () => { } } = props;
+	const { onClickMovie = () => { }, onClickSeries = () => { }, style } = props;
 	const [selectedType, setSelectedType] = useState('movie');
 
 	const switchType = (mediaType) => {
@@ -24,7 +24,7 @@ export default function MediaTypeSwitch(props) {
 	}
 
 	return (
-		<View style={styles.container}>
+		<View style={[styles.container, style]}>
 			<TouchableWithoutFeedback
 				onPress={() => { switchType('movie') }}>
 				<View style={[selectedType === 'movie' ? styles.buttonActive : styles.buttonIdle, styles.buttonLeft]}>
