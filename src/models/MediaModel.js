@@ -25,6 +25,6 @@ export default class MediaModel {
 		this.summary = summary;
 		this.languages = languages;
 		this.score = score / 2;
-		this.scoreCount = scoreCount
+		this.scoreCount = scoreCount;
 	}
 }
