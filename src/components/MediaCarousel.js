@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, StyleSheet, Text } from 'react-native';
+import { View, FlatList, StyleSheet, Text, SafeAreaView } from 'react-native';
 import MediaCarouselItem from './MediaCarouselItem';
 import PropTypes from 'prop-types';
 

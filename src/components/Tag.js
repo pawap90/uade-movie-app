@@ -5,11 +5,10 @@ import PropTypes from 'prop-types';
 Tag.propTypes = {
 	text: PropTypes.string,
 	backgroundColor: PropTypes.string,
-	textColor: PropTypes.string,
 	color: PropTypes.string,
-	paddingHorizontal: PropTypes.string,
-	paddingVertical: PropTypes.string,
-	fontSize: PropTypes.string,
+	paddingHorizontal: PropTypes.number,
+	paddingVertical: PropTypes.number,
+	fontSize: PropTypes.number,
 };
 
 export default function Tag(props) {

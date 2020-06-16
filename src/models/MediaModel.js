@@ -3,7 +3,7 @@
 /**
  * Class to represent a movie item.
  */
-export default class MovieModel {
+export default class MediaModel {
 	/**
      * Constructor
      * @param {String} id Item identifier
@@ -13,8 +13,10 @@ export default class MovieModel {
      * @param {Date} releaseDate Release date
      * @param {String} summary Summary
      * @param {Array<String>} languages Languages
+     * @param {Number} score Score
+     * @param {Number} scoreCount Score count
      */
-	constructor(id, title, imagePath, genres, releaseDate, summary, languages) {
+	constructor(id, title, imagePath, genres, releaseDate, summary, languages, score, scoreCount) {
 		this.id = id;
 		this.title = title;
 		this.imagePath = imagePath;
@@ -22,5 +24,7 @@ export default class MovieModel {
 		this.releaseDate = releaseDate;
 		this.summary = summary;
 		this.languages = languages;
+		this.score = score / 2;
+		this.scoreCount = scoreCount
 	}
 }

@@ -14,13 +14,13 @@ SearchScreen.propTypes = {
 };
 
 const MEDIA_TYPE = {
-	movies: {
-		key: 'movies',
+	movie: {
+		key: 'movie',
 		textSingular: 'película',
 		textPlural: 'películas'
 	},
-	series: {
-		key: 'series',
+	serie: {
+		key: 'serie',
 		textSingular: 'serie',
 		textPlural: 'series'
 	}
@@ -34,7 +34,7 @@ export default function SearchScreen(props) {
 	const [resultItems, setResultItems] = useState([]);
 	const [page, setPage] = useState(1);
 	const [endReached, setEndReached] = useState(false);
-	const [mediaType, setMediaType] = useState(MEDIA_TYPE.movies.key);
+	const [mediaType, setMediaType] = useState(MEDIA_TYPE.movie.key);
 
 	useEffect(() => {
 		search();
@@ -42,7 +42,7 @@ export default function SearchScreen(props) {
 
 	const search = async () => {
 		let searchResult = {};
-		if (mediaType === MEDIA_TYPE.movies.key)
+		if (mediaType === MEDIA_TYPE.movie.key)
 			searchResult = await MovieDbService.searchMovies(page, searchTerm);
 		else
 			searchResult = await MovieDbService.searchSeries(page, searchTerm);
@@ -77,10 +77,10 @@ export default function SearchScreen(props) {
 		<View style={BaseStyles.container}>
 			<MediaTypeSwitch
 				onClickMovie={() => {
-					changeMediaType(MEDIA_TYPE.movies.key); 
+					changeMediaType(MEDIA_TYPE.movie.key); 
 				}}
 				onClickSeries={() => {
-					changeMediaType(MEDIA_TYPE.series.key); 
+					changeMediaType(MEDIA_TYPE.serie.key); 
 				}}
 			/>
 			<View style={styles.header}>
@@ -100,6 +100,7 @@ export default function SearchScreen(props) {
 						genres={item.genres}
 						year={item.year}
 						summary={item.summary}
+						mediaType={mediaType}
 					/>}
 				keyExtractor={item => item.id.toString()}
 				onEndReachedThreshold={0.1}
