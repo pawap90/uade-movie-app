@@ -23,7 +23,6 @@ const PROFILE = {
 
 export default function ProfileScreen(props) {
 	const { route } = props;
-	const { searchTerm = 'jurassic' } = route.params;
 
 	const [resultHeader, setResultHeader] = useState({ total: 0 });
 	const [resultItems, setResultItems] = useState([]);
@@ -45,13 +44,6 @@ export default function ProfileScreen(props) {
 		setResultItems([...resultItems, ...searchResult.results]);
 	};
 
-	const resetSearch = () => {
-		setResultItems([]);
-		setResultHeader({ total: 0 });
-		setEndReached(false);
-		setPage(1);
-	};
-
 	return (
 		<View style={BaseStyles.container}>
 	
@@ -59,8 +51,15 @@ export default function ProfileScreen(props) {
 				<Text style={styles.title}>MovieApp</Text>
 			</View>
 			<View style={styles.container}>
-
-
+				<View >
+					{icon && <Image style={styles.icon} source={icon}></Image>}
+					<Text style={styles.text}>Datos personales</Text>
+				</View>
+				<LabelEdit label="Nombre" text={PROFILE.name} onPress={() => alert('Change Name')}></LabelEdit>
+				<LabelEdit label="Correo electronico" text={PROFILE.email} onPress={() => alert('Change Email')}></LabelEdit>
+				<View style = {styles.lineStyle} />
+				<InfoEdit label="Contraseña" onPress={() => alert('Change Password')}></InfoEdit>
+				<View style = {styles.lineStyle} />
 			</View>
 			<View style={styles.footer}>
 				<Button text="CONFIRMAR" onPress={() => alert('Confirmar profile')}></Button>
@@ -98,5 +97,10 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'flex-end'
-	}
+	},
+	lineStyle:{
+        borderWidth: 0.5,
+        borderColor:'black',
+        margin:10,
+   }
 });

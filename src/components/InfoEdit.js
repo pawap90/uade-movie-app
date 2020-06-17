@@ -13,9 +13,9 @@ export default function ButtonWithIcon(props) {
 	const { onPress, text, label } = props;
 	return (
 		<View>
-			<View style={styles.container}>
-				<Text style={styles.text}>{label}</Text>
-				<Text style={styles.text}>{text}</Text>
+			<View >
+				{icon && <Image style={styles.icon} source={icon}></Image>}
+				<Text style={styles.text}>{lable}</Text>
 			</View>
 			<View style={styles.right}>
 				<Button text="Cambiar" onPress={onPress}></Button>
