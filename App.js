@@ -7,6 +7,7 @@ import BaseStyles from './src/BaseStyles';
 import { Text } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import SearchScreen from './src/screens/SearchScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
 
 const Stack = createStackNavigator();
 
@@ -15,10 +16,11 @@ const App = () => {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Home" screenOptions={setScreenOptions}>
+			<Stack.Navigator initialRouteName="Profile" screenOptions={setScreenOptions}>
 				<Stack.Screen name="Home" component={HomeScreen} />
 				<Stack.Screen name="MediaDetails" component={MediaDetailsScreen} />
 				<Stack.Screen name="Search" component={SearchScreen} />
+				<Stack.Screen name="Profile" component={ProfileScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

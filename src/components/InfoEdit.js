@@ -9,12 +9,12 @@ LabelEdit.propTypes = {
 };
 
 export default function InfoEdit(props) {
-	const { onPress, label } = props;
+	const { onPress, label, icon } = props;
 	return (
 		<View>
 			<View >
 				{icon && <Image style={styles.icon} source={icon}></Image>}
-				<Text style={styles.text}>{lable}</Text>
+				<Text style={styles.text}>{label}</Text>
 			</View>
 			<View style={styles.right}>
 				<Button text="Cambiar" onPress={onPress}></Button>
