@@ -9,7 +9,7 @@ LabelEdit.propTypes = {
 	text: PropTypes.string
 };
 
-export default function ButtonWithIcon(props) {
+export default function LabelEdit(props) {
 	const { onPress, text, label } = props;
 	return (
 		<View>

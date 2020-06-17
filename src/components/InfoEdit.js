@@ -5,12 +5,11 @@ import PropTypes from 'prop-types';
 
 LabelEdit.propTypes = {
 	onPress: PropTypes.func,
-	label: PropTypes.string,
-	text: PropTypes.string
+	label: PropTypes.string
 };
 
-export default function ButtonWithIcon(props) {
-	const { onPress, text, label } = props;
+export default function InfoEdit(props) {
+	const { onPress, label } = props;
 	return (
 		<View>
 			<View >
