@@ -1,14 +1,15 @@
 
 import React from 'react';
-import { Text, StyleSheet, View, TouchableWithoutFeedback, Image, Button } from 'react-native';
+import { Text, StyleSheet, View, Image, Button } from 'react-native';
 import PropTypes from 'prop-types';
 
-LabelEdit.propTypes = {
+ProfileSection.propTypes = {
 	onPress: PropTypes.func,
-	label: PropTypes.string
+	label: PropTypes.string,
+	icon: PropTypes.number
 };
 
-export default function InfoEdit(props) {
+export default function ProfileSection(props) {
 	const { onPress, label, icon } = props;
 	return (
 		<View>
@@ -16,9 +17,9 @@ export default function InfoEdit(props) {
 				{icon && <Image style={styles.icon} source={icon}></Image>}
 				<Text style={styles.text}>{label}</Text>
 			</View>
-			<View style={styles.right}>
-				<Button text="Cambiar" onPress={onPress}></Button>
-			</View>
+			{ onPress && <View style={styles.right}>
+				<Button title="Cambiar" onPress={onPress}></Button>
+			</View> }
 		</View>
 	);
 }
@@ -31,10 +32,17 @@ const styles = StyleSheet.create({
 		padding: 6
 	},
 	text: {
-		color: '#FFFFFF'
+		color: '#FFFFFF',
+		textAlignVertical: 'top',
+		marginLeft: 45
 	},
 	right: {
 		alignItems: 'flex-end',
-		textAlign: 'right'
+		textAlign: 'right',
+		textAlignVertical: 'center'
+	},
+	icon: {
+		width: 30,
+		height: 30
 	}
 });

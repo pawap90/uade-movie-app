@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, Button } from 'react-native';
 import PropTypes from 'prop-types';
-import MovieDbService from '../services/MovieDbService';
-import MediaTypeSwitch from '../components/MediaTypeSwitch';
 import BaseStyles from '../BaseStyles';
-import { FlatList } from 'react-native-gesture-handler';
-import MediaSummaryCard from '../components/MediaSummaryCard';
+import ic_avatar from '../../assets/ic_avatar.jpg';
+import ic_key from '../../assets/ic_key.png';
+import ProfileSectionWithAttribute from '../components/ProfileSectionWithAttribute';
+import ProfileSection from '../components/ProfileSection';
 
 ProfileScreen.propTypes = {
 	navigation: PropTypes.object,
@@ -28,11 +27,10 @@ export default function ProfileScreen(props) {
 	const [resultItems, setResultItems] = useState([]);
 	const [page, setPage] = useState(1);
 	const [endReached, setEndReached] = useState(false);
-	const [mediaType, setMediaType] = useState(MEDIA_TYPE.movies.key);
 
 	useEffect(() => {
-		searchProfile();
-	}, [page, mediaType]);
+		//searchProfile();
+	});
 
 	const searchProfile = async () => {
 		let searchResult = {};
@@ -45,24 +43,17 @@ export default function ProfileScreen(props) {
 	};
 
 	return (
-		<View style={BaseStyles.container}>
-	
-			<View style={styles.header}>
-				<Text style={styles.title}>MovieApp</Text>
-			</View>
-			<View style={styles.container}>
-				<View >
-					{icon && <Image style={styles.icon} source={icon}></Image>}
-					<Text style={styles.text}>Datos personales</Text>
-				</View>
-				<LabelEdit label="Nombre" text={PROFILE.name} onPress={() => alert('Change Name')}></LabelEdit>
-				<LabelEdit label="Correo electronico" text={PROFILE.email} onPress={() => alert('Change Email')}></LabelEdit>
+		<View style={styles.container}>
+			<View>
+				<ProfileSection  icon={ic_avatar} label="Datos personales"></ProfileSection>
+				<ProfileSectionWithAttribute label="Nombre" text={PROFILE.user.name} onPress={() => alert('Change Name')}></ProfileSectionWithAttribute>
+				<ProfileSectionWithAttribute label="Correo electronico" text={PROFILE.user.email} onPress={() => alert('Change Email')}></ProfileSectionWithAttribute>
 				<View style = {styles.lineStyle} />
-				<InfoEdit label="Contraseña" onPress={() => alert('Change Password')}></InfoEdit>
+				<ProfileSection  icon={ic_key} label="Contraseña" onPress={() => alert('Change Password')}></ProfileSection>
 				<View style = {styles.lineStyle} />
 			</View>
 			<View style={styles.footer}>
-				<Button text="CONFIRMAR" onPress={() => alert('Confirmar profile')}></Button>
+				<Button style={styles.button} title="CONFIRMAR" onPress={() => alert('Confirmar profile')}></Button>
 			</View>
 		</View>
 	);
@@ -71,14 +62,8 @@ export default function ProfileScreen(props) {
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: '#34424F',
-		padding: 24
-	},
-	header: {
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'flex-end',
-		marginVertical: 10
+		padding: 24,
+		height: '100%'
 	},
 	title: {
 		color: '#FFFFFF',
@@ -93,14 +78,26 @@ const styles = StyleSheet.create({
 		marginBottom: 20
 	},
 	footer: {
-		display: 'flex',
+		width: '100%',
+		padding: 16,
+		justifyContent: 'center',
+		alignItems: 'center',
+		position: 'absolute',
+		bottom: 0
+	},
+	button: {
+		width:'100%',
+		fontSize: 14,
+		fontWeight: "bold",
+		color: "white",
 		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'flex-end'
+		justifyContent: 'center',
+		alignItems: 'center'
 	},
 	lineStyle:{
         borderWidth: 0.5,
         borderColor:'black',
-        margin:10,
+		margin:10,
+		alignSelf: 'stretch'
    }
 });
