@@ -1,35 +1,23 @@
 
 import React from 'react';
-import { Text, StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
+import ProfileSection from './ProfileSection'
 
-ProfileSection.propTypes = {
+ProfileGender.propTypes = {
 	onPress: PropTypes.func,
 	label: PropTypes.string,
 	icon: PropTypes.number
 };
 
-export default function ProfileSection(props) {
-	const { onPress, label, icon } = props;
+export default function ProfileGender(props) {
+	const { onPress, label } = props;
 	return (
 		<View style={styles.container} >
-			{ icon && <Image style={styles.icon} source={icon}></Image>}			
-			<Text style={getStyleText({icon})}>
-				{label}
-			</Text>
-			{ onPress && <View style={styles.right}>
-				<Text style={styles.button} onPress={onPress}>Cambiar</Text>
-			</View> }
+			<ProfileSection label={label} onPress={onPress}></ProfileSection>
+
 		</View>
 	);
-}
-
-function getStyleText(object) {
-	if (object.icon > 0) {		
-		return styles.textWithMargin
-	} else {
-		return styles.text
-	}
 }
 
 const styles = StyleSheet.create({
@@ -37,14 +25,9 @@ const styles = StyleSheet.create({
 		height: 50,
         justifyContent: 'center',
 	},
-	textWithMargin: {
-		color: '#FFFFFF',
-		start: 45,
-		fontWeight: 'bold',
-		fontSize: 16,
-	},
 	text: {
 		color: '#FFFFFF',
+		start: 45,
 		fontWeight: 'bold',
 		fontSize: 16,
 	},

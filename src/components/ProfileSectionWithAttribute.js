@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Text, StyleSheet, View, Button } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 
 ProfileSectionWithAttribute.propTypes = {
@@ -14,26 +14,46 @@ export default function ProfileSectionWithAttribute(props) {
 	return (
 		<View style={styles.container}>
 			<View style={styles.container}>
-				<Text style={styles.text}>{label}</Text>
+				<Text style={styles.textLabel}>{label}</Text>
 				<Text style={styles.text}>{text}</Text>
 			</View>
 			<View style={styles.right}>
-				<Button title="Cambiar" onPress={onPress}></Button>
+				<Text style={styles.button} onPress={onPress}>Cambiar</Text>
 			</View>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-		marginTop:16,
-		backgroundColor: 'red'
+	textLabel: {
+		color: '#9099a4',
+		fontSize: 16
 	},
 	text: {
-		color: '#FFFFFF'
+		color: '#FFFFFF',
+		fontSize: 16
+	},
+	icon: {
+		width: 30,
+		height: 30,
+		position: 'absolute',
+	},
+	container : {
+		height: 50,
+        justifyContent: 'center',
 	},
 	right: {
-		alignItems: 'flex-end',
-		textAlign: 'right'
-	}
+		position: 'absolute',
+		end: 0,
+	},
+	button: {
+		color: '#ffffff',
+		fontSize: 12,
+		backgroundColor: '#495969',
+		paddingVertical: 6,
+		paddingHorizontal: 12,
+		borderRadius: 10,
+		fontWeight: 'bold',
+		textAlign: 'center'
+   }
 });

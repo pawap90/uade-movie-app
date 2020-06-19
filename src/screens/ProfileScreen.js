@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
-import BaseStyles from '../BaseStyles';
 import ic_avatar from '../../assets/ic_avatar.jpg';
 import ic_key from '../../assets/ic_key.png';
 import ProfileSectionWithAttribute from '../components/ProfileSectionWithAttribute';
 import ProfileSection from '../components/ProfileSection';
+import ProfileGender from '../components/ProfileGender';
 
 ProfileScreen.propTypes = {
 	navigation: PropTypes.object,
@@ -45,15 +45,16 @@ export default function ProfileScreen(props) {
 	return (
 		<View style={styles.container}>
 			<View>
-				<ProfileSection  icon={ic_avatar} label="Datos personales"></ProfileSection>
-				<ProfileSectionWithAttribute label="Nombre" text={PROFILE.user.name} onPress={() => alert('Change Name')}></ProfileSectionWithAttribute>
-				<ProfileSectionWithAttribute label="Correo electronico" text={PROFILE.user.email} onPress={() => alert('Change Email')}></ProfileSectionWithAttribute>
+				<ProfileSection style={styles.profile} icon={ic_avatar} label="Datos personales"></ProfileSection>
+				<ProfileSectionWithAttribute style={styles.profile} label="Nombre" text={PROFILE.user.name} onPress={() => alert('Change Name')}></ProfileSectionWithAttribute>
+				<ProfileSectionWithAttribute style={styles.profile} label="Correo electronico" text={PROFILE.user.email} onPress={() => alert('Change Email')}></ProfileSectionWithAttribute>
 				<View style = {styles.lineStyle} />
-				<ProfileSection  icon={ic_key} label="Contraseña" onPress={() => alert('Change Password')}></ProfileSection>
+				<ProfileSection icon={ic_key} label="Contraseña" onPress={() => alert('Change Password')}></ProfileSection>
 				<View style = {styles.lineStyle} />
+				<ProfileGender label="Géneros preferidos" onPress={() => alert('Change Password')}></ProfileGender>
 			</View>
 			<View style={styles.footer}>
-				<Button style={styles.button} title="CONFIRMAR" onPress={() => alert('Confirmar profile')}></Button>
+			<Text style={styles.button} onPress={() => alert('Confirmar profile')}>CONFIRMAR</Text>
 			</View>
 		</View>
 	);
@@ -78,26 +79,28 @@ const styles = StyleSheet.create({
 		marginBottom: 20
 	},
 	footer: {
-		width: '100%',
-		padding: 16,
-		justifyContent: 'center',
-		alignItems: 'center',
+		bottom: 16,
+		start: 16,
+		end: 16,
 		position: 'absolute',
-		bottom: 0
-	},
-	button: {
-		width:'100%',
-		fontSize: 14,
-		fontWeight: "bold",
-		color: "white",
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center'
 	},
 	lineStyle:{
         borderWidth: 0.5,
         borderColor:'black',
-		margin:10,
+		marginTop:10,
+		marginBottom:10,
 		alignSelf: 'stretch'
+   },
+   profile: {
+	   marginTop: 16,
+   },
+   button: {
+		color: '#34424F',
+		fontSize: 16,
+		backgroundColor: '#E6D72A',
+		paddingVertical: 6,
+		borderRadius: 10,
+		fontWeight: 'bold',
+		textAlign: 'center'
    }
 });
