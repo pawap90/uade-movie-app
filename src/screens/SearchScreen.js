@@ -7,6 +7,9 @@ import MediaTypeSwitch from '../components/MediaTypeSwitch';
 import BaseStyles from '../BaseStyles';
 import { FlatList } from 'react-native-gesture-handler';
 import MediaSummaryCard from '../components/MediaSummaryCard';
+import Spinner from '../components/Spinner';
+import { useDispatch } from 'react-redux';
+import { showSpinner, hideSpinner } from '../actions/application';
 
 SearchScreen.propTypes = {
 	navigation: PropTypes.object,
@@ -29,7 +32,7 @@ const MEDIA_TYPE = {
 export default function SearchScreen(props) {
 	const { route } = props;
 	const { searchTerm = 'jurassic' } = route.params;
-
+	const dispatch = useDispatch();
 	const [resultHeader, setResultHeader] = useState({ total: 0 });
 	const [resultItems, setResultItems] = useState([]);
 	const [page, setPage] = useState(1);
@@ -41,6 +44,7 @@ export default function SearchScreen(props) {
 	}, [page, mediaType]);
 
 	const search = async () => {
+		dispatch(showSpinner);
 		let searchResult = {};
 		if (mediaType === MEDIA_TYPE.movie.key)
 			searchResult = await MovieDbService.searchMovies(page, searchTerm);
@@ -52,6 +56,7 @@ export default function SearchScreen(props) {
 
 		setResultHeader(searchResult);
 		setResultItems([...resultItems, ...searchResult.results]);
+		dispatch(hideSpinner);
 	};
 
 	const changeMediaType = async (mediaType) => {
@@ -74,41 +79,44 @@ export default function SearchScreen(props) {
 	});
 
 	return (
-		<View style={BaseStyles.container}>
-			<MediaTypeSwitch
-				onClickMovie={() => {
-					changeMediaType(MEDIA_TYPE.movie.key); 
-				}}
-				onClickSeries={() => {
-					changeMediaType(MEDIA_TYPE.serie.key); 
-				}}
-			/>
-			<View style={styles.header}>
-				<Text style={styles.title}>Resultados</Text>
-				<Text style={styles.totalResults}>{
-					`${resultHeader.total} ${resultHeader.total == 1 ? MEDIA_TYPE[mediaType].textSingular : MEDIA_TYPE[mediaType].textPlural}`
-				}</Text>
+		<>
+			<Spinner></Spinner>
+			<View style={BaseStyles.container}>
+				<MediaTypeSwitch
+					onClickMovie={() => {
+						changeMediaType(MEDIA_TYPE.movie.key); 
+					}}
+					onClickSeries={() => {
+						changeMediaType(MEDIA_TYPE.serie.key); 
+					}}
+				/>
+				<View style={styles.header}>
+					<Text style={styles.title}>Resultados</Text>
+					<Text style={styles.totalResults}>{
+						`${resultHeader.total} ${resultHeader.total == 1 ? MEDIA_TYPE[mediaType].textSingular : MEDIA_TYPE[mediaType].textPlural}`
+					}</Text>
+				</View>
+				<FlatList
+					data={resultItems}
+					style={styles.list}
+					renderItem={({ item }) =>
+						<MediaSummaryCard
+							id={item.id}
+							title={item.title}
+							imageUrl={item.imageUrl}
+							genres={item.genres}
+							year={item.year}
+							summary={item.summary}
+							mediaType={mediaType}
+						/>}
+					keyExtractor={item => item.id.toString()}
+					onEndReachedThreshold={0.1}
+					onEndReached={() => {
+						resultItems.length > 0 && nextPage(); 
+					}}
+				/>
 			</View>
-			<FlatList
-				data={resultItems}
-				style={styles.list}
-				renderItem={({ item }) =>
-					<MediaSummaryCard
-						id={item.id}
-						title={item.title}
-						imageUrl={item.imageUrl}
-						genres={item.genres}
-						year={item.year}
-						summary={item.summary}
-						mediaType={mediaType}
-					/>}
-				keyExtractor={item => item.id.toString()}
-				onEndReachedThreshold={0.1}
-				onEndReached={() => {
-					resultItems.length > 0 && nextPage(); 
-				}}
-			/>
-		</View>
+		</>
 	);
 }
 
