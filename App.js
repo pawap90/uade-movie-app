@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './src/screens/GenresSelectionScreen';
+import HomeScreen from './src/screens/HomeScreen';
+import GenresSelectionScreen from './src/screens/GenresSelectionScreen';
 import MediaDetailsScreen from './src/screens/MediaDetailsScreen';
 import BaseStyles from './src/BaseStyles';
 import { Text } from 'react-native';
@@ -15,7 +16,8 @@ const App = () => {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Home" screenOptions={setScreenOptions}>
+			<Stack.Navigator initialRouteName="GenresSelectionScreen" screenOptions={setScreenOptions}>
+				<Stack.Screen name="GenresSelection" component={GenresSelectionScreen} />
 				<Stack.Screen name="Home" component={HomeScreen} />
 				<Stack.Screen name="MediaDetails" component={MediaDetailsScreen} />
 				<Stack.Screen name="Search" component={SearchScreen} />
