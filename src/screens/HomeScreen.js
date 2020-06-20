@@ -43,10 +43,10 @@ export default function HomeScreen() {
 			setAiringTodaySeries(results);
 		};
 
-		mediaType === 'movie' ? getUpcomingMovies() : getAiringTodaySeries();
-
 		getTopRatedMedia();
 		getPopularMedia();
+		mediaType === 'movie' ? getUpcomingMovies() : getAiringTodaySeries();
+
 	}, [mediaType]);
 
 	return (

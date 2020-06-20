@@ -9,16 +9,16 @@ export default class SearchResultItemModel {
      * Constructor
      * @param {String} id Item identifier
      * @param {String} title Title
-     * @param {String} imagePath Main image path
+     * @param {String} imageUrl Main image url
      * @param {Array<String>} genres Array of genres
      * @param {Number} year Release year
      * @param {String} summary Summary
      * @param {String} type Type of item (by default 'movie')
      */
-	constructor(id, title, imagePath, genres, year, summary, type='movie') {
+	constructor(id, title, imageUrl, genres, year, summary, type='movie') {
 		this.id = id;
 		this.title = title;
-		this.imagePath = imagePath;
+		this.imageUrl = imageUrl;
 		this.genres = genres;
 		this.year = year;
 		this.summary = summary;

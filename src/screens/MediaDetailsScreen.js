@@ -34,7 +34,7 @@ export default function MediaDetailsScreen(props) {
 
 	return (
 		<ScrollView style={styles.container}>
-			<Image style={styles.image} source={media.imagePath != null ? { uri: media.imagePath } : imagePlaceholder}></Image>
+			<Image style={styles.image} source={media.imageUrl != null ? { uri: media.imageUrl } : imagePlaceholder}></Image>
 			<MovieHeader
 				genres={media.genres}
 				title={media.title}
