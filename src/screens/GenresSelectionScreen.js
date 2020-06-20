@@ -20,7 +20,7 @@ export default function GenresSelectionScreen(props) {
 	var title = 'Seleccioná tus géneros preferidos';
 
 	return (
-		<View style={BaseStyles.container}>
+		<ScrollView style={BaseStyles.container}>
 			<Text style={styles.title}>{title}</Text>
 			{/* <ScrollView style={BaseStyles.container}>
 				<FlatList
@@ -29,7 +29,7 @@ export default function GenresSelectionScreen(props) {
 					keyExtractor={item => item.id}
 				/>
 			</ScrollView> */}
-		</View>
+		</ScrollView>
 
 	);
 }
@@ -38,5 +38,6 @@ const styles = StyleSheet.create({
 	title: {
 		color: '#FFFFFF',
 		fontSize: 24,
+		marginVertical: 32,
 	}
 });
