@@ -56,7 +56,7 @@ export default function HomeScreen() {
 	}, [mediaType]);
 
 	useEffect(() => {
-		if(topRatedMedia.length > 0 && popularMedia.length > 0 && (upcomingMovies.length > 0 || airingTodaySeries.length > 0))
+		if (topRatedMedia.length > 0 && popularMedia.length > 0 && (upcomingMovies.length > 0 || airingTodaySeries.length > 0))
 			dispatch(hideSpinner);
 
 	}, [topRatedMedia, popularMedia, upcomingMovies, airingTodaySeries]);
@@ -65,11 +65,29 @@ export default function HomeScreen() {
 		<>
 			<Spinner></Spinner>
 			<ScrollView style={BaseStyles.container}>
-				<MediaTypeSwitch style={styles.mediaTypeSwitch} onClickMovie={() => onMediaTypeSelected('movie')} onClickSeries={() => onMediaTypeSelected('serie')}></MediaTypeSwitch>
-				<MediaCarousel mediaType={mediaType} style={styles.carousel} title="Mejor valoradas" items={topRatedMedia} buttonLabel="Ver más +" />
-				<MediaCarousel mediaType={mediaType} style={styles.carousel} title="Según su popularidad" items={popularMedia} buttonLabel="Ver más +" width={130} height={250} />
-				<View style={{ marginBottom: 40 }}>
+				<MediaTypeSwitch
+					style={styles.mediaTypeSwitch}
+					onClickMovie={() => onMediaTypeSelected('movie')}
+					onClickSeries={() => onMediaTypeSelected('serie')}>
+				</MediaTypeSwitch>
 
+				<MediaCarousel
+					mediaType={mediaType}
+					style={styles.carousel}
+					title="Mejor valoradas"
+					items={topRatedMedia}
+					buttonLabel="Ver más +" />
+
+				<MediaCarousel
+					mediaType={mediaType}
+					style={styles.carousel}
+					title="Según su popularidad"
+					items={popularMedia}
+					buttonLabel="Ver más +"
+					width={130}
+					height={250} />
+
+				<View style={{ marginBottom: 40 }}>
 					<MediaCarousel
 						mediaType={mediaType}
 						title={mediaType === 'movie' ? 'Proximamente' : 'Transmitiéndose hoy'}
