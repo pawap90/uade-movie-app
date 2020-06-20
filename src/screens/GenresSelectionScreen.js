@@ -17,10 +17,10 @@ GenresSelectionScreen.propTypes = {
 };
 
 export default function GenresSelectionScreen(props) {
-	var title = 'YOU ARE WATCHING THE TITLE';
+	var title = 'Seleccioná tus géneros preferidos';
 
 	return (
-		<View style={styles.container}>
+		<View style={BaseStyles.container}>
 			<Text style={styles.title}>{title}</Text>
 			{/* <ScrollView style={BaseStyles.container}>
 				<FlatList
@@ -35,10 +35,6 @@ export default function GenresSelectionScreen(props) {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		paddingVertical: 10,
-		paddingLeft: 10,
-	},
 	title: {
 		color: '#FFFFFF',
 		fontSize: 24,
