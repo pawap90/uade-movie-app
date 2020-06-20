@@ -10,16 +10,17 @@ MediaCarouselItem.propTypes = {
 	title: PropTypes.string,
 	imageUrl: PropTypes.string,
 	width: PropTypes.number,
-	height: PropTypes.number
+	height: PropTypes.number,
+	mediaType: PropTypes.string
 };
 
 export default function MediaCarouselItem(props) {
-	const { id, title, imageUrl, width, height } = props;
+	const { mediaType, id, title, imageUrl, width, height } = props;
 
 	const navigation = useNavigation();
 
 	const goToDetails = () => {
-		navigation.push('MediaDetails', { id: id });
+		navigation.push('MediaDetails', { id: id, mediaType: mediaType });
 	};
 
 	return (

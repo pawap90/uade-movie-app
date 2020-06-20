@@ -3,7 +3,7 @@
 import { MOVIEDB_API_BASE_URL, MOVIEDB_API_KEY } from 'react-native-dotenv';
 import SearchResultItemModel from '../models/SearchResultItemModel';
 import SearchResultModel from '../models/SearchResultModel';
-import MovieModel from '../models/MovieModel';
+import MediaModel from '../models/MediaModel';
 
 let movieGenresCache = null;
 let seriesGenresCache = null;
@@ -23,7 +23,7 @@ export default class MovieDbService {
 		const responseJson = await response.json();
 
 		// Parse results to model.
-		const movie = new MovieModel(
+		const movie = new MediaModel(
 			responseJson.id,
 			responseJson.original_title,
 			responseJson.poster_path ? await this.getImageUrl(responseJson.poster_path, 'w300') : null,
@@ -34,10 +34,41 @@ export default class MovieDbService {
 			responseJson.overview,
 			responseJson.spoken_languages.map(sl => {
 				return sl.name;
-			})
+			}),
+			responseJson.vote_average,
+			responseJson.vote_count
 		);
 
 		return movie;
+	}
+
+	/**
+     * Get a single series by id.
+     * @param {Number} id Series identifier.
+     */
+	static async getSeries(id) {
+		const endpoint = `${MOVIEDB_API_BASE_URL}/tv/${id}?api_key=${MOVIEDB_API_KEY}`;
+
+		// Get response.
+		const response = await fetch(endpoint);
+		const responseJson = await response.json();
+
+		// Parse results to model.
+		const serie = new MediaModel(
+			responseJson.id,
+			responseJson.original_name,
+			responseJson.poster_path ? await this.getImageUrl(responseJson.poster_path, 'w300') : null,
+			responseJson.genres.map(g => {
+				return g.name;
+			}),
+			new Date(responseJson.first_air_date),
+			responseJson.overview,
+			responseJson.languages,
+			responseJson.vote_average,
+			responseJson.vote_count
+		);
+
+		return serie;
 	}
 
 	/**
@@ -55,7 +86,7 @@ export default class MovieDbService {
 		// Parse results to model
 		const movies = await Promise.all(
 			responseJson.results.map(async movie =>
-				new MovieModel(
+				new MediaModel(
 					movie.id,
 					movie.original_title,
 					movie.poster_path ? await this.getImageUrl(movie.poster_path, 'w185') : null
@@ -81,7 +112,7 @@ export default class MovieDbService {
 		// Parse results to model
 		const movies = await Promise.all(
 			responseJson.results.map(async serie =>
-				new MovieModel(
+				new MediaModel(
 					serie.id,
 					serie.original_name,
 					serie.poster_path ? await this.getImageUrl(serie.poster_path, 'w185') : null
@@ -106,7 +137,7 @@ export default class MovieDbService {
 		// Parse results to model
 		const movies = await Promise.all(
 			responseJson.results.map(async movie =>
-				new MovieModel(
+				new MediaModel(
 					movie.id,
 					movie.original_title,
 					movie.poster_path ? await this.getImageUrl(movie.poster_path, 'w300') : null
@@ -131,7 +162,7 @@ export default class MovieDbService {
 		// Parse results to model
 		const series = await Promise.all(
 			responseJson.results.map(async serie =>
-				new MovieModel(
+				new MediaModel(
 					serie.id,
 					serie.original_name,
 					serie.poster_path ? await this.getImageUrl(serie.poster_path, 'w300') : null
@@ -156,7 +187,7 @@ export default class MovieDbService {
 		// Parse results to model
 		const movies = await Promise.all(
 			responseJson.results.map(async movie =>
-				new MovieModel(
+				new MediaModel(
 					movie.id,
 					movie.original_title,
 					movie.poster_path ? await this.getImageUrl(movie.poster_path, 'w300') : null
@@ -181,7 +212,7 @@ export default class MovieDbService {
 		// Parse results to model
 		const series = await Promise.all(
 			responseJson.results.map(async serie =>
-				new MovieModel(
+				new MediaModel(
 					serie.id,
 					serie.original_name,
 					serie.poster_path ? await this.getImageUrl(serie.poster_path, 'w300') : null
@@ -206,7 +237,7 @@ export default class MovieDbService {
 		// Parse results to model
 		const movies = await Promise.all(
 			responseJson.results.map(async movie =>
-				new MovieModel(
+				new MediaModel(
 					movie.id,
 					movie.original_title,
 					movie.poster_path ? await this.getImageUrl(movie.poster_path, 'w300') : null
@@ -231,7 +262,7 @@ export default class MovieDbService {
 		// Parse results to model
 		const series = await Promise.all(
 			responseJson.results.map(async serie =>
-				new MovieModel(
+				new MediaModel(
 					serie.id,
 					serie.original_name,
 					serie.poster_path ? await this.getImageUrl(serie.poster_path, 'w300') : null

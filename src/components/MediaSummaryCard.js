@@ -11,16 +11,17 @@ MediaSummaryCard.propTypes = {
 	imageUrl: PropTypes.string,
 	genres: PropTypes.array,
 	year: PropTypes.number,
-	summary: PropTypes.string
+	summary: PropTypes.string,
+	mediaType: PropTypes.string,
 };
 
 export default function MediaSummaryCard(props) {
-	const { id, title, imageUrl, genres, year, summary } = props;
+	const { id, title, imageUrl, genres, year, summary, mediaType } = props;
 
 	const navigation = useNavigation();
 
 	const goToDetails = () => {
-		navigation.push('MediaDetails', { id: id });
+		navigation.push('MediaDetails', { id: id, mediaType: mediaType });
 	};
 
 	return (

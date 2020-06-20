@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import MediaCarousel from '../components/MediaCarousel';
 import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
@@ -52,14 +52,18 @@ export default function HomeScreen() {
 	return (
 		<ScrollView style={BaseStyles.container}>
 			<MediaTypeSwitch style={styles.mediaTypeSwitch} onClickMovie={() => onMediaTypeSelected('movie')} onClickSeries={() => onMediaTypeSelected('serie')}></MediaTypeSwitch>
-			<MediaCarousel style={styles.carousel} title="Mejor valoradas" items={topRatedMedia} buttonLabel="Ver más +" />
-			<MediaCarousel style={styles.carousel} title="Según su popularidad" items={popularMedia} buttonLabel="Ver más +" width={130} height={250} />
-			<MediaCarousel
-				title={mediaType === 'movie' ? 'Proximamente' : 'Transmitiéndose hoy'}
-				items={mediaType === 'movie' ? upcomingMovies : airingTodaySeries} 
-				buttonLabel="Ver más +" 
-				width={130} 
-				height={250} />
+			<MediaCarousel mediaType={mediaType} style={styles.carousel} title="Mejor valoradas" items={topRatedMedia} buttonLabel="Ver más +" />
+			<MediaCarousel mediaType={mediaType} style={styles.carousel} title="Según su popularidad" items={popularMedia} buttonLabel="Ver más +" width={130} height={250} />
+			<View style={{ marginBottom: 40 }}>
+
+				<MediaCarousel
+					mediaType={mediaType}
+					title={mediaType === 'movie' ? 'Proximamente' : 'Transmitiéndose hoy'}
+					items={mediaType === 'movie' ? upcomingMovies : airingTodaySeries}
+					buttonLabel="Ver más +"
+					width={130}
+					height={250} />
+			</View>
 		</ScrollView>
 	);
 }
