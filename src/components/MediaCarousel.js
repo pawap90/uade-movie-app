@@ -26,7 +26,7 @@ export default function MediaCarousel(props) {
 				<FlatList
 					data={items}
 					horizontal={true}
-					renderItem={({ item }) => <MediaCarouselItem mediaType={mediaType} id={item.id} title={item.title} imageUrl={item.imagePath} width={width} height={height} />}
+					renderItem={({ item }) => <MediaCarouselItem mediaType={mediaType} id={item.id} title={item.title} imageUrl={item.imageUrl} width={width} height={height} />}
 					keyExtractor={item => item.id}/>
 			</SafeAreaView>
 		</View>

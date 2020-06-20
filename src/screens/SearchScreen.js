@@ -96,7 +96,7 @@ export default function SearchScreen(props) {
 					<MediaSummaryCard
 						id={item.id}
 						title={item.title}
-						imageUrl={item.imagePath}
+						imageUrl={item.imageUrl}
 						genres={item.genres}
 						year={item.year}
 						summary={item.summary}
@@ -132,8 +132,5 @@ const styles = StyleSheet.create({
 		color: '#FFFFFF',
 		opacity: 0.7,
 		fontSize: 18
-	},
-	list: {
-		marginBottom: 20
 	}
 });
