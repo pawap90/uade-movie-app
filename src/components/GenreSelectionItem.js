@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
-import BaseStyles from '../BaseStyles';
 
 GenreSelectionItem.propTypes = {
 	genreName: PropTypes.string
@@ -31,10 +30,12 @@ const styles = StyleSheet.create({
 		color: '#FFFFFF',
 		padding: 12,
 		textAlign: "center",
+		fontWeight: 'bold',
+		textTransform: 'uppercase'
 	},
 	genreSection: {
 		backgroundColor: '#1F2D3D',
 		borderWidth: 1.5,
-		borderColor: '#60C7AC'
+		borderColor: '#60C7AC',
 	}
 });
