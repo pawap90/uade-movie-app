@@ -22,6 +22,7 @@ export default function GenresSelectionScreen(props) {
 	return (
 		<ScrollView style={BaseStyles.container}>
 			<Text style={styles.title}>{title}</Text>
+			<GenreSelectionItem></GenreSelectionItem>
 			{/* <ScrollView style={BaseStyles.container}>
 				<FlatList
 					data={GENRES}
