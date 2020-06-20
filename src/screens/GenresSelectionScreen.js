@@ -1,46 +1,46 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, StyleSheet, Text } from 'react-native';
 import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
-import { GenreSelectionItem } from "../components/GenreSelectionItem";
+import { GenreSelectionItem } from '../components/GenreSelectionItem';
 
 const GENRES = [
-    { genreName: 'Action' },
-    { genreName: 'Black & White' },
-    { genreName: 'Drama' },
-    { genreName: 'Thriller' },
-    { genreName: 'Sci Fi' }
-]
+	{ genreName: 'Action' },
+	{ genreName: 'Black & White' },
+	{ genreName: 'Drama' },
+	{ genreName: 'Thriller' },
+	{ genreName: 'Sci Fi' }
+];
 
 GenresSelectionScreen.propTypes = {
-    title: PropTypes.string
+	title: PropTypes.string
 };
 
 export default function GenresSelectionScreen(props) {
-    const { title } = props;
+	var title = 'YOU ARE WATCHING THE TITLE';
 
-    return (
-        <div style={styles.container}>
-            <Text style={styles.title}>{title}</Text>
-            <ScrollView style={BaseStyles.container}>
-                <FlatList
-                    data={GENRES}
-                    renderItem={({ item }) => <GenreSelectionItem genreName={genreName} />}
-                    keyExtractor={item => item.id}
-                />
-            </ScrollView>
-        </div>
+	return (
+		<View style={styles.container}>
+			<Text style={styles.title}>{title}</Text>
+			{/* <ScrollView style={BaseStyles.container}>
+				<FlatList
+					data={GENRES}
+					renderItem={({ item }) => <GenreSelectionItem genreName={genreName} />}
+					keyExtractor={item => item.id}
+				/>
+			</ScrollView> */}
+		</View>
 
-    );
+	);
 }
 
 const styles = StyleSheet.create({
-    container: {
-        paddingVertical: Constants.statusBarHeight,
-        paddingLeft: Constants.statusBarHeight,
-    },
-    title: {
-        color: '#FFFFFF',
-        fontSize: 24,
-    }
+	container: {
+		paddingVertical: 10,
+		paddingLeft: 10,
+	},
+	title: {
+		color: '#FFFFFF',
+		fontSize: 24,
+	}
 });
