@@ -1,14 +1,14 @@
 'use strict';
 
 /**
- * Class to represent a movie item.
+ * Class to represent a media item.
  */
 export default class MediaModel {
 	/**
      * Constructor
      * @param {String} id Item identifier
      * @param {String} title Title
-     * @param {String} imagePath Main image path
+     * @param {String} imageUrl Main image url
      * @param {Array<String>} genres Array of genres
      * @param {Date} releaseDate Release date
      * @param {String} summary Summary
@@ -16,10 +16,10 @@ export default class MediaModel {
      * @param {Number} score Score
      * @param {Number} scoreCount Score count
      */
-	constructor(id, title, imagePath, genres, releaseDate, summary, languages, score, scoreCount) {
+	constructor(id, title, imageUrl, genres, releaseDate, summary, languages, score, scoreCount) {
 		this.id = id;
 		this.title = title;
-		this.imagePath = imagePath;
+		this.imageUrl = imageUrl;
 		this.genres = genres;
 		this.releaseDate = releaseDate;
 		this.summary = summary;

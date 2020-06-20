@@ -21,7 +21,7 @@ export default function MediaDetailsScreen(props) {
 
 	useEffect(() => {
 		const getMediaDetails = async () => {
-			const result = mediaType === 'movie' ? await MovieDbService.getMovie(id) : await MovieDbService.getSerie(id);
+			const result = mediaType === 'movie' ? await MovieDbService.getMovie(id) : await MovieDbService.getSeries(id);
 			setMedia(result);
 		};
 		const getSimilarMedia = async () => {

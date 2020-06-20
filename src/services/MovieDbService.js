@@ -43,10 +43,10 @@ export default class MovieDbService {
 	}
 
 	/**
-     * Get a single serie by id.
-     * @param {Number} id Serie identifier.
+     * Get a single series by id.
+     * @param {Number} id Series identifier.
      */
-	static async getSerie(id) {
+	static async getSeries(id) {
 		const endpoint = `${MOVIEDB_API_BASE_URL}/tv/${id}?api_key=${MOVIEDB_API_KEY}`;
 
 		// Get response.
