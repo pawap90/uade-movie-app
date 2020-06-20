@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, ImageBackground } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 
 GenreSelectionItem.propTypes = {
@@ -12,13 +11,16 @@ export default function GenreSelectionItem(props) {
 	const [selectedOrNot, setselectedOrNot] = useState(false);
 
 	const genreBoxPressed = () => {
-		setselectedOrNot( prevState => {selectedOrNot: !prevState.selectedOrNot})
+		if (setselectedOrNot)
+			setselectedOrNot(false);
+		else
+			setselectedOrNot(true);
 	};
 
 	return (
-		<TouchableWithoutFeedback style={styles.genreSection} onPress={genreBoxPressed}>
+		<View style={styles.genreSection} onPress={genreBoxPressed}>
 			<Text style={styles.genreName}>{genreName}</Text>
-		</TouchableWithoutFeedback>
+		</View>
 	);
 }
 

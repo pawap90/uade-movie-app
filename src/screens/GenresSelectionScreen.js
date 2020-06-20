@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, View, StyleSheet, Text } from 'react-native';
 import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
-import { GenreSelectionItem } from '../components/GenreSelectionItem';
+import GenreSelectionItem from '../components/GenreSelectionItem';
 
 const GENRES = [
 	{ genreName: 'Action' },
@@ -22,7 +22,8 @@ export default function GenresSelectionScreen(props) {
 	return (
 		<ScrollView style={BaseStyles.container}>
 			<Text style={styles.title}>{title}</Text>
-			<GenreSelectionItem></GenreSelectionItem>
+			<GenreSelectionItem genreName="Action">
+			</GenreSelectionItem>
 			{/* <ScrollView style={BaseStyles.container}>
 				<FlatList
 					data={GENRES}
