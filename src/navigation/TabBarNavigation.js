@@ -35,11 +35,11 @@ const setTabBarScreenOptions = ({ route }) => {
 			let icon;
 
 			switch (route.name) {
-			case 'Home':
+			case 'Inicio':
 				icon = HomeIcon;
 				break;
 
-			case 'MyLists':
+			case 'Mis listas':
 				icon = ListIcon;
 				break;
 
