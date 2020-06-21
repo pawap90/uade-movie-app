@@ -106,8 +106,6 @@ export default class AccountService {
  */
 const getAccessToken = async () => {
 	const accessToken = await AsyncStorage.getItem(ACCESS_TOKEN_STORAGE_KEY);
-	console.log(ACCESS_TOKEN_STORAGE_KEY);
-	console.log(accessToken);
 	return accessToken;
 };
 
