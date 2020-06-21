@@ -30,10 +30,12 @@ const styles = StyleSheet.create({
 		backgroundColor: '#1F2D3D',
 		borderWidth: 1.5,
 		borderColor: '#60C7AC',
+		marginBottom: 14.5,
 	},
 	genreSectionSelected: {
 		backgroundColor: '#60C7AC',
 		borderWidth: 1.5,
 		borderColor: '#60C7AC',
+		marginBottom: 14.5,
 	},
 });
