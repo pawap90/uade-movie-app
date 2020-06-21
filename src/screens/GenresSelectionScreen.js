@@ -3,7 +3,7 @@ import { ScrollView, View, StyleSheet, Text, FlatList, SafeAreaView } from 'reac
 import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
 import GenreSelectionItem from '../components/GenreSelectionItem';
-import ButtonWithoutIcon from '../components/ButtonPrimaryActionWithoutIcon';
+import ButtonPrimaryActionWithoutIcon from '../components/ButtonPrimaryActionWithoutIcon';
 
 
 const GENRES = [
@@ -54,12 +54,12 @@ export default function GenresSelectionScreen(props) {
 	const buttonLabel = 'Guardar Cambios';
 
 	return (
-		<ScrollView style={BaseStyles.container}>
-			<Text style={styles.title}>{title}</Text>
-			<GenreSelectionItem genreName="Action">
-			</GenreSelectionItem>
-
+		<ScrollView contentContainerStyle={{...BaseStyles.container, ...styles.containerAdaptations}}>
 			<View>
+				<Text style={styles.title}>{title}</Text>
+				<GenreSelectionItem genreName="Action">
+				</GenreSelectionItem>
+
 				<FlatList
 					data={GENRES}
 					renderItem={({ item }) => <GenreSelectionItem genreName={item.genreName} />}
@@ -67,14 +67,18 @@ export default function GenresSelectionScreen(props) {
 				/>
 			</View>
 
-
-			<ButtonWithoutIcon text="Guardar Cambios"></ButtonWithoutIcon>
+			<ButtonPrimaryActionWithoutIcon text={buttonLabel}></ButtonPrimaryActionWithoutIcon>
 		</ScrollView >
 
 	);
 }
 
 const styles = StyleSheet.create({
+	containerAdaptations: {
+		display: 'flex',
+		justifyContent: 'space-between',
+		flexGrow: 1
+	},
 	title: {
 		color: '#FFFFFF',
 		fontSize: 24,
