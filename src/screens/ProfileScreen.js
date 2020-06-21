@@ -22,11 +22,7 @@ const PROFILE = {
 
 export default function ProfileScreen(props) {
 	const { route } = props;
-
-	const [resultHeader, setResultHeader] = useState({ total: 0 });
 	const [resultItems, setResultItems] = useState([]);
-	const [page, setPage] = useState(1);
-	const [endReached, setEndReached] = useState(false);
 
 	useEffect(() => {
 		//searchProfile();
@@ -45,16 +41,16 @@ export default function ProfileScreen(props) {
 	return (
 		<View style={styles.container}>
 			<View>
-				<ProfileSection style={styles.profile} icon={ic_avatar} label="Datos personales"></ProfileSection>
-				<ProfileSectionWithAttribute style={styles.profile} label="Nombre" text={PROFILE.user.name} onPress={() => alert('Change Name')}></ProfileSectionWithAttribute>
-				<ProfileSectionWithAttribute style={styles.profile} label="Correo electronico" text={PROFILE.user.email} onPress={() => alert('Change Email')}></ProfileSectionWithAttribute>
+				<ProfileSection icon={ic_avatar} label="Datos personales"></ProfileSection>
+				<ProfileSectionWithAttribute label="Nombre" text={PROFILE.user.name} onPress={() => alert('Change Name')}></ProfileSectionWithAttribute>
+				<ProfileSectionWithAttribute label="Correo electronico" text={PROFILE.user.email} onPress={() => alert('Change Email')}></ProfileSectionWithAttribute>
 				<View style = {styles.lineStyle} />
 				<ProfileSection icon={ic_key} label="Contraseña" onPress={() => alert('Change Password')}></ProfileSection>
 				<View style = {styles.lineStyle} />
-				<ProfileGender label="Géneros preferidos" onPress={() => alert('Change Password')}></ProfileGender>
+				<ProfileGender data={PROFILE.user.gender} label="Géneros preferidos" onPress={() => alert('Change Password')}></ProfileGender>
 			</View>
 			<View style={styles.footer}>
-			<Text style={styles.button} onPress={() => alert('Confirmar profile')}>CONFIRMAR</Text>
+				<Text style={styles.button} onPress={() => alert('Confirmar profile')}>CONFIRMAR</Text>
 			</View>
 		</View>
 	);
@@ -91,14 +87,11 @@ const styles = StyleSheet.create({
 		marginBottom:10,
 		alignSelf: 'stretch'
    },
-   profile: {
-	   marginTop: 16,
-   },
    button: {
 		color: '#34424F',
 		fontSize: 16,
 		backgroundColor: '#E6D72A',
-		paddingVertical: 6,
+		paddingVertical: 10,
 		borderRadius: 10,
 		fontWeight: 'bold',
 		textAlign: 'center'

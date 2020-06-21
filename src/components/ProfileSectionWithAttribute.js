@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
 	container : {
 		height: 50,
         justifyContent: 'center',
+		marginTop: 16
 	},
 	right: {
 		position: 'absolute',

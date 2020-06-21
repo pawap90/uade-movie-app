@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 ProfileSection.propTypes = {
 	onPress: PropTypes.func,
 	label: PropTypes.string,
-	icon: PropTypes.number
+	icon: PropTypes.number,
+	withLine: PropTypes.bool
 };
 
 export default function ProfileSection(props) {
@@ -35,7 +36,7 @@ function getStyleText(object) {
 const styles = StyleSheet.create({
 	container : {
 		height: 50,
-        justifyContent: 'center',
+		justifyContent: 'center',
 	},
 	textWithMargin: {
 		color: '#FFFFFF',
