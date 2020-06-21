@@ -13,6 +13,14 @@ const BaseStyles = StyleSheet.create({
 	tabBar: {
 		backgroundColor: '#60C7AC'
 	},
+	actionButton: {
+		fontSize: 16,
+		backgroundColor: '#E6D72A',
+		paddingHorizontal: 8,
+		paddingVertical: 6,
+		borderRadius: 5,
+		fontWeight: 'bold'
+	},
 	tabBarIcon: (focused) => {
 		return {
 			width: 20,
