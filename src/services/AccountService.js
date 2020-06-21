@@ -67,7 +67,6 @@ export default class AccountService {
 			// Request init configuration.
 			const reqInit = {
 				headers: {
-					'Accept': 'application/json',
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify(loginModel),
