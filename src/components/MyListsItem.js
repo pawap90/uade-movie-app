@@ -11,16 +11,14 @@ MyListsItem.propTypes = {
 	id: PropTypes.number,
 	name: PropTypes.string,
 	itemCount: PropTypes.number,
-	isPublic: PropTypes.bool
+	isPublic: PropTypes.bool,
+	onDeleteListTapped: PropTypes.func
 };
 
 export default function MyListsItem(props) {
 
-	const { id, name, itemCount, isPublic } = props;
+	const { id, name, itemCount, isPublic, onDeleteListTapped } = props;
 
-	const onDeleteList = () => {
-		alert(`${id} será eliminada`);
-	};
 	return (
 		<View style={styles.container}>
 			<Image style={styles.icon} source={ListIcon} />
@@ -42,7 +40,7 @@ export default function MyListsItem(props) {
 				backgroundColor="#F95F62"
 				paddingVertical={12}
 				paddingHorizontal={16}
-				onPress={onDeleteList}>
+				onPress={() => onDeleteListTapped(id, name)}>
 			</ButtonWithIcon>
 		</View>
 	);
@@ -69,8 +67,8 @@ const styles = StyleSheet.create({
 		marginBottom: 5
 	},
 	icon: {
-		width: 35,
-		height: 35,
+		width: 30,
+		height: 30,
 		tintColor: '#FFFFFF',
 		marginRight: 16
 	},

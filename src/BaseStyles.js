@@ -25,6 +25,7 @@ const BaseStyles = StyleSheet.create({
 		return {
 			width: 20,
 			height: 20,
+			resizeMode: 'contain',
 			tintColor: focused ? '#E6D72A' : '#FFFFFF'
 		};
 	}

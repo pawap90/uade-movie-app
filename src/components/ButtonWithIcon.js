@@ -3,17 +3,32 @@ import { Text, StyleSheet, View, TouchableWithoutFeedback, Image } from 'react-n
 import PropTypes from 'prop-types';
 
 ButtonWithIcon.propTypes = {
-	onPress: PropTypes.func,
 	text: PropTypes.string,
 	icon: PropTypes.number,
+	onPress: PropTypes.func,
+	grow: PropTypes.bool,
 	backgroundColor: PropTypes.string,
 	color: PropTypes.string,
 	paddingHorizontal: PropTypes.number,
-	paddingVertical: PropTypes.number
+	paddingVertical: PropTypes.number,
+	fontSize: PropTypes.number,
+	marginHorizontal: PropTypes.number
 };
 
 export default function ButtonWithIcon(props) {
-	const { onPress, text, icon, backgroundColor = 'transparent', color = '#FFFFFF', paddingHorizontal = 8, paddingVertical = 8 } = props;
+	const {
+		text,
+		icon,
+		onPress,
+		grow = false,
+		backgroundColor = 'transparent',
+		color = '#FFFFFF',
+		paddingHorizontal = 8,
+		paddingVertical = 8,
+		fontSize = 14,
+		marginHorizontal = 0
+	} = props;
+	
 	return (
 		<TouchableWithoutFeedback onPress={onPress}>
 			<View style={
@@ -21,7 +36,9 @@ export default function ButtonWithIcon(props) {
 					...styles.container,
 					backgroundColor: backgroundColor,
 					paddingHorizontal: paddingHorizontal,
-					paddingVertical: paddingVertical
+					paddingVertical: paddingVertical,
+					marginHorizontal: marginHorizontal,
+					flex: grow ? 1 : 0
 				}}>
 
 				{icon && <Image style={
@@ -31,7 +48,7 @@ export default function ButtonWithIcon(props) {
 						marginRight: text ? 8 : 0
 					}} source={icon}></Image>}
 
-				<Text style={{ color: color }}>{text}</Text>
+				<Text style={{ color: color, fontSize: fontSize }}>{text}</Text>
 			</View>
 		</TouchableWithoutFeedback>
 	);
@@ -42,7 +59,8 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'center',
-		borderRadius: 5,
+		justifyContent: 'center',
+		borderRadius: 5
 	},
 	icon: {
 		width: 14,
