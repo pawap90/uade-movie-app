@@ -11,10 +11,10 @@ export default class MediaModel {
      * @param {String} lastname User lastname
      * @param {Array<String>} genres User favorite genres
      */
-    constructor(email, name, lastname, genres) {
-        this.email = email;
-        this.name = name;
-        this.lastname = lastname;
-        this.genres = genres;
-    }
+	constructor(email, name, lastname, genres) {
+		this.email = email;
+		this.name = name;
+		this.lastname = lastname;
+		this.genres = genres;
+	}
 }

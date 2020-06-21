@@ -9,8 +9,8 @@ export default class LoginModel {
      * @param {String} email User email
      * @param {String} password User password
      */
-    constructor(email, password) {
-        this.email = email;
-        this.password = password;
-    }
+	constructor(email, password) {
+		this.email = email;
+		this.password = password;
+	}
 }

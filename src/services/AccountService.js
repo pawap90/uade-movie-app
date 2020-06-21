@@ -110,11 +110,11 @@ const getAccessToken = async () => {
 	console.log(ACCESS_TOKEN_STORAGE_KEY);
 	console.log(accessToken);
 	return accessToken;
-}
+};
 
 /**
  * Store access token into local storage.
  */
 const storeAccessToken = async (accessToken) => {
 	await AsyncStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, accessToken);
-}
+};
