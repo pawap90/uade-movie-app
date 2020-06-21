@@ -1,9 +1,12 @@
 'use strict';
 
 import { BACKEND_API_BASE_URL } from 'react-native-dotenv';
+import AsyncStorage from '@react-native-community/async-storage';
+
 import LoginModel from '../models/LoginModel';
 import AccountModel from '../models/AccountModel';
 import ErrorHandler from '../errors/ErrorHandler';
+import { ACCESS_TOKEN_STORAGE_KEY } from '../constants';
 
 const BASE_ENDPOINT = `${BACKEND_API_BASE_URL}/api/account`;
 
@@ -21,22 +24,25 @@ export default class AccountService {
 
 			// Request init configuration.
 			const reqInit = {
-				headers: this.getAuthHeader()
+				headers: await this.getAuthHeader()
 			};
 
 			// Get response.
-			// const response = await fetch(endpoint, reqInit);
-			const response = await fetch(endpoint);
+			const response = await fetch(endpoint, reqInit);
 
 			if (response.status === 401)
 				throw ErrorHandler.handle('El usuario no fue autorizado', null, response.status);
+			else if (response.status !== 200)
+				throw ErrorHandler.handle('Se produjo un error obteniendo los datos del usuario', null, response.status);
 
 			const responseJson = await response.json();
 
 			// Parse results to model.
 			const account = new AccountModel(
-				responseJson.id,
-				responseJson.original_title
+				responseJson.email,
+				responseJson.name,
+				responseJson.lastName,
+				responseJson.genres
 			);
 
 			return account;
@@ -47,7 +53,7 @@ export default class AccountService {
 	}
 
 	/**
-     * Get the current user's data.
+     * Login user and get access token.
 	 * @param {LoginModel} loginModel Login data
      */
 	static async login(loginModel) {
@@ -60,7 +66,12 @@ export default class AccountService {
 
 			// Request init configuration.
 			const reqInit = {
-				body: JSON.stringify(loginModel)
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(loginModel),
+				method: 'POST'
 			};
 
 			// Get response.
@@ -68,11 +79,13 @@ export default class AccountService {
 
 			if (response.status === 401)
 				throw ErrorHandler.handle('Las credenciales ingresadas son incorrectas', null, response.status);
+			else if (response.status !== 200)
+				throw ErrorHandler.handle('Se produjo un error autorizando al usuario', null, response.status);
 
 			const responseJson = await response.json();
 
 			// Save JWT locally
-			storeAccessToken(responseJson.access);
+			await storeAccessToken(responseJson.access);
 		}
 		catch (err) {
 			throw ErrorHandler.handle('Se produjo un error autorizando al usuario', err, 500);
@@ -82,19 +95,26 @@ export default class AccountService {
 	/**
      * Get the authorization header to authorizes the current user.
      */
-	static getAuthHeader() {
+	static async getAuthHeader() {
 		return {
-			'Authorization': getAccessToken(),
+			'Authorization': await getAccessToken(),
 		};
 	}
 }
 
-const getAccessToken = () => {
-	// TO-DO
-	return '';
-
+/**
+ * Get access token from local storage.
+ */
+const getAccessToken = async () => {
+	const accessToken = await AsyncStorage.getItem(ACCESS_TOKEN_STORAGE_KEY);
+	console.log(ACCESS_TOKEN_STORAGE_KEY);
+	console.log(accessToken);
+	return accessToken;
 }
 
-const storeAccessToken = (accessToken) => {
-	// TO-DO
+/**
+ * Store access token into local storage.
+ */
+const storeAccessToken = async (accessToken) => {
+	await AsyncStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, accessToken);
 }
