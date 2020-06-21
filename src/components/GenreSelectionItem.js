@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 
 GenreSelectionItem.propTypes = {
@@ -10,17 +10,10 @@ export default function GenreSelectionItem(props) {
 	const { genreName } = props;
 	const [selectedOrNot, setselectedOrNot] = useState(false);
 
-	const genreBoxPressed = () => {
-		if (selectedOrNot)
-			setselectedOrNot(false);
-		else
-			setselectedOrNot(true);
-	};
-
 	return (
-		<View style={selectedOrNot?styles.genreSectionSelected:styles.genreSectionDefault} onPress={genreBoxPressed}>
+		<TouchableOpacity style={selectedOrNot?styles.genreSectionSelected:styles.genreSectionDefault} onPress={ () => setselectedOrNot(!selectedOrNot)}>
 			<Text style={styles.genreName}>{genreName}</Text>
-		</View>
+		</TouchableOpacity>
 	);
 }
 
