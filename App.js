@@ -17,14 +17,14 @@ const store = configureStore();
 const App = () => {
 	return (
 		<Provider store={store}>
-		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Profile" screenOptions={setScreenOptions}>
-				<Stack.Screen name="Home" component={HomeScreen} />
-				<Stack.Screen name="MediaDetails" component={MediaDetailsScreen} />
-				<Stack.Screen name="Search" component={SearchScreen} />
-				<Stack.Screen name="Profile" component={ProfileScreen} />
-			</Stack.Navigator>
-		</NavigationContainer>
+			<NavigationContainer>
+				<Stack.Navigator initialRouteName="Home" screenOptions={setScreenOptions}>
+					<Stack.Screen name="Home" component={HomeScreen} />
+					<Stack.Screen name="MediaDetails" component={MediaDetailsScreen} />
+					<Stack.Screen name="Search" component={SearchScreen} />
+					<Stack.Screen name="Profile" component={ProfileScreen} />
+				</Stack.Navigator>
+			</NavigationContainer>
 		</Provider>
 	);
 };

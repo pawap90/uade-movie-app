@@ -14,6 +14,7 @@ export default function ProfileSection(props) {
 	const { onPress, label, icon } = props;
 	return (
 		<View style={styles.container} >
+			
 			{ icon && <Image style={styles.icon} source={icon}></Image>}			
 			<Text style={getStyleText({icon})}>
 				{label}

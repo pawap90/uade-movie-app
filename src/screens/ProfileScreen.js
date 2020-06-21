@@ -44,9 +44,9 @@ export default function ProfileScreen(props) {
 				<ProfileSection icon={ic_avatar} label="Datos personales"></ProfileSection>
 				<ProfileSectionWithAttribute label="Nombre" text={PROFILE.user.name} onPress={() => alert('Change Name')}></ProfileSectionWithAttribute>
 				<ProfileSectionWithAttribute label="Correo electronico" text={PROFILE.user.email} onPress={() => alert('Change Email')}></ProfileSectionWithAttribute>
-				<View style = {styles.lineStyle} />
+				<View style = {styles.lineStyleTop} />
 				<ProfileSection icon={ic_key} label="Contraseña" onPress={() => alert('Change Password')}></ProfileSection>
-				<View style = {styles.lineStyle} />
+				<View style = {styles.lineStyleBottom} />
 				<ProfileGender data={PROFILE.user.gender} label="Géneros preferidos" onPress={() => alert('Change Password')}></ProfileGender>
 			</View>
 			<View style={styles.footer}>
@@ -62,32 +62,27 @@ const styles = StyleSheet.create({
 		padding: 24,
 		height: '100%'
 	},
-	title: {
-		color: '#FFFFFF',
-		fontSize: 24
-	},
-	totalResults: {
-		color: '#FFFFFF',
-		opacity: 0.7,
-		fontSize: 18
-	},
-	list: {
-		marginBottom: 20
-	},
 	footer: {
 		bottom: 16,
 		start: 16,
 		end: 16,
 		position: 'absolute',
 	},
-	lineStyle:{
+	lineStyleTop:{
         borderWidth: 0.5,
-        borderColor:'black',
-		marginTop:10,
-		marginBottom:10,
-		alignSelf: 'stretch'
-   },
-   button: {
+        borderColor:'#9099a4',
+		alignSelf: 'stretch',
+		marginTop: 32,
+		marginBottom: 4
+	},
+	lineStyleBottom:{
+        borderWidth: 0.5,
+        borderColor:'#9099a4',
+		alignSelf: 'stretch',
+		marginBottom: 24,
+		marginTop: 4
+   	},
+   	button: {
 		color: '#34424F',
 		fontSize: 16,
 		backgroundColor: '#E6D72A',
@@ -95,5 +90,5 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		fontWeight: 'bold',
 		textAlign: 'center'
-   }
+   	}
 });
