@@ -16,7 +16,7 @@ const App = () => {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="GenresSelectionScreen" screenOptions={setScreenOptions}>
+			<Stack.Navigator initialRouteName="GenresSelection" screenOptions={setScreenOptions}>
 				<Stack.Screen name="GenresSelection" component={GenresSelectionScreen} />
 				<Stack.Screen name="Home" component={HomeScreen} />
 				<Stack.Screen name="MediaDetails" component={MediaDetailsScreen} />

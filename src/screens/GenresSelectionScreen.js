@@ -3,7 +3,7 @@ import { ScrollView, View, StyleSheet, Text, FlatList, SafeAreaView } from 'reac
 import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
 import GenreSelectionItem from '../components/GenreSelectionItem';
-import ButtonWithIcon from '../components/ButtonWithIcon';
+import ButtonWithoutIcon from '../components/ButtonPrimaryActionWithoutIcon';
 
 
 const GENRES = [
@@ -27,22 +27,22 @@ const GENRES = [
 		genreName: 'Sci Fi',
 		id: '5'
 	},
-	{
-		genreName: 'Darkful',
-		id: '6'
-	},
-	{
-		genreName: 'Philossofical',
-		id: '7'
-	},
-	{
-		genreName: 'Bakery',
-		id: '8'
-	},
-	{
-		genreName: 'Crime',
-		id: '9'
-	}
+	// {
+	// 	genreName: 'Darkful',
+	// 	id: '6'
+	// },
+	// {
+	// 	genreName: 'Philossofical',
+	// 	id: '7'
+	// },
+	// {
+	// 	genreName: 'Bakery',
+	// 	id: '8'
+	// },
+	// {
+	// 	genreName: 'Crime',
+	// 	id: '9'
+	// }
 ];
 
 GenresSelectionScreen.propTypes = {
@@ -50,22 +50,26 @@ GenresSelectionScreen.propTypes = {
 };
 
 export default function GenresSelectionScreen(props) {
-	var title = 'Seleccioná tus géneros preferidos';
+	const title = 'Seleccioná tus géneros preferidos';
+	const buttonLabel = 'Guardar Cambios';
 
 	return (
-		<SafeAreaView style={BaseStyles.container}>
+		<ScrollView style={BaseStyles.container}>
 			<Text style={styles.title}>{title}</Text>
 			<GenreSelectionItem genreName="Action">
 			</GenreSelectionItem>
 
-			<FlatList
-				data={GENRES}
-				renderItem={({ item }) => <GenreSelectionItem genreName={item.genreName} />}
-				keyExtractor={item => item.id}
-			/>
+			<View>
+				<FlatList
+					data={GENRES}
+					renderItem={({ item }) => <GenreSelectionItem genreName={item.genreName} />}
+					keyExtractor={item => item.id}
+				/>
+			</View>
 
-			<ButtonWithIcon></ButtonWithIcon>
-		</SafeAreaView >
+
+			<ButtonWithoutIcon text="Guardar Cambios"></ButtonWithoutIcon>
+		</ScrollView >
 
 	);
 }
@@ -75,5 +79,13 @@ const styles = StyleSheet.create({
 		color: '#FFFFFF',
 		fontSize: 24,
 		marginVertical: 32,
+	},
+	button: {
+		fontSize: 16,
+		backgroundColor: '#E6D72A',
+		paddingHorizontal: 8,
+		paddingVertical: 6,
+		borderRadius: 10,
+		fontWeight: 'bold'
 	}
 });
