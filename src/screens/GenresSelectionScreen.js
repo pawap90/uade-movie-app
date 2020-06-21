@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, StyleSheet, Text, FlatList, SafeAreaView } from 'react-native';
+import { ScrollView, View, StyleSheet, Text, FlatList } from 'react-native';
 import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
 import GenreSelectionItem from '../components/GenreSelectionItem';
@@ -27,22 +27,22 @@ const GENRES = [
 		genreName: 'Sci Fi',
 		id: '5'
 	},
-	// {
-	// 	genreName: 'Darkful',
-	// 	id: '6'
-	// },
-	// {
-	// 	genreName: 'Philossofical',
-	// 	id: '7'
-	// },
-	// {
-	// 	genreName: 'Bakery',
-	// 	id: '8'
-	// },
-	// {
-	// 	genreName: 'Crime',
-	// 	id: '9'
-	// }
+	{
+		genreName: 'Darkful',
+		id: '6'
+	},
+	{
+		genreName: 'Philossofical',
+		id: '7'
+	},
+	{
+		genreName: 'Bakery',
+		id: '8'
+	},
+	{
+		genreName: 'Crime',
+		id: '9'
+	}
 ];
 
 GenresSelectionScreen.propTypes = {
@@ -54,13 +54,11 @@ export default function GenresSelectionScreen(props) {
 	const buttonLabel = 'Guardar Cambios';
 
 	return (
-		<ScrollView contentContainerStyle={{...BaseStyles.container, ...styles.containerAdaptations}}>
+		<ScrollView contentContainerStyle={{ ...BaseStyles.container, ...styles.containerAdaptations }}>
 			<View>
 				<Text style={styles.title}>{title}</Text>
-				<GenreSelectionItem genreName="Action">
-				</GenreSelectionItem>
-
 				<FlatList
+					style={styles.genresList}
 					data={GENRES}
 					renderItem={({ item }) => <GenreSelectionItem genreName={item.genreName} />}
 					keyExtractor={item => item.id}
@@ -81,15 +79,10 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		color: '#FFFFFF',
-		fontSize: 24,
+		fontSize: 25,
 		marginVertical: 32,
 	},
-	button: {
-		fontSize: 16,
-		backgroundColor: '#E6D72A',
-		paddingHorizontal: 8,
-		paddingVertical: 6,
-		borderRadius: 10,
-		fontWeight: 'bold'
+	genresList: {
+		display: 'flex',
 	}
 });

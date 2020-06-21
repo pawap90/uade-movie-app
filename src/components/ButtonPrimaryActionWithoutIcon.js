@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Text, StyleSheet, View, TouchableWithoutFeedback, Image } from 'react-native';
+import { Text, StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 
 ButtonWithoutIcon.propTypes = {
@@ -9,8 +9,8 @@ ButtonWithoutIcon.propTypes = {
 };
 
 export default function ButtonWithoutIcon(props) {
-
 	const { onPress, text } = props;
+	
 	return (
 		<TouchableWithoutFeedback onPress={onPress}>
 			<View style={styles.container}>
@@ -25,18 +25,14 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		padding: 6,
 		backgroundColor: '#E6D72A',
-		paddingHorizontal: 8,
-		paddingVertical: 6,
+		paddingHorizontal: 15,
+		paddingVertical: 15.5,
 		borderRadius: 10,
 	},
 	text: {
 		color: '#343F4B',
 		fontWeight: 'bold',
 		fontSize: 16,
-		
+		textTransform: 'uppercase'
 	},
 });
-
-button: {
-
-}
