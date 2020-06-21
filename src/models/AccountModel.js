@@ -3,7 +3,7 @@
 /**
  * Class to manage the account data.
  */
-export default class MediaModel {
+export default class AccountModel {
 	/**
      * Constructor
      * @param {String} email User email
