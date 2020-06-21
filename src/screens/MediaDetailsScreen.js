@@ -6,6 +6,9 @@ import MovieDbService from '../services/MovieDbService';
 import CommentsCarousel from '../components/CommentsCarousel';
 import MediaCarousel from '../components/MediaCarousel';
 import imagePlaceholder from '../../assets/image-placeholder.png';
+import Spinner from '../components/Spinner';
+import { useDispatch } from 'react-redux';
+import { hideSpinner, showSpinner } from '../actions/application';
 
 MediaDetailsScreen.propTypes = {
 	route: PropTypes.object,
@@ -15,36 +18,50 @@ MediaDetailsScreen.propTypes = {
 export default function MediaDetailsScreen(props) {
 
 	const { route } = props;
+	const dispatch = useDispatch();
 	const { id, mediaType = 'movie' } = route.params;
-	const [movie, setMovie] = useState({});
+	const [media, setMedia] = useState({});
 	const [similarMedia, setSimilarMedia] = useState([]);
 
+	const [similarMediaIsLoaded, setSimilarMediaIsLoaded] = useState(false);
+
 	useEffect(() => {
-		const getMovieDetails = async () => {
-			const result = await MovieDbService.getMovie(id);
-			setMovie(result);
+		const getMediaDetails = async () => {
+			const result = mediaType === 'movie' ? await MovieDbService.getMovie(id) : await MovieDbService.getSeries(id);
+			setMedia(result);
 		};
 		const getSimilarMedia = async () => {
 			const results = mediaType === 'movie' ? await MovieDbService.getSimilarMovies(id) : await MovieDbService.getSimilarSeries(id);
+			setSimilarMediaIsLoaded(true);
 			setSimilarMedia(results);
 		};
-		getMovieDetails();
+		dispatch(showSpinner);
+		getMediaDetails();
 		getSimilarMedia();
 	}, []);
 
+	useEffect(() => {
+		if (similarMediaIsLoaded && media.id)
+			dispatch(hideSpinner);
+
+	}, [media, similarMedia]);
+
 	return (
-		<ScrollView style={styles.container}>
-			<Image style={styles.image} source={movie.imagePath != null ? { uri: movie.imagePath } : imagePlaceholder}></Image>
-			<MovieHeader
-				genres={movie.genres}
-				title={movie.title}
-				releaseDate={movie.releaseDate}
-				summary={movie.summary}
-				languages={movie.languages}>
-			</MovieHeader>
-			<CommentsCarousel style={styles.carousel} />
-			{similarMedia.length > 0 && <MediaCarousel style={styles.carousel} title="Peliculas similares" items={similarMedia} width={125} height={200} />}
-		</ScrollView>
+		<>
+			<Spinner></Spinner>
+			<ScrollView style={styles.container}>
+				<Image style={styles.image} source={media.imageUrl != null ? { uri: media.imageUrl } : imagePlaceholder}></Image>
+				<MovieHeader
+					genres={media.genres}
+					title={media.title}
+					releaseDate={media.releaseDate}
+					summary={media.summary}
+					languages={media.languages}>
+				</MovieHeader>
+				<CommentsCarousel style={styles.carousel} />
+				{similarMedia.length > 0 && <MediaCarousel mediaType={mediaType} style={styles.carousel} title={mediaType === 'movie' ? 'Peliculas similares' : 'Series similares'} items={similarMedia} width={125} height={200} />}
+			</ScrollView>
+		</>
 	);
 }
 
