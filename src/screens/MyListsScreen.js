@@ -6,10 +6,17 @@ import ButtonWithIcon from '../components/ButtonWithIcon';
 import plusIcon from '../../assets/plus.png';
 import MyListsItem from '../components/MyListsItem';
 import ConfirmationModal from '../components/ConfirmationModal';
+import MessageModal from '../components/MessageModal';
+import { useDispatch } from 'react-redux';
+import { showSpinner, hideSpinner } from '../actions/application';
 
 export default function MyListsScreen() {
 
-	const [deleteModalIsVisible, setDeleteModalIsVisible] = useState(false);
+	const dispatch = useDispatch();
+
+	const [deleteConfirmationModalIsVisible, setDeleteConfirmationModalIsVisible] = useState(false);
+	const [deleteResultModalIsVisible, setDeleteResultModalIsVisible] = useState(false);
+	const [deleteResultType, setDeleteResultType] = useState('success');
 	const [selectedItem, setSelectedItem] = useState({});
 
 	const onDeleteListTapped = (id, name) => {
@@ -17,16 +24,26 @@ export default function MyListsScreen() {
 			id: id,
 			name: name
 		});
-		setDeleteModalIsVisible(true);
+		setDeleteConfirmationModalIsVisible(true);
 	};
 
 	const onCancelDeleteTapped = () => {
-		setDeleteModalIsVisible(false);
+		setDeleteConfirmationModalIsVisible(false);
 	};
 
 	const onConfirmDeleteTapped = () => {
-		setDeleteModalIsVisible(false);
-		alert(`${selectedItem.name} ha sido eliminada`);
+		setDeleteConfirmationModalIsVisible(false);
+		dispatch(showSpinner);
+		
+		// TO-DO Call API to delete list item
+		setTimeout(() => {
+			dispatch(hideSpinner);
+			setDeleteResultModalIsVisible(true);
+		},2000);
+	};
+
+	const onConfirmResultTapped = () => {
+		setDeleteResultModalIsVisible(false);
 	};
 
 	return (
@@ -52,9 +69,16 @@ export default function MyListsScreen() {
 				animationType="fade"
 				onCancel={onCancelDeleteTapped}
 				onConfirm={onConfirmDeleteTapped}
-				isVisible={deleteModalIsVisible}
-				title={`¿Está seguro que desea eliminar ${selectedItem.name}?`}
-			></ConfirmationModal>
+				isVisible={deleteConfirmationModalIsVisible}
+				title={`¿Está seguro que desea eliminar ${selectedItem.name}?`}>
+			</ConfirmationModal>
+			<MessageModal
+				type={deleteResultType}
+				animationType="fade"
+				onConfirm={onConfirmResultTapped}
+				isVisible={deleteResultModalIsVisible}
+				title={`${selectedItem.name} ha sido eliminada`}>
+			</MessageModal>
 		</>
 	);
 }
