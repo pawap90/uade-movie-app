@@ -14,28 +14,29 @@ export default function ProfileSection(props) {
 	const { onPress, label, icon } = props;
 	return (
 		<View style={styles.container} >
-			
-			{ icon && <Image style={styles.icon} source={icon}></Image>}			
-			<Text style={getStyleText({icon})}>
+
+			{icon && <Image style={styles.icon} source={icon}></Image>}
+			<Text style={getStyleText({ icon })}>
 				{label}
 			</Text>
-			{ onPress && <View style={styles.right}>
+			{onPress && <View style={styles.right}>
 				<Text style={styles.button} onPress={onPress}>Cambiar</Text>
-			</View> }
+			</View>}
 		</View>
 	);
 }
 
 function getStyleText(object) {
-	if (object.icon > 0) {		
-		return styles.textWithMargin
-	} else {
-		return styles.text
+	if (object.icon > 0) {
+		return styles.textWithMargin;
+	}
+	else {
+		return styles.text;
 	}
 }
 
 const styles = StyleSheet.create({
-	container : {
+	container: {
 		height: 50,
 		justifyContent: 'center',
 	},
@@ -68,5 +69,5 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		fontWeight: 'bold',
 		textAlign: 'center'
-   }
+	}
 });

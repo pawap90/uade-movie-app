@@ -38,9 +38,9 @@ const styles = StyleSheet.create({
 		height: 30,
 		position: 'absolute',
 	},
-	container : {
+	container: {
 		height: 50,
-        justifyContent: 'center',
+		justifyContent: 'center',
 		marginTop: 16
 	},
 	right: {
@@ -56,5 +56,5 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		fontWeight: 'bold',
 		textAlign: 'center'
-   }
+	}
 });

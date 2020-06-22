@@ -2,7 +2,7 @@
 import React from 'react';
 import { StyleSheet, View, FlatList, Text } from 'react-native';
 import PropTypes from 'prop-types';
-import ProfileSection from './ProfileSection'
+import ProfileSection from './ProfileSection';
 
 ProfileGender.propTypes = {
 	onPress: PropTypes.func,
@@ -16,7 +16,7 @@ export default function ProfileGender(props) {
 	return (
 		<View style={styles.container} >
 			<ProfileSection label={label} onPress={onPress}></ProfileSection>
-			<FlatList data={data} renderItem={({item}) => 
+			<FlatList data={data} renderItem={({ item }) =>
 				<Text style={styles.itemList}>{item}</Text>
 			}
 			numColumns={3}>
@@ -26,8 +26,8 @@ export default function ProfileGender(props) {
 }
 
 const styles = StyleSheet.create({
-	container : {
-        justifyContent: 'center',
+	container: {
+		justifyContent: 'center',
 	},
 	text: {
 		color: '#FFFFFF',
@@ -53,19 +53,19 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		fontWeight: 'bold',
 		textAlign: 'center'
-   },
-   itemList: {
+	},
+	itemList: {
 		color: 'white',
 		fontWeight: 'bold',
 		fontSize: 12,
 		width: 100,
-		marginTop:8, 
+		marginTop: 8,
 		textAlign: 'center',
 		marginStart: 8,
 		justifyContent: 'center',
 		borderColor: 'white',
 		borderWidth: 1,
-		borderRadius:8,
+		borderRadius: 8,
 		paddingStart: 4,
-   }
+	}
 });
