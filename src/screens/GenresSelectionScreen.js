@@ -49,7 +49,7 @@ GenresSelectionScreen.propTypes = {
 	title: PropTypes.string
 };
 
-export default function GenresSelectionScreen(props) {
+export default function GenresSelectionScreen() {
 	const title = 'Seleccioná tus géneros preferidos';
 	const buttonLabel = 'Guardar Cambios';
 

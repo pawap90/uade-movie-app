@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 
 GenreSelectionItem.propTypes = {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 		color: '#FFFFFF',
 		padding: 12,
-		textAlign: "center",
+		textAlign: 'center',
 		fontWeight: 'bold',
 		textTransform: 'uppercase'
 	},
