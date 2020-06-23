@@ -56,13 +56,10 @@ const BaseStyles = StyleSheet.create({
 		resizeMode: 'contain',
 		marginBottom: 20
 	},
-	tabBarIcon: (focused) => {
-		return {
-			width: 20,
-			height: 20,
-			resizeMode: 'contain',
-			tintColor: focused ? '#E6D72A' : '#FFFFFF'
-		};
+	tabBarIcon: {
+		width: 20,
+		height: 20,
+		resizeMode: 'contain'
 	}
 });
 

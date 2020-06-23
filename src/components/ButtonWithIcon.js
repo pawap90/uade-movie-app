@@ -12,7 +12,8 @@ ButtonWithIcon.propTypes = {
 	paddingHorizontal: PropTypes.number,
 	paddingVertical: PropTypes.number,
 	fontSize: PropTypes.number,
-	marginHorizontal: PropTypes.number
+	marginHorizontal: PropTypes.number,
+	marginVertical: PropTypes.number
 };
 
 export default function ButtonWithIcon(props) {
@@ -26,9 +27,10 @@ export default function ButtonWithIcon(props) {
 		paddingHorizontal = 8,
 		paddingVertical = 8,
 		fontSize = 14,
-		marginHorizontal = 0
+		marginHorizontal = 0,
+		marginBottom = 0,
 	} = props;
-	
+
 	return (
 		<TouchableWithoutFeedback onPress={onPress}>
 			<View style={
@@ -38,6 +40,7 @@ export default function ButtonWithIcon(props) {
 					paddingHorizontal: paddingHorizontal,
 					paddingVertical: paddingVertical,
 					marginHorizontal: marginHorizontal,
+					marginBottom: marginBottom,
 					flex: grow ? 1 : 0
 				}}>
 
@@ -65,5 +68,6 @@ const styles = StyleSheet.create({
 	icon: {
 		width: 14,
 		height: 14,
+		resizeMode: "contain"
 	}
 });

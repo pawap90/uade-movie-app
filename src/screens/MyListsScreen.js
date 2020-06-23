@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Spinner from '../components/Spinner';
 import BaseStyles from '../BaseStyles';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
@@ -14,10 +14,13 @@ export default function MyListsScreen() {
 
 	const dispatch = useDispatch();
 
+	const [myLists, setMyLists] = useState([])
 	const [deleteConfirmationModalIsVisible, setDeleteConfirmationModalIsVisible] = useState(false);
-	const [deleteResultModalIsVisible, setDeleteResultModalIsVisible] = useState(false);
-	const [deleteResultType, setDeleteResultType] = useState('success');
 	const [selectedItem, setSelectedItem] = useState({});
+	const [deleteResultModalData, setDeleteResultModalData] = useState({
+		type: 'success',
+		isVisible: false
+	});
 
 	const onDeleteListTapped = (id, name) => {
 		setSelectedItem({
@@ -34,17 +37,33 @@ export default function MyListsScreen() {
 	const onConfirmDeleteTapped = () => {
 		setDeleteConfirmationModalIsVisible(false);
 		dispatch(showSpinner);
-		
+
 		// TO-DO Call API to delete list item
 		setTimeout(() => {
 			dispatch(hideSpinner);
-			setDeleteResultModalIsVisible(true);
-		},2000);
+			setDeleteResultModalData(prev => ({
+				...prev,
+				isVisible: true,
+				title: `${selectedItem.name} ha sido eliminada`
+			}));
+		}, 2000);
 	};
 
 	const onConfirmResultTapped = () => {
-		setDeleteResultModalIsVisible(false);
+		setDeleteResultModalData(prev => ({ ...prev, isVisible: false }));
 	};
+
+	useEffect(() => {
+		const getMyLists = () => {
+			dispatch(showSpinner)
+			// TODO - Load My lists from API
+			setTimeout(() => {
+				setMyLists(DATA)
+				dispatch(hideSpinner)
+			},1000)
+		}
+		getMyLists()
+	}, [])
 
 	return (
 		<>
@@ -56,11 +75,11 @@ export default function MyListsScreen() {
 						text="Crear lista"
 						icon={plusIcon}
 						backgroundColor="#E6D72A"
-						color="#000000">
+						color="#1F2D3D">
 					</ButtonWithIcon>
 				</View>
 				<FlatList
-					data={DATA}
+					data={myLists}
 					renderItem={({ item }) => <MyListsItem {...item} onDeleteListTapped={onDeleteListTapped} />}
 					keyExtractor={item => item.id}
 				/>
@@ -73,11 +92,11 @@ export default function MyListsScreen() {
 				title={`¿Está seguro que desea eliminar ${selectedItem.name}?`}>
 			</ConfirmationModal>
 			<MessageModal
-				type={deleteResultType}
+				type={deleteResultModalData.type}
+				title={deleteResultModalData.title}
 				animationType="fade"
 				onConfirm={onConfirmResultTapped}
-				isVisible={deleteResultModalIsVisible}
-				title={`${selectedItem.name} ha sido eliminada`}>
+				isVisible={deleteResultModalData.isVisible}>
 			</MessageModal>
 		</>
 	);

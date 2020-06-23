@@ -32,7 +32,7 @@ export default function ConfirmationModal(props) {
 							text="Cancelar"
 							onPress={onCancel}
 							backgroundColor="#FFFFFF"
-							color="#000000"
+							color="#1F2D3D"
 							fontSize={17}
 							marginHorizontal={5}
 							grow={true}
@@ -41,7 +41,8 @@ export default function ConfirmationModal(props) {
 						<ButtonWithIcon
 							text="Confirmar"
 							onPress={onConfirm}
-							backgroundColor="#F95F62"
+							backgroundColor="#F18D9E"
+							color="#1F2D3D"
 							fontSize={17}
 							marginHorizontal={5}
 							grow={true}

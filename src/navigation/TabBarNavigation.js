@@ -13,6 +13,7 @@ import React from 'react';
 import BaseStyles from '../BaseStyles';
 import SearchButton from '../components/SearchButton';
 import PropTypes from 'prop-types';
+import ListDetailsScreen from '../screens/ListDetailsScreen';
 
 export default function TabBarNavigation() {
 	return (
@@ -48,7 +49,7 @@ const setTabBarScreenOptions = ({ route }) => {
 				break;
 			}
 
-			return <Image source={icon} style={BaseStyles.tabBarIcon(focused)} />;
+			return <Image source={icon} style={{...BaseStyles.tabBarIcon, tintColor: focused ? '#E6D72A' : '#FFFFFF'}} />;
 		}
 	};
 	
@@ -60,13 +61,13 @@ const setTabBarScreenOptions = ({ route }) => {
 	return screenOptions;
 };
 
-const setStackedScreensOptions = () => {
+const setStackedScreensOptions = (includeSearch = true) => {
 	const screenOptions = {
 		title: 'MovieApp',
 		headerStyle: BaseStyles.header,
 		headerTintColor: '#FFFFFF',
 		headerRight: () => {
-			return <SearchButton></SearchButton>;
+			return includeSearch ? <SearchButton></SearchButton> : null;
 		}
 	};
 
@@ -96,15 +97,17 @@ const HomeStackScreen = () => {
 
 const MyListsStackScreen = () => {
 	return (
-		<MyListsStack.Navigator screenOptions={setStackedScreensOptions}>
+		<MyListsStack.Navigator screenOptions={() => setStackedScreensOptions(false)}>
 			<MyListsStack.Screen name="MyLists" component={MyListsScreen} />
+			<MyListsStack.Screen name="ListDetails" component={ListDetailsScreen} />
+			<HomeStack.Screen name="MediaDetails" component={MediaDetailsScreen} />
 		</MyListsStack.Navigator>
 	);
 };
 
 const ProfileStackScreen = () => {
 	return (
-		<ProfileStack.Navigator initialRouteName="Profile" screenOptions={setStackedScreensOptions}>
+		<ProfileStack.Navigator initialRouteName="Profile" screenOptions={() => setStackedScreensOptions(false)}>
 			<ProfileStack.Screen name="Profile" component={ProfileScreen} />
 		</ProfileStack.Navigator>
 	);

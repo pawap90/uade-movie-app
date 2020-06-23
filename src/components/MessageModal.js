@@ -33,14 +33,14 @@ export default function MessageModal(props) {
 			onRequestClose={onConfirm}>
 			<View style={BaseStyles.modalContainer}>
 				<View style={BaseStyles.modalBody}>
-					<Image source={icons[type]} style={{ ...BaseStyles.modalIcon, tintColor: '#E6D72A' }}></Image>
+					<Image source={icons[type]} style={{ ...BaseStyles.modalIcon, tintColor: styles[type].tintColor }}></Image>
 					<Text style={BaseStyles.modalTitle}>{title}</Text>
 					<View style={BaseStyles.modalButtonsContainer}>
 						<ButtonWithIcon
-							text="Ok"
+							text="OK"
 							onPress={onConfirm}
-							backgroundColor="#E6D72A"
-							color="#000000"
+							backgroundColor={styles[type].tintColor}
+							color={styles[type].color}
 							fontSize={17}
 							grow={true}
 							paddingVertical={12}>
@@ -51,3 +51,18 @@ export default function MessageModal(props) {
 		</Modal>
 	);
 }
+
+const styles = StyleSheet.create({
+	info: {
+		tintColor: "#E6D72A",
+		color: "#1F2D3D"
+	},
+	error: {
+		tintColor: "#F18D9E",
+		color: "#1F2D3D"
+	},
+	success: {
+		tintColor: "#60C7AC",
+		color: "#1F2D3D"
+	}
+})
