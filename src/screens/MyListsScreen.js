@@ -14,7 +14,7 @@ export default function MyListsScreen() {
 
 	const dispatch = useDispatch();
 
-	const [myLists, setMyLists] = useState([])
+	const [myLists, setMyLists] = useState([]);
 	const [deleteConfirmationModalIsVisible, setDeleteConfirmationModalIsVisible] = useState(false);
 	const [selectedItem, setSelectedItem] = useState({});
 	const [deleteResultModalData, setDeleteResultModalData] = useState({
@@ -55,15 +55,15 @@ export default function MyListsScreen() {
 
 	useEffect(() => {
 		const getMyLists = () => {
-			dispatch(showSpinner)
+			dispatch(showSpinner);
 			// TODO - Load My lists from API
 			setTimeout(() => {
-				setMyLists(DATA)
-				dispatch(hideSpinner)
-			},1000)
-		}
-		getMyLists()
-	}, [])
+				setMyLists(DATA);
+				dispatch(hideSpinner);
+			},1000);
+		};
+		getMyLists();
+	}, []);
 
 	return (
 		<>

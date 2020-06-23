@@ -54,15 +54,15 @@ export default function MessageModal(props) {
 
 const styles = StyleSheet.create({
 	info: {
-		tintColor: "#E6D72A",
-		color: "#1F2D3D"
+		tintColor: '#E6D72A',
+		color: '#1F2D3D'
 	},
 	error: {
-		tintColor: "#F18D9E",
-		color: "#1F2D3D"
+		tintColor: '#F18D9E',
+		color: '#1F2D3D'
 	},
 	success: {
-		tintColor: "#60C7AC",
-		color: "#1F2D3D"
+		tintColor: '#60C7AC',
+		color: '#1F2D3D'
 	}
-})
+});

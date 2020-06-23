@@ -1,6 +1,6 @@
 import React from 'react';
 import ButtonWithIcon from './ButtonWithIcon';
-import { Modal, View, StyleSheet, Text, Image } from 'react-native';
+import { Modal, View, Text, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import ErrorIcon from '../../assets/error.png';
 import BaseStyles from '../BaseStyles';

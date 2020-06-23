@@ -2,7 +2,6 @@ import React from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
 import ListIcon from '../../assets/list.png';
 import TrashIcon from '../../assets/trash.png';
-import EyeIcon from '../../assets/eye.png';
 import LockIcon from '../../assets/lock.png';
 import ButtonWithIcon from './ButtonWithIcon';
 import Tag from './Tag';
@@ -31,8 +30,8 @@ export default function MyListsItem(props) {
 			itemCount: itemCount,
 			isPublic: isPublic,
 			onDeleteListTapped: onDeleteListTapped
-		})
-	}
+		});
+	};
 
 	return (
 		<View style={styles.container}>

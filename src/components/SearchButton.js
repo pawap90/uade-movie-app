@@ -1,4 +1,3 @@
-import { connect } from 'react-redux';
 import React from 'react';
 import { TouchableWithoutFeedback, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -11,4 +10,4 @@ export default function SearchButton() {
 			<Text style={{ paddingHorizontal: 10, color: '#FFFFFF' }}>Buscar</Text>
 		</TouchableWithoutFeedback>
 	);
-};
+}

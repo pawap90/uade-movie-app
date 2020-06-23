@@ -13,7 +13,8 @@ ButtonWithIcon.propTypes = {
 	paddingVertical: PropTypes.number,
 	fontSize: PropTypes.number,
 	marginHorizontal: PropTypes.number,
-	marginVertical: PropTypes.number
+	marginVertical: PropTypes.number,
+	marginBottom: PropTypes.number,
 };
 
 export default function ButtonWithIcon(props) {
@@ -68,6 +69,6 @@ const styles = StyleSheet.create({
 	icon: {
 		width: 14,
 		height: 14,
-		resizeMode: "contain"
+		resizeMode: 'contain'
 	}
 });
