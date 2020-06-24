@@ -11,9 +11,9 @@ import HomeScreen from '../screens/HomeScreen';
 import MediaDetailsScreen from '../screens/MediaDetailsScreen';
 import React from 'react';
 import BaseStyles from '../BaseStyles';
-import SearchButton from '../components/SearchButton';
 import PropTypes from 'prop-types';
 import ListDetailsScreen from '../screens/ListDetailsScreen';
+import NavBar from '../components/NavBar';
 
 export default function TabBarNavigation() {
 	return (
@@ -66,12 +66,17 @@ const setStackedScreensOptions = (includeSearch = true) => {
 		title: 'MovieApp',
 		headerStyle: BaseStyles.header,
 		headerTintColor: '#FFFFFF',
-		headerRight: () => {
-			return includeSearch ? <SearchButton></SearchButton> : null;
+		header: ({ scene, previous, navigation }) => {
+			return <NavBar scene={scene} previous={previous} navigation={navigation} includeSearch={includeSearch}/>;
 		}
 	};
 
-	screenOptions.headerRight.displayName = 'SearchButton';
+	screenOptions.header.displayName = 'NavBar';
+	screenOptions.header.propTypes = {
+		scene: PropTypes.object,
+		previous: PropTypes.bool,
+		navigation: PropTypes.object
+	};
 
 	return screenOptions;
 };

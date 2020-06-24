@@ -15,6 +15,7 @@ ButtonWithIcon.propTypes = {
 	marginHorizontal: PropTypes.number,
 	marginVertical: PropTypes.number,
 	marginBottom: PropTypes.number,
+	iconSize: PropTypes.number,
 };
 
 export default function ButtonWithIcon(props) {
@@ -30,6 +31,7 @@ export default function ButtonWithIcon(props) {
 		fontSize = 14,
 		marginHorizontal = 0,
 		marginBottom = 0,
+		iconSize = 14
 	} = props;
 
 	return (
@@ -49,7 +51,8 @@ export default function ButtonWithIcon(props) {
 					{
 						...styles.icon,
 						tintColor: color,
-						marginRight: text ? 8 : 0
+						marginRight: text ? 8 : 0,
+						width: iconSize, height: iconSize
 					}} source={icon}></Image>}
 
 				<Text style={{ color: color, fontSize: fontSize }}>{text}</Text>
@@ -67,8 +70,6 @@ const styles = StyleSheet.create({
 		borderRadius: 5
 	},
 	icon: {
-		width: 14,
-		height: 14,
 		resizeMode: 'contain'
 	}
 });
