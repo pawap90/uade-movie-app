@@ -9,6 +9,16 @@ const BaseStyles = StyleSheet.create({
 	},
 	header: {
 		backgroundColor: '#60C7AC'
+	},
+	tabBar: {
+		backgroundColor: '#60C7AC'
+	},
+	tabBarIcon: (focused) => {
+		return {
+			width: 20,
+			height: 20,
+			tintColor: focused ? '#E6D72A' : '#FFFFFF'
+		};
 	}
 });
 
