@@ -2,6 +2,7 @@ import React from 'react';
 import { View, FlatList, StyleSheet, Text, SafeAreaView } from 'react-native';
 import MediaCarouselItem from './MediaCarouselItem';
 import PropTypes from 'prop-types';
+import BaseStyles from '../BaseStyles';
 
 MediaCarousel.propTypes = {
 	title: PropTypes.string,
@@ -20,7 +21,7 @@ export default function MediaCarousel(props) {
 		<View style={[styles.container, style]}>
 			<View style={styles.header}>
 				<Text style={styles.title}>{title}</Text>
-				{buttonLabel && <Text style={styles.button}>{buttonLabel}</Text>}
+				{buttonLabel && <Text style={BaseStyles.actionButton}>{buttonLabel}</Text>}
 			</View>
 			<SafeAreaView>
 				<FlatList
@@ -43,13 +44,5 @@ const styles = StyleSheet.create({
 	title: {
 		color: '#FFFFFF',
 		fontSize: 24,
-	},
-	button: {
-		fontSize: 16,
-		backgroundColor: '#E6D72A',
-		paddingHorizontal: 8,
-		paddingVertical: 6,
-		borderRadius: 10,
-		fontWeight: 'bold'
 	}
 });

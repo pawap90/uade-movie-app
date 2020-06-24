@@ -28,8 +28,7 @@ export default function Tag(props) {
 const styles = StyleSheet.create({
 	container: {
 		marginRight: 8,
-		marginBottom: 8,
-		borderRadius: 10,
+		borderRadius: 5,
 		fontWeight: 'bold'
 	}
 });
