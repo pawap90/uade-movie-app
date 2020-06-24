@@ -5,7 +5,7 @@ import MessageModal from '../components/MessageModal';
 import { View, Text, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Spinner from '../components/Spinner';
-import ListItem from '../components/ListItem';
+import ListMediaItem from '../components/ListMediaItem';
 import { useDispatch } from 'react-redux';
 import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
@@ -108,7 +108,7 @@ export default function ListDetailsScreen(props) {
 				</View>
 				<FlatList
 					data={list.items}
-					renderItem={({ item }) => <ListItem {...item} onDeleteListItemTapped={onDeleteListItemTapped} />}
+					renderItem={({ item }) => <ListMediaItem {...item} onDeleteListItemTapped={onDeleteListItemTapped} />}
 					keyExtractor={item => item.id}
 				/>
 			</View>

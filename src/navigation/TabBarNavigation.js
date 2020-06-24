@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MyListsScreen from '../screens/MyListsScreen';
+import ListsScreen from '../screens/ListsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import HomeIcon from '../../assets/home.png';
 import ListIcon from '../../assets/list.png';
@@ -103,7 +103,7 @@ const HomeStackScreen = () => {
 const MyListsStackScreen = () => {
 	return (
 		<MyListsStack.Navigator screenOptions={() => setStackedScreensOptions(false)}>
-			<MyListsStack.Screen name="MyLists" component={MyListsScreen} />
+			<MyListsStack.Screen name="MyLists" component={ListsScreen} />
 			<MyListsStack.Screen name="ListDetails" component={ListDetailsScreen} />
 			<HomeStack.Screen name="MediaDetails" component={MediaDetailsScreen} />
 		</MyListsStack.Navigator>

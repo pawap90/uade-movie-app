@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-MyListsItem.propTypes = {
+ListsItem.propTypes = {
 	id: PropTypes.number,
 	name: PropTypes.string,
 	itemCount: PropTypes.number,
@@ -17,7 +17,7 @@ MyListsItem.propTypes = {
 	onDeleteListTapped: PropTypes.func
 };
 
-export default function MyListsItem(props) {
+export default function ListsItem(props) {
 
 	const navigation = useNavigation();
 

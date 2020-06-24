@@ -4,13 +4,13 @@ import BaseStyles from '../BaseStyles';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import ButtonWithIcon from '../components/ButtonWithIcon';
 import plusIcon from '../../assets/plus.png';
-import MyListsItem from '../components/MyListsItem';
+import ListsItem from '../components/ListsItem';
 import ConfirmationModal from '../components/ConfirmationModal';
 import MessageModal from '../components/MessageModal';
 import { useDispatch } from 'react-redux';
 import { showSpinner, hideSpinner } from '../actions/application';
 
-export default function MyListsScreen() {
+export default function ListsScreen() {
 
 	const dispatch = useDispatch();
 
@@ -80,7 +80,7 @@ export default function MyListsScreen() {
 				</View>
 				<FlatList
 					data={myLists}
-					renderItem={({ item }) => <MyListsItem {...item} onDeleteListTapped={onDeleteListTapped} />}
+					renderItem={({ item }) => <ListsItem {...item} onDeleteListTapped={onDeleteListTapped} />}
 					keyExtractor={item => item.id}
 				/>
 			</View>

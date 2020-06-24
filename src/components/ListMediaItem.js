@@ -9,7 +9,7 @@ import ButtonWithIcon from './ButtonWithIcon';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
-ListItem.propTypes = {
+ListMediaItem.propTypes = {
 	id: PropTypes.number,
 	title: PropTypes.string,
 	summary: PropTypes.string,
@@ -19,7 +19,7 @@ ListItem.propTypes = {
 	onDeleteListItemTapped: PropTypes.func
 };
 
-export default function ListItem(props) {
+export default function ListMediaItem(props) {
 
 	const { id, title, summary, imageUrl, year, genres, onDeleteListItemTapped } = props;
 	const navigation = useNavigation();
