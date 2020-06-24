@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MyListsScreen from '../screens/MyListsScreen';
+import ListsScreen from '../screens/ListsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import HomeIcon from '../../assets/home.png';
 import ListIcon from '../../assets/list.png';
@@ -11,8 +11,9 @@ import HomeScreen from '../screens/HomeScreen';
 import MediaDetailsScreen from '../screens/MediaDetailsScreen';
 import React from 'react';
 import BaseStyles from '../BaseStyles';
-import SearchButton from '../components/SearchButton';
 import PropTypes from 'prop-types';
+import ListDetailsScreen from '../screens/ListDetailsScreen';
+import NavBar from '../components/NavBar';
 
 export default function TabBarNavigation() {
 	return (
@@ -48,7 +49,7 @@ const setTabBarScreenOptions = ({ route }) => {
 				break;
 			}
 
-			return <Image source={icon} style={BaseStyles.tabBarIcon(focused)} />;
+			return <Image source={icon} style={{...BaseStyles.tabBarIcon, tintColor: focused ? '#E6D72A' : '#FFFFFF'}} />;
 		}
 	};
 	
@@ -60,17 +61,22 @@ const setTabBarScreenOptions = ({ route }) => {
 	return screenOptions;
 };
 
-const setStackedScreensOptions = () => {
+const setStackedScreensOptions = (includeSearch = true) => {
 	const screenOptions = {
 		title: 'MovieApp',
 		headerStyle: BaseStyles.header,
 		headerTintColor: '#FFFFFF',
-		headerRight: () => {
-			return <SearchButton></SearchButton>;
+		header: ({ scene, previous, navigation }) => {
+			return <NavBar scene={scene} previous={previous} navigation={navigation} includeSearch={includeSearch}/>;
 		}
 	};
 
-	screenOptions.headerRight.displayName = 'SearchButton';
+	screenOptions.header.displayName = 'NavBar';
+	screenOptions.header.propTypes = {
+		scene: PropTypes.object,
+		previous: PropTypes.bool,
+		navigation: PropTypes.object
+	};
 
 	return screenOptions;
 };
@@ -96,15 +102,17 @@ const HomeStackScreen = () => {
 
 const MyListsStackScreen = () => {
 	return (
-		<MyListsStack.Navigator screenOptions={setStackedScreensOptions}>
-			<MyListsStack.Screen name="MyLists" component={MyListsScreen} />
+		<MyListsStack.Navigator screenOptions={() => setStackedScreensOptions(false)}>
+			<MyListsStack.Screen name="MyLists" component={ListsScreen} />
+			<MyListsStack.Screen name="ListDetails" component={ListDetailsScreen} />
+			<HomeStack.Screen name="MediaDetails" component={MediaDetailsScreen} />
 		</MyListsStack.Navigator>
 	);
 };
 
 const ProfileStackScreen = () => {
 	return (
-		<ProfileStack.Navigator initialRouteName="Profile" screenOptions={setStackedScreensOptions}>
+		<ProfileStack.Navigator initialRouteName="Profile" screenOptions={() => setStackedScreensOptions(false)}>
 			<ProfileStack.Screen name="Profile" component={ProfileScreen} />
 		</ProfileStack.Navigator>
 	);

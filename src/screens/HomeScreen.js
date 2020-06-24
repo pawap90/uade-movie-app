@@ -56,8 +56,9 @@ export default function HomeScreen() {
 	}, [mediaType]);
 
 	useEffect(() => {
-		if (topRatedMedia.length > 0 && popularMedia.length > 0 && (upcomingMovies.length > 0 || airingTodaySeries.length > 0))
+		if (topRatedMedia.length > 0 && popularMedia.length > 0 && (upcomingMovies.length > 0 || airingTodaySeries.length > 0)) {
 			dispatch(hideSpinner);
+		}
 
 	}, [topRatedMedia, popularMedia, upcomingMovies, airingTodaySeries]);
 

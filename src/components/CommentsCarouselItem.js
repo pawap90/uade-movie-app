@@ -26,7 +26,7 @@ export default function CommentsCarouselItem(props) {
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: '#4C5B6A',
-		borderRadius: 12,
+		borderRadius: 5,
 		padding: 14,
 		width: 300,
 		marginRight: 12
