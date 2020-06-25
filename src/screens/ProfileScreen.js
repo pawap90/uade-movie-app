@@ -10,6 +10,7 @@ import BaseStyles from '../BaseStyles';
 import Separator from '../components/Separator';
 import { ScrollView } from 'react-native-gesture-handler';
 import ButtonWithIcon from '../components/ButtonWithIcon';
+import { useNavigation } from '@react-navigation/native';
 
 ProfileScreen.propTypes = {
 	navigation: PropTypes.object,
@@ -17,16 +18,23 @@ ProfileScreen.propTypes = {
 };
 
 export default function ProfileScreen() {
-
+	const navigation = useNavigation();
 	const [user, setUser] = useState({});
 
 	const getUser = () => {
 		setUser({
 			name: 'Jane Doe',
 			email: 'janedoeiam@somemail.com',
-			genres: ['Drama', 'Ciencia Ficcion', 'Acción', 'Comedia', 'Ciencia Ficcion', 'Acción', 'Comedia']
+			genres: ['Drama', 'Ciencia Ficcion']
 		});
 	};
+
+	const onAttributeChange = (attribute, newValue) => {
+		setUser({
+			...user,
+			[attribute]: newValue
+		})
+	}
 
 	const onSubmit = () => {
 		// TODO CALL API TO SAVE user
@@ -34,7 +42,7 @@ export default function ProfileScreen() {
 
 	useEffect(() => {
 		getUser();
-	},[]);
+	}, []);
 
 	return (
 		<View style={BaseStyles.container}>
@@ -48,16 +56,18 @@ export default function ProfileScreen() {
 
 				<ProfileAttribute
 					label="Nombre"
+					name="name"
 					value={user.name}
 					buttonText="Cambiar"
-					onButtonClick={() => alert('Change Name')}>
+					updateProfile={onAttributeChange}>
 				</ProfileAttribute>
 
 				<ProfileAttribute
 					label="Correo electronico"
+					name="email"
 					value={user.email}
 					buttonText="Cambiar"
-					onButtonClick={() => alert('Change Email')}>
+					updateProfile={onAttributeChange}>
 				</ProfileAttribute>
 
 				<Separator />
@@ -72,7 +82,7 @@ export default function ProfileScreen() {
 
 				<ProfileSection
 					title="Géneros preferidos"
-					onPress={() => alert('Change Password')}
+					onPress={() => navigation.push('GenreSelection', { userGenres: user.genres })}
 					marginBottom={12}>
 				</ProfileSection>
 

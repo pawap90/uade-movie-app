@@ -14,18 +14,19 @@ ProfileSection.propTypes = {
 export default function ProfileSection(props) {
 	const { onPress, title, icon, marginBottom = 0 } = props;
 	return (
-		<View style={{...styles.container, marginBottom}}>
+		<View style={{ ...styles.container, marginBottom }}>
 			{icon && <Image style={styles.icon} source={icon}></Image>}
 
 			<Text style={styles.title}>{title}</Text>
 
-			{onPress && <View style={styles.right}>
+			{onPress &&
 				<ButtonWithIcon
 					text="Cambiar"
+					onPress={onPress}
 					backgroundColor="#60C7AC"
 					color="#000000">
 				</ButtonWithIcon>
-			</View>}
+			}
 		</View>
 	);
 }
@@ -34,12 +35,14 @@ const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		paddingVertical: 10
+		paddingVertical: 10,
+		justifyContent: 'space-between'
 	},
 	title: {
 		color: '#FFFFFF',
 		fontWeight: 'bold',
 		fontSize: 16,
+		flex: 1
 	},
 	icon: {
 		width: 30,
@@ -47,10 +50,6 @@ const styles = StyleSheet.create({
 		resizeMode: 'contain',
 		tintColor: '#FFFFFF',
 		marginRight: 15
-	},
-	right: {
-		position: 'absolute',
-		end: 0,
 	},
 	button: {
 		color: '#ffffff',
