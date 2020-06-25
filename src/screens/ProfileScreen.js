@@ -33,8 +33,8 @@ export default function ProfileScreen() {
 		setUser({
 			...user,
 			[attribute]: newValue
-		})
-	}
+		});
+	};
 
 	const onSubmit = () => {
 		// TODO CALL API TO SAVE user

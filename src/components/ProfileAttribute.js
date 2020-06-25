@@ -7,30 +7,32 @@ import { TextInput } from 'react-native-gesture-handler';
 
 ProfileAttribute.propTypes = {
 	label: PropTypes.string,
+	name: PropTypes.string,
 	value: PropTypes.string,
 	buttonText: PropTypes.string,
 	onButtonClick: PropTypes.func,
+	updateProfile: PropTypes.func
 };
 
 export default function ProfileAttribute(props) {
 	const { label, name, value, buttonText, updateProfile } = props;
 
-	const [isEditing, setIsEditing] = useState(false)
-	const [newValue, setNewValue] = useState(value)
+	const [isEditing, setIsEditing] = useState(false);
+	const [newValue, setNewValue] = useState(value);
 
 	const onFinishEditing = () => {
-		setIsEditing(false)
-		updateProfile(name, newValue)
-	}
+		setIsEditing(false);
+		updateProfile(name, newValue);
+	};
 
 	const onCancelEditing = () => {
-		setIsEditing(false)
-		setNewValue(value)
-	}
+		setIsEditing(false);
+		setNewValue(value);
+	};
 
 	useEffect(() => {
-		setNewValue(value)
-	},[value])
+		setNewValue(value);
+	},[value]);
 
 	return (
 		<View style={styles.container}>
