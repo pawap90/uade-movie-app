@@ -14,6 +14,7 @@ import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
 import ListDetailsScreen from '../screens/ListDetailsScreen';
 import NavBar from '../components/NavBar';
+import GenreSelectionScreen from '../screens/GenreSelectionScreen';
 
 export default function TabBarNavigation() {
 	return (
@@ -114,6 +115,7 @@ const ProfileStackScreen = () => {
 	return (
 		<ProfileStack.Navigator initialRouteName="Profile" screenOptions={() => setStackedScreensOptions(false)}>
 			<ProfileStack.Screen name="Profile" component={ProfileScreen} />
+			<ProfileStack.Screen name="GenreSelection" component={GenreSelectionScreen} />
 		</ProfileStack.Navigator>
 	);
 };
