@@ -2,51 +2,41 @@
 import React from 'react';
 import { Text, StyleSheet, View, Image } from 'react-native';
 import PropTypes from 'prop-types';
+import ButtonWithIcon from './ButtonWithIcon';
 
 ProfileSection.propTypes = {
 	onPress: PropTypes.func,
-	label: PropTypes.string,
+	title: PropTypes.string,
 	icon: PropTypes.number,
-	withLine: PropTypes.bool
+	marginBottom: PropTypes.number
 };
 
 export default function ProfileSection(props) {
-	const { onPress, label, icon } = props;
+	const { onPress, title, icon, marginBottom = 0 } = props;
 	return (
-		<View style={styles.container} >
-
+		<View style={{...styles.container, marginBottom}}>
 			{icon && <Image style={styles.icon} source={icon}></Image>}
-			<Text style={getStyleText({ icon })}>
-				{label}
-			</Text>
+
+			<Text style={styles.title}>{title}</Text>
+
 			{onPress && <View style={styles.right}>
-				<Text style={styles.button} onPress={onPress}>Cambiar</Text>
+				<ButtonWithIcon
+					text="Cambiar"
+					backgroundColor="#60C7AC"
+					color="#000000">
+				</ButtonWithIcon>
 			</View>}
 		</View>
 	);
 }
 
-function getStyleText(object) {
-	if (object.icon > 0) {
-		return styles.textWithMargin;
-	}
-	else {
-		return styles.text;
-	}
-}
-
 const styles = StyleSheet.create({
 	container: {
-		height: 50,
-		justifyContent: 'center',
+		flexDirection: 'row',
+		alignItems: 'center',
+		paddingVertical: 10
 	},
-	textWithMargin: {
-		color: '#FFFFFF',
-		start: 45,
-		fontWeight: 'bold',
-		fontSize: 16,
-	},
-	text: {
+	title: {
 		color: '#FFFFFF',
 		fontWeight: 'bold',
 		fontSize: 16,
@@ -54,7 +44,9 @@ const styles = StyleSheet.create({
 	icon: {
 		width: 30,
 		height: 30,
-		position: 'absolute',
+		resizeMode: 'contain',
+		tintColor: '#FFFFFF',
+		marginRight: 15
 	},
 	right: {
 		position: 'absolute',

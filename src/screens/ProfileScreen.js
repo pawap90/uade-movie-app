@@ -1,77 +1,92 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
-import ic_avatar from '../../assets/ic_avatar.jpg';
-import ic_key from '../../assets/ic_key.png';
-import ProfileSectionWithAttribute from '../components/ProfileSectionWithAttribute';
+import UserIcon from '../../assets/user.png';
+import KeyIcon from '../../assets/key.png';
+import ProfileAttribute from '../components/ProfileAttribute';
 import ProfileSection from '../components/ProfileSection';
-import ProfileGender from '../components/ProfileGender';
+import ProfileGenres from '../components/ProfileGenres';
+import BaseStyles from '../BaseStyles';
+import Separator from '../components/Separator';
+import { ScrollView } from 'react-native-gesture-handler';
+import ButtonWithIcon from '../components/ButtonWithIcon';
 
 ProfileScreen.propTypes = {
 	navigation: PropTypes.object,
 	route: PropTypes.object
 };
 
-const PROFILE = {
-	user: {
-		name: 'Jane Doe',
-		email: 'janedoeiam@somemail.com',
-		gender: ['Drama', 'Ciencia Ficcion', 'Acción', 'Comedia']
-	}
-};
-
 export default function ProfileScreen() {
+
+	const [user, setUser] = useState({});
+
+	const getUser = () => {
+		setUser({
+			name: 'Jane Doe',
+			email: 'janedoeiam@somemail.com',
+			genres: ['Drama', 'Ciencia Ficcion', 'Acción', 'Comedia', 'Ciencia Ficcion', 'Acción', 'Comedia']
+		});
+	};
+
+	const onSubmit = () => {
+		// TODO CALL API TO SAVE user
+	};
+
+	useEffect(() => {
+		getUser();
+	},[]);
+
 	return (
-		<View style={styles.container}>
-			<View>
-				<ProfileSection icon={ic_avatar} label="Datos personales"></ProfileSection>
-				<ProfileSectionWithAttribute label="Nombre" text={PROFILE.user.name} onPress={() => alert('Change Name')}></ProfileSectionWithAttribute>
-				<ProfileSectionWithAttribute label="Correo electronico" text={PROFILE.user.email} onPress={() => alert('Change Email')}></ProfileSectionWithAttribute>
-				<View style={styles.lineStyleTop} />
-				<ProfileSection icon={ic_key} label="Contraseña" onPress={() => alert('Change Password')}></ProfileSection>
-				<View style={styles.lineStyleBottom} />
-				<ProfileGender data={PROFILE.user.gender} label="Géneros preferidos" onPress={() => alert('Change Password')}></ProfileGender>
-			</View>
-			<View style={styles.footer}>
-				<Text style={styles.button} onPress={() => alert('Confirmar profile')}>CONFIRMAR</Text>
-			</View>
+		<View style={BaseStyles.container}>
+
+			<ScrollView>
+				<ProfileSection
+					icon={UserIcon}
+					title="Datos personales"
+					marginBottom={12}>
+				</ProfileSection>
+
+				<ProfileAttribute
+					label="Nombre"
+					value={user.name}
+					buttonText="Cambiar"
+					onButtonClick={() => alert('Change Name')}>
+				</ProfileAttribute>
+
+				<ProfileAttribute
+					label="Correo electronico"
+					value={user.email}
+					buttonText="Cambiar"
+					onButtonClick={() => alert('Change Email')}>
+				</ProfileAttribute>
+
+				<Separator />
+
+				<ProfileSection
+					icon={KeyIcon}
+					title="Contraseña"
+					onPress={() => alert('Change Password')}>
+				</ProfileSection>
+
+				<Separator />
+
+				<ProfileSection
+					title="Géneros preferidos"
+					onPress={() => alert('Change Password')}
+					marginBottom={12}>
+				</ProfileSection>
+
+				<ProfileGenres genres={user.genres}></ProfileGenres>
+
+			</ScrollView>
+
+			<ButtonWithIcon
+				backgroundColor="#E6D72A"
+				text="Confirmar"
+				color="#000000"
+				marginBottom={16}
+				paddingVertical={12}
+				onPress={onSubmit} />
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		backgroundColor: '#34424F',
-		padding: 24,
-		height: '100%'
-	},
-	footer: {
-		bottom: 16,
-		start: 16,
-		end: 16,
-		position: 'absolute',
-	},
-	lineStyleTop: {
-		borderWidth: 0.5,
-		borderColor: '#9099a4',
-		alignSelf: 'stretch',
-		marginTop: 32,
-		marginBottom: 4
-	},
-	lineStyleBottom: {
-		borderWidth: 0.5,
-		borderColor: '#9099a4',
-		alignSelf: 'stretch',
-		marginBottom: 24,
-		marginTop: 4
-	},
-	button: {
-		color: '#34424F',
-		fontSize: 16,
-		backgroundColor: '#E6D72A',
-		paddingVertical: 10,
-		borderRadius: 10,
-		fontWeight: 'bold',
-		textAlign: 'center'
-	}
-});
