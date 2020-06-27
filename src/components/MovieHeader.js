@@ -5,19 +5,35 @@ import Score from '../components/Score';
 import DateHelper from '../helper/dateHelper';
 import ButtonWithIcon from './ButtonWithIcon';
 import plusIcon from '../../assets/plus.png';
+import starIcon from '../../assets/star-full.png';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
-MovieHeader.propTypes = {
-	title: PropTypes.string,
-	releaseDate: PropTypes.object,
-	summary: PropTypes.string,
-	genres: PropTypes.array,
-	languages: PropTypes.array
-};
 
-export default function MovieHeader(props) {
+const MovieHeader = (props) => {
 
-	const { title, releaseDate, summary, genres = [], languages = [] } = props;
+	const { title, releaseDate, summary, genres = [], languages = [], isLoggedIn } = props;
+	const navigation = useNavigation();
+
+	const onAddToMyListsTapped = () => {
+		if(!isLoggedIn) {
+			navigation.navigate('RequiredLogin', { message: 'Debe autenticarse en la app para poder agregar series o peliculas a sus listas' });
+		}
+		else {
+			// TODO Handle add media to my lists
+		}
+	};
+
+	const onRateTapped = () => {
+		if(!isLoggedIn) {
+			navigation.navigate('RequiredLogin', { message: 'Debe autenticarse en la app para poder calificar series o peliculas' });
+		}
+		else {
+			// TODO Handle add media to my lists
+		}
+	};
+
 
 	return (
 		<View style={styles.container}>
@@ -36,11 +52,21 @@ export default function MovieHeader(props) {
 			</View>
 			<View style={styles.footer}>
 				<Score value={3.4} total={3543}></Score>
-				<ButtonWithIcon text="Mi lista" icon={plusIcon} onPress={() => alert('Add to my list tapped')}></ButtonWithIcon>
+				<ButtonWithIcon text="Calificar" icon={starIcon} onPress={onRateTapped}></ButtonWithIcon>
+				<ButtonWithIcon text="Mi lista" icon={plusIcon} onPress={onAddToMyListsTapped}></ButtonWithIcon>
 			</View>
 		</View>
 	);
-}
+};
+
+MovieHeader.propTypes = {
+	title: PropTypes.string,
+	releaseDate: PropTypes.object,
+	summary: PropTypes.string,
+	genres: PropTypes.array,
+	languages: PropTypes.array,
+	isLoggedIn: PropTypes.bool
+};
 
 const styles = StyleSheet.create({
 	container: {
@@ -74,6 +100,14 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		alignItems: 'flex-end'
+		alignItems: 'center'
 	}
 });
+
+const mapStateToProps = (state) => {
+	return {
+		isLoggedIn: state.isLoggedIn
+	};
+};
+
+export default connect(mapStateToProps)(MovieHeader);
