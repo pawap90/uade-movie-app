@@ -92,6 +92,44 @@ export default class AccountService {
 	}
 
 	/**
+     * Login user and get access token.
+	 * @param {ChangePasswordModel} ChangePasswordModel Change Password data
+     */
+	static async changePassword(ChangePasswordModel) {
+
+		try {
+			if (!(ChangePasswordModel instanceof ChangePasswordModel))
+				throw new Error('The ChangePasswordModel must be of type ChangePasswordModel');
+
+			const endpoint = `${BASE_ENDPOINT}/change-password`;
+
+			// Request init configuration.
+			const reqInit = {
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(ChangePasswordModel),
+				method: 'PUT'
+			};
+
+			// Get response.
+			const response = await fetch(endpoint, reqInit);
+
+			if (response.status === 401)
+				throw ErrorHandler.handle('Las credenciales ingresadas son incorrectas', null, response.status);
+			else if (response.status !== 200)
+				throw ErrorHandler.handle('Se produjo un error autorizando al usuario', null, response.status);
+
+			const responseJson = await response.json();
+
+			// Save JWT locally
+			await storeAccessToken(responseJson.access);
+		}
+		catch (err) {
+			throw ErrorHandler.handle('Se produjo un error autorizando al usuario', err, 500);
+		}
+	}
+	/**
      * Get the authorization header to authorizes the current user.
      */
 	static async getAuthHeader() {
@@ -100,6 +138,8 @@ export default class AccountService {
 		};
 	}
 }
+
+
 
 /**
  * Get access token from local storage.

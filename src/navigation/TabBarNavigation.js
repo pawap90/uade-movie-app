@@ -15,6 +15,7 @@ import PropTypes from 'prop-types';
 import ListDetailsScreen from '../screens/ListDetailsScreen';
 import NavBar from '../components/NavBar';
 import GenreSelectionScreen from '../screens/GenreSelectionScreen';
+import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 
 export default function TabBarNavigation() {
 	return (
@@ -116,6 +117,7 @@ const ProfileStackScreen = () => {
 		<ProfileStack.Navigator initialRouteName="Profile" screenOptions={() => setStackedScreensOptions(false)}>
 			<ProfileStack.Screen name="Profile" component={ProfileScreen} />
 			<ProfileStack.Screen name="GenreSelection" component={GenreSelectionScreen} />
+			<ProfileStack.Screen name="ChangePassword" component={ChangePasswordScreen} />
 		</ProfileStack.Navigator>
 	);
 };
