@@ -16,6 +16,7 @@ import ListDetailsScreen from '../screens/ListDetailsScreen';
 import NavBar from '../components/NavBar';
 import LoginScreen from '../screens/LoginScreen';
 import { connect } from 'react-redux';
+import GenreSelectionScreen from '../screens/GenreSelectionScreen';
 
 const TabBarNavigation = (props) => {
 
@@ -128,6 +129,7 @@ const ProfileStackScreen = () => {
 	return (
 		<ProfileStack.Navigator initialRouteName="Profile" screenOptions={() => setStackedScreensOptions(false)}>
 			<ProfileStack.Screen name="Profile" component={ProfileScreen} />
+			<ProfileStack.Screen name="GenreSelection" component={GenreSelectionScreen} />
 		</ProfileStack.Navigator>
 	);
 };
