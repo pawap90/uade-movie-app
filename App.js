@@ -18,6 +18,7 @@ const App = () => {
 	);
 };
 
+// Disable warnings on expo client (temporally)
 console.disableYellowBox = true;
 
 export default App;
