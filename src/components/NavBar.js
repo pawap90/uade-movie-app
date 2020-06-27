@@ -14,7 +14,7 @@ NavBar.propTypes = {
 };
 
 export default function NavBar(props) {
-	const { scene, previous, navigation, includeSearch } = props;
+	const { scene, previous, navigation, includeSearch = false } = props;
 	const { options } = scene.descriptor;
 	const title = options.headerTitle || options.title || scene.route.name;
 

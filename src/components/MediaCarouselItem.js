@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import imagePlaceholder from '../../assets/image-placeholder.png';
 
 MediaCarouselItem.propTypes = {
-	id: PropTypes.number,
+	id: PropTypes.string,
 	title: PropTypes.string,
 	imageUrl: PropTypes.string,
 	width: PropTypes.number,

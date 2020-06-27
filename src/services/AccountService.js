@@ -104,8 +104,8 @@ export default class AccountService {
 	 * Get user's authentication status based on the access token.
 	 */
 	static async isLoggedIn() {
-		const accessToken = await getAccessToken()
-		return accessToken != null
+		const accessToken = await getAccessToken();
+		return accessToken != null;
 	}
 }
 
