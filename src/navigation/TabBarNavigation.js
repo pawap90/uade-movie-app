@@ -14,16 +14,29 @@ import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
 import ListDetailsScreen from '../screens/ListDetailsScreen';
 import NavBar from '../components/NavBar';
+import LoginScreen from '../screens/LoginScreen';
+import { connect } from 'react-redux';
 
-export default function TabBarNavigation() {
+const TabBarNavigation = (props) => {
+
+	const { isLoggedIn } = props
+
 	return (
 		<Tab.Navigator screenOptions={setTabBarScreenOptions} tabBarOptions={setTabBarOptions}>
-			<Tab.Screen name="Inicio" component={HomeStackScreen} />
+			<Tab.Screen name="Inicio" component={() => HomeStackScreen(isLoading, isLoggedIn)} />
 			<Tab.Screen name="Mis listas" component={MyListsStackScreen} />
 			<Tab.Screen name="Perfil" component={ProfileStackScreen} />
 		</Tab.Navigator>
 	);
 }
+
+const mapStateToProps = (state) => {
+	return {
+		isLoggedIn: state.isLoggedIn
+	};
+};
+
+export default connect(mapStateToProps)(TabBarNavigation)
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -36,28 +49,28 @@ const setTabBarScreenOptions = ({ route }) => {
 			let icon;
 
 			switch (route.name) {
-			case 'Inicio':
-				icon = HomeIcon;
-				break;
+				case 'Inicio':
+					icon = HomeIcon;
+					break;
 
-			case 'Mis listas':
-				icon = ListIcon;
-				break;
+				case 'Mis listas':
+					icon = ListIcon;
+					break;
 
-			default:
-				icon = UserIcon;
-				break;
+				default:
+					icon = UserIcon;
+					break;
 			}
 
-			return <Image source={icon} style={{...BaseStyles.tabBarIcon, tintColor: focused ? '#E6D72A' : '#FFFFFF'}} />;
+			return <Image source={icon} style={{ ...BaseStyles.tabBarIcon, tintColor: focused ? '#E6D72A' : '#FFFFFF' }} />;
 		}
 	};
-	
+
 	screenOptions.tabBarIcon.displayName = 'TabBarIcon';
 	screenOptions.tabBarIcon.propTypes = {
 		focused: PropTypes.bool
 	};
-	
+
 	return screenOptions;
 };
 
@@ -67,7 +80,7 @@ const setStackedScreensOptions = (includeSearch = true) => {
 		headerStyle: BaseStyles.header,
 		headerTintColor: '#FFFFFF',
 		header: ({ scene, previous, navigation }) => {
-			return <NavBar scene={scene} previous={previous} navigation={navigation} includeSearch={includeSearch}/>;
+			return <NavBar scene={scene} previous={previous} navigation={navigation} includeSearch={includeSearch} />;
 		}
 	};
 
@@ -90,12 +103,13 @@ const setTabBarOptions = ({
 	inactiveTintColor: '#FFFFFF'
 });
 
-const HomeStackScreen = () => {
+const HomeStackScreen = (isLoggedIn) => {
 	return (
 		<HomeStack.Navigator initialRouteName="Home" screenOptions={setStackedScreensOptions}>
 			<HomeStack.Screen name="Home" component={HomeScreen} />
 			<HomeStack.Screen name="MediaDetails" component={MediaDetailsScreen} />
 			<HomeStack.Screen name="Search" component={SearchScreen} />
+			{!isLoggedIn && <HomeStack.Screen name="Login" component={LoginScreen} />}
 		</HomeStack.Navigator>
 	);
 };
