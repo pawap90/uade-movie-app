@@ -60,6 +60,19 @@ const BaseStyles = StyleSheet.create({
 		width: 20,
 		height: 20,
 		resizeMode: 'contain'
+	},
+	label: {
+		color: '#9099a4',
+		fontSize: 17,
+		marginBottom: 10
+	},
+	input: {
+		backgroundColor: '#344251',
+		color: '#FFFFFF',
+		paddingHorizontal: 8,
+		paddingVertical: 4,
+		borderRadius: 5,
+		marginBottom: 10
 	}
 });
 

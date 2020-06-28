@@ -32,8 +32,8 @@ export default function Score(props) {
 			{showTitle && <Text style={styles.title}>IMDB</Text>}
 			<View style={styles.stars}>
 				{[1, 2, 3, 4, 5].map(item => getStar(item, value))}
-				{total && <Text style={styles.total}>{total} votos</Text>}
 			</View>
+			{total && <Text style={styles.total}>{total} votos</Text>}
 		</View>
 	);
 }
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
 		marginRight: 5
 	},
 	total: {
-		marginLeft: 4,
+		marginTop: 4,
 		color: '#C1C5C9',
 		fontSize: 12
 	}

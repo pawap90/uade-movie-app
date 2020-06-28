@@ -81,7 +81,7 @@ export default function ListsScreen() {
 				<FlatList
 					data={myLists}
 					renderItem={({ item }) => <ListsItem {...item} onDeleteListTapped={onDeleteListTapped} />}
-					keyExtractor={item => item.id}
+					keyExtractor={item => `${item.id}`}
 				/>
 			</View>
 			<ConfirmationModal
