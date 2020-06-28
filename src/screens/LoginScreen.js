@@ -9,7 +9,7 @@ import Spinner from '../components/Spinner';
 import AccountService from '../services/AccountService';
 import LoginModel from '../models/LoginModel';
 import { useDispatch } from 'react-redux';
-import { showSpinner, hideSpinner, login } from '../actions/application'
+import { showSpinner, hideSpinner, login } from '../actions/application';
 import UserError from '../errors/UserError';
 import MessageModal from '../components/MessageModal';
 import { useNavigation } from '@react-navigation/native';
@@ -19,44 +19,45 @@ export default function LoginScreen() {
 	const [form, setForm] = useState({
 		email: null,
 		password: null
-	})
+	});
 
-	const [errorMessage, setErrorMessage] = useState(null)
+	const [errorMessage, setErrorMessage] = useState(null);
 
-	const dispatch = useDispatch()
-	const navigation = useNavigation()
+	const dispatch = useDispatch();
+	const navigation = useNavigation();
 
 	const onSubmitTapped = async () => {
 		if(form.email === null || form.password === null) {
-			setErrorMessage("Por favor completa los datos para poder ingresar")
-			return
+			setErrorMessage('Por favor completa los datos para poder ingresar');
+			return;
 		}
 
 
-		dispatch(showSpinner)
+		dispatch(showSpinner);
 		try {
-			await AccountService.login(new LoginModel(form.email, form.password))
-			dispatch(login)
+			await AccountService.login(new LoginModel(form.email, form.password));
+			dispatch(login);
 			navigation.reset({
 				routes: [{ name: 'TabBar' }]
 			});
-		} catch (error) {
+		}
+		catch (error) {
 			if (error instanceof UserError) {
-				setErrorMessage(error.message)
+				setErrorMessage(error.message);
 			}
 		}
-		dispatch(hideSpinner)
-	}
+		dispatch(hideSpinner);
+	};
 
 	const onContinueAnonymousTapped = () => {
 		navigation.reset({
 			routes: [{ name: 'TabBar' }]
 		});
-	}
+	};
 
 	const onRegisterTapped = () => {
 		// TODO - Navigate to register screen
-	}
+	};
 
 	const onAttributeChange = (attribute, newValue) => {
 		setForm({
@@ -133,7 +134,7 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
 	container: {
-		justifyContent: "center",
+		justifyContent: 'center',
 		alignItems: 'center',
 		flex: 1
 	},
@@ -159,4 +160,4 @@ const styles = StyleSheet.create({
 	form: {
 		flex: 1
 	}
-})
+});

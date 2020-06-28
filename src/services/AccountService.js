@@ -135,5 +135,5 @@ const storeAccessToken = async (accessToken) => {
  * Remove access token from local storage.
  */
 const removeAccessToken = async () => {
-	await AsyncStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY)
-}
+	await AsyncStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
+};

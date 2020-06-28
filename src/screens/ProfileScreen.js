@@ -45,14 +45,14 @@ export default function ProfileScreen() {
 	};
 
 	const onLogout = async () => {
-		dispatch(showSpinner)
-		await AccountService.logout()
-		dispatch(logout)
-		dispatch(hideSpinner)
+		dispatch(showSpinner);
+		await AccountService.logout();
+		dispatch(logout);
+		dispatch(hideSpinner);
 		navigation.reset({
 			routes: [{ name: 'Login' }]
 		});
-	}
+	};
 
 	useEffect(() => {
 		getUser();

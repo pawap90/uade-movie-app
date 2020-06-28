@@ -19,13 +19,13 @@ const GlobalNavigation = (props) => {
 
 	useEffect(() => {
 		const checkIfUserIsLoggedIn = async () => {
-			const result = await AccountService.isLoggedIn()
+			const result = await AccountService.isLoggedIn();
 			if(result) {
-				dispatch(login)
+				dispatch(login);
 			}
-		}
-		checkIfUserIsLoggedIn()
-	},[])
+		};
+		checkIfUserIsLoggedIn();
+	},[]);
 	
 	return (
 		<Stack.Navigator screenOptions={{header: () => null}}>
