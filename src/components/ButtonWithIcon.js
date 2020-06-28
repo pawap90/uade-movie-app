@@ -55,7 +55,7 @@ export default function ButtonWithIcon(props) {
 						width: iconSize, height: iconSize
 					}} source={icon}></Image>}
 
-				<Text style={{ color: color, fontSize: fontSize }}>{text}</Text>
+				<Text style={{ color: color, fontSize: fontSize, fontWeight: 'bold' }}>{text}</Text>
 			</View>
 		</TouchableWithoutFeedback>
 	);

@@ -1,7 +1,6 @@
 const initialState = {
 	isLoading: false,
-	isLoggedIn: false,
-	accessToken: null
+	isLoggedIn: false
 };
 
 const applicationReducer = (state = initialState, action) => {
@@ -11,9 +10,9 @@ const applicationReducer = (state = initialState, action) => {
 	case 'HIDE_SPINNER':
 		return { ...state, isLoading: false };
 	case 'LOGGED_IN':
-		return { ...state, isLoggedIn: true, accessToken: action.token };
+		return { ...state, isLoggedIn: true };
 	case 'LOGGED_OUT':
-		return { ...state, isLoggedIn: false, accessToken: null };
+		return { ...state, isLoggedIn: false };
 	default:
 		return state;
 	}

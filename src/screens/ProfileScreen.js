@@ -11,6 +11,9 @@ import Separator from '../components/Separator';
 import { ScrollView } from 'react-native-gesture-handler';
 import ButtonWithIcon from '../components/ButtonWithIcon';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { logout, showSpinner, hideSpinner } from '../actions/application';
+import AccountService from '../services/AccountService';
 
 ProfileScreen.propTypes = {
 	navigation: PropTypes.object,
@@ -20,6 +23,7 @@ ProfileScreen.propTypes = {
 export default function ProfileScreen() {
 	const navigation = useNavigation();
 	const [user, setUser] = useState({});
+	const dispatch = useDispatch();
 
 	const getUser = () => {
 		setUser({
@@ -39,6 +43,16 @@ export default function ProfileScreen() {
 	const onSubmit = () => {
 		// TODO CALL API TO SAVE user
 	};
+
+	const onLogout = async () => {
+		dispatch(showSpinner)
+		await AccountService.logout()
+		dispatch(logout)
+		dispatch(hideSpinner)
+		navigation.reset({
+			routes: [{ name: 'Login' }]
+		});
+	}
 
 	useEffect(() => {
 		getUser();
@@ -92,11 +106,18 @@ export default function ProfileScreen() {
 
 			<ButtonWithIcon
 				backgroundColor="#E6D72A"
-				text="Confirmar"
+				text="Guardar cambios"
 				color="#000000"
 				marginBottom={16}
 				paddingVertical={12}
 				onPress={onSubmit} />
+			<ButtonWithIcon
+				backgroundColor="#60C7AC"
+				text="Cerrar sesión"
+				color="#000000"
+				marginBottom={16}
+				paddingVertical={12}
+				onPress={onLogout} />
 		</View>
 	);
 }

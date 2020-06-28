@@ -6,11 +6,8 @@ export const hideSpinner = {
 	type: 'HIDE_SPINNER'
 };
 
-export const login = (token) => {
-	return {
-		type: 'LOGGED_IN',
-		token: token
-	};
+export const login = {
+	type: 'LOGGED_IN'
 };
 
 export const logout = {
