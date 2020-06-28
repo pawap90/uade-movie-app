@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import LoginModel from '../models/LoginModel';
 import AccountModel from '../models/AccountModel';
 import ErrorHandler from '../errors/ErrorHandler';
-import { ACCESS_TOKEN_STORAGE_KEY } from '../constants';
+import { ACCESS_TOKEN_STORAGE_KEY } from '../Constants';
 
 const BASE_ENDPOINT = `${BACKEND_API_BASE_URL}/api/account`;
 
@@ -92,6 +92,13 @@ export default class AccountService {
 	}
 
 	/**
+     * Logout user and remove the access token.
+     */
+	static async logout() {
+		await removeAccessToken();
+	}
+
+	/**
      * Get the authorization header to authorizes the current user.
      */
 	static async getAuthHeader() {
@@ -122,4 +129,11 @@ const getAccessToken = async () => {
  */
 const storeAccessToken = async (accessToken) => {
 	await AsyncStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, accessToken);
+};
+
+/**
+ * Remove access token from local storage.
+ */
+const removeAccessToken = async () => {
+	await AsyncStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
 };

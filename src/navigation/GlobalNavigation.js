@@ -1,11 +1,13 @@
 
 import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
+import React, { useEffect } from 'react';
 import LoginScreen from '../screens/LoginScreen';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import RequiredLoginScreen from '../screens/RequiredLoginScreen';
 import TabBarNavigation from './TabBarNavigation';
 import PropTypes from 'prop-types';
+import AccountService from '../services/AccountService';
+import { login } from '../actions/application';
 
 const Stack = createStackNavigator();
 
@@ -13,6 +15,17 @@ const Stack = createStackNavigator();
 const GlobalNavigation = (props) => {
 	
 	const { isLoggedIn } = props;
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const checkIfUserIsLoggedIn = async () => {
+			const result = await AccountService.isLoggedIn();
+			if(result) {
+				dispatch(login);
+			}
+		};
+		checkIfUserIsLoggedIn();
+	},[]);
 	
 	return (
 		<Stack.Navigator screenOptions={{header: () => null}}>
