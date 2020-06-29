@@ -100,23 +100,25 @@ export default class AccountService {
 
 	/**
      * Login user and get access token.
-	 * @param {ChangePasswordModel} ChangePasswordModel Change Password data
+	 * @param {changePasswordModel} ChangePasswordModel Change Password data
      */
-	static async changePassword(ChangePasswordModel) {
-		try {			
-			if (!(ChangePasswordModel instanceof ChangePasswordModel))
+	static async changePassword(changePasswordModel) {
+		console.log(changePasswordModel);
+		
+		try {
+			if (!(changePasswordModel instanceof ChangePasswordModel))
 				throw new Error('The ChangePasswordModel must be of type ChangePasswordModel');
 
 			const endpoint = `${BASE_ENDPOINT}/change-password`;
 
-			// Request init configuration.			
+			// Request init configuration.
 			const reqInit = {
 				headers: {
 					'Accept': 'application/json',
     				'Content-Type': 'application/json',
 					headers: await this.getAuthHeader(),
 				},
-				body: JSON.stringify(ChangePasswordModel),
+				body: JSON.stringify(changePasswordModel),
 				method: 'PUT'
 			};
 			
