@@ -46,25 +46,25 @@ export default function ChangePasswordScreen() {
 	return (
 		<View style={BaseStyles.container}>
 			<ScrollView>
-			<ProfileSection title="Cambiar contraseña"></ProfileSection>
-			<Text style={styles.label}>Contraseña actual</Text>
-			<TextInput 
-				style={styles.input}
-				onChangeText={text => onChangeCurrentText(text)}
-				value={valueCurrent}>
-			</TextInput>
-			<Text style={styles.label}>Nueva contraseña</Text>
-			<TextInput 
-				style={styles.input}
-				onChangeText={text => onChangeNewText(text)}
-				value={valueNew}>
-			</TextInput>
-			<Text style={styles.label}>Vuelve a escribir la contraseña</Text>
-			<TextInput 
-				style={styles.input}
-				onChangeText={text => onChangeRepeatText(text)}
-				value={valueRepeat}>
-			</TextInput>
+				<ProfileSection title="Cambiar contraseña"></ProfileSection>
+				<Text style={styles.label}>Contraseña actual</Text>
+				<TextInput 
+					style={styles.input}
+					onChangeText={text => onChangeCurrentText(text)}
+					value={valueCurrent}>
+				</TextInput>
+				<Text style={styles.label}>Nueva contraseña</Text>
+				<TextInput 
+					style={styles.input}
+					onChangeText={text => onChangeNewText(text)}
+					value={valueNew}>
+				</TextInput>
+				<Text style={styles.label}>Vuelve a escribir la contraseña</Text>
+				<TextInput 
+					style={styles.input}
+					onChangeText={text => onChangeRepeatText(text)}
+					value={valueRepeat}>
+				</TextInput>
 			</ScrollView>
 			<ButtonWithIcon
 				style={styles.button}

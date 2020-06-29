@@ -103,16 +103,18 @@ export default class AccountService {
 	 * @param {ChangePasswordModel} ChangePasswordModel Change Password data
      */
 	static async changePassword(ChangePasswordModel) {
-		try {
+		try {			
 			if (!(ChangePasswordModel instanceof ChangePasswordModel))
 				throw new Error('The ChangePasswordModel must be of type ChangePasswordModel');
 
 			const endpoint = `${BASE_ENDPOINT}/change-password`;
 
-			// Request init configuration.
+			// Request init configuration.			
 			const reqInit = {
 				headers: {
-					headers: await this.getAuthHeader()
+					'Accept': 'application/json',
+    				'Content-Type': 'application/json',
+					headers: await this.getAuthHeader(),
 				},
 				body: JSON.stringify(ChangePasswordModel),
 				method: 'PUT'
@@ -120,7 +122,7 @@ export default class AccountService {
 			
 			// Get response.
 			const response = await fetch(endpoint, reqInit);
-
+			
 			if (response.status === 401)
 				throw ErrorHandler.handle('Las credenciales ingresadas son incorrectas', null, response.status);
 			else if (response.status !== 200)
@@ -128,8 +130,7 @@ export default class AccountService {
 
 			const responseJson = await response.json();
 
-			// Save JWT locally
-			await storeAccessToken(responseJson.access);
+			return responseJson;
 		}
 		catch (err) {
 			throw ErrorHandler.handle('Se produjo un error autorizando al usuario', err, 500);
