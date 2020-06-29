@@ -4,6 +4,7 @@ import { BACKEND_API_BASE_URL } from 'react-native-dotenv';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import LoginModel from '../models/LoginModel';
+import ChangePasswordModel from '../models/ChangePasswordModel';
 import AccountModel from '../models/AccountModel';
 import ErrorHandler from '../errors/ErrorHandler';
 import { ACCESS_TOKEN_STORAGE_KEY } from '../Constants';
@@ -103,20 +104,17 @@ export default class AccountService {
 	 * @param {changePasswordModel} ChangePasswordModel Change Password data
      */
 	static async changePassword(changePasswordModel) {
-		console.log(changePasswordModel);
-		
 		try {
 			if (!(changePasswordModel instanceof ChangePasswordModel))
 				throw new Error('The ChangePasswordModel must be of type ChangePasswordModel');
 
 			const endpoint = `${BASE_ENDPOINT}/change-password`;
-
+			
 			// Request init configuration.
 			const reqInit = {
 				headers: {
-					'Accept': 'application/json',
     				'Content-Type': 'application/json',
-					headers: await this.getAuthHeader(),
+					'Authorization': await getAccessToken(),
 				},
 				body: JSON.stringify(changePasswordModel),
 				method: 'PUT'
