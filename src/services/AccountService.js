@@ -109,20 +109,20 @@ export default class AccountService {
 				throw new Error('The ChangePasswordModel must be of type ChangePasswordModel');
 
 			const endpoint = `${BASE_ENDPOINT}/change-password`;
-			
+
 			// Request init configuration.
 			const reqInit = {
 				headers: {
-    				'Content-Type': 'application/json',
+					'Content-Type': 'application/json',
 					'Authorization': await getAccessToken(),
 				},
 				body: JSON.stringify(changePasswordModel),
 				method: 'PUT'
 			};
-			
+
 			// Get response.
 			const response = await fetch(endpoint, reqInit);
-			
+
 			if (response.status === 401)
 				throw ErrorHandler.handle('Las credenciales ingresadas son incorrectas', null, response.status);
 			else if (response.status !== 200)
