@@ -103,7 +103,6 @@ export default class AccountService {
 	 * @param {ChangePasswordModel} ChangePasswordModel Change Password data
      */
 	static async changePassword(ChangePasswordModel) {
-
 		try {
 			if (!(ChangePasswordModel instanceof ChangePasswordModel))
 				throw new Error('The ChangePasswordModel must be of type ChangePasswordModel');
@@ -113,12 +112,12 @@ export default class AccountService {
 			// Request init configuration.
 			const reqInit = {
 				headers: {
-					'Content-Type': 'application/json'
+					headers: await this.getAuthHeader()
 				},
 				body: JSON.stringify(ChangePasswordModel),
 				method: 'PUT'
 			};
-
+			
 			// Get response.
 			const response = await fetch(endpoint, reqInit);
 

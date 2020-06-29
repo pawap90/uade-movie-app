@@ -3,31 +3,48 @@ import ProfileSection from '../components/ProfileSection';
 import { Text, StyleSheet, View, TextInput } from 'react-native';
 import BaseStyles from '../BaseStyles';
 import ButtonWithIcon from '../components/ButtonWithIcon';
-import { useNavigation } from '@react-navigation/native';
 import PropTypes from 'prop-types';
 import AccountService from '../services/AccountService';
 import ChangePasswordModel from '../models/ChangePasswordModel';
+import { useDispatch } from 'react-redux';
+import { showSpinner, hideSpinner } from '../actions/application';
+import MessageModal from '../components/MessageModal';
 
 ChangePasswordScreen.propTypes = {
 	route: PropTypes.object
 };
 
-export default function ChangePasswordScreen(props) {
-	const { route } = props;
-	const navigation = useNavigation();
+export default function ChangePasswordScreen() {
+	const [errorMessage, setErrorMessage] = useState(null);
 	const [valueCurrent, onChangeCurrentText] = React.useState('');
 	const [valueNew, onChangeNewText] = React.useState('');
 	const [valueRepeat, onChangeRepeatText] = React.useState('');
 
+	const dispatch = useDispatch();
 
-	const putChangePassword = async () => {
-		let model = new ChangePasswordModel(valueCurrent, valueNew)
-		const results = await AccountService.putChangePassword(model);
-		setPopularMedia(results);
+	const onSubmitTapped = async () => {
+		if(valueNew.length === 0 || valueRepeat.length === 0 || valueCurrent.length === 0) {
+			setErrorMessage('Por favor completa los datos para poder ingresar');
+			return;
+		}
+		if (valueNew !== valueRepeat) {
+			setErrorMessage('Las contraseñas no coinciden');
+			return;
+		}
+
+		dispatch(showSpinner);
+		try {
+			await AccountService.changePassword(new ChangePasswordModel(valueCurrent, valueNew));
+			setErrorMessage('Contraseña cambiada con exito');
+		}
+		catch (error) {
+			setErrorMessage(error.message);
+		}
+		dispatch(hideSpinner);
 	};
 
 	return (
-		<View style={{ ...BaseStyles.container, justifyContent: 'space-between' }}>
+		<View style={{ ...BaseStyles.container}}>
 			<ProfileSection title="Cambiar contraseña"></ProfileSection>
 			<Text style={styles.label}>Contraseña actual</Text>
 			<TextInput 
@@ -48,43 +65,30 @@ export default function ChangePasswordScreen(props) {
 				value={valueRepeat}>
 			</TextInput>
 			<ButtonWithIcon
+				style={styles.button}
 				text="Confirmar"
 				backgroundColor="#E6D72A"
 				color="#000000"
 				marginBottom={16}
 				paddingVertical={12}
-				onPress={() => {
-					if (valueNew === valueRepeat) {
-						putChangePassword()
-					}	
-				}}>
+				onPress={() => onSubmitTapped() }>
 			</ButtonWithIcon>
+			<MessageModal
+				title={errorMessage}
+				isVisible={errorMessage != null}
+				onConfirm={() => setErrorMessage(null)}></MessageModal>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	buttonContainer: {
-		display: 'flex',
-		justifyContent: 'space-between'
-	},
 	button: {
-		padding: 12,
-		borderColor: '#60C7AC',
-		borderWidth: 2,
-		fontSize: 18,
-		marginBottom: 16,
-		borderRadius: 5
-	},
-	selected: {
-		backgroundColor: '#60C7AC'
-	},
-	notSelected: {
-		color: '#60C7AC',
-		backgroundColor: 'transparent'
+		position: 'absolute',
+		bottom: 0
 	},
 	label: {
-		color: '#ffffff'
+		color: '#ffffff',
+		marginTop: 16
 	},
 	input: {
 		height: 40, 
