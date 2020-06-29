@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ProfileSection from '../components/ProfileSection';
-import { Text, StyleSheet, View, TextInput } from 'react-native';
+import { Text, StyleSheet, View, TextInput, ScrollView } from 'react-native';
 import BaseStyles from '../BaseStyles';
 import ButtonWithIcon from '../components/ButtonWithIcon';
 import PropTypes from 'prop-types';
@@ -44,7 +44,8 @@ export default function ChangePasswordScreen() {
 	};
 
 	return (
-		<View style={{ ...BaseStyles.container}}>
+		<View style={BaseStyles.container}>
+			<ScrollView>
 			<ProfileSection title="Cambiar contraseña"></ProfileSection>
 			<Text style={styles.label}>Contraseña actual</Text>
 			<TextInput 
@@ -64,6 +65,7 @@ export default function ChangePasswordScreen() {
 				onChangeText={text => onChangeRepeatText(text)}
 				value={valueRepeat}>
 			</TextInput>
+			</ScrollView>
 			<ButtonWithIcon
 				style={styles.button}
 				text="Confirmar"
