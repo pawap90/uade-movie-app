@@ -10,10 +10,11 @@ import { useNavigation } from '@react-navigation/native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 ListsItem.propTypes = {
-	id: PropTypes.number,
+	_id: PropTypes.number,
 	name: PropTypes.string,
-	itemCount: PropTypes.number,
+	mediaItems: PropTypes.array,
 	isPublic: PropTypes.bool,
+	isDefault: PropTypes.bool,
 	onDeleteListTapped: PropTypes.func
 };
 
@@ -21,16 +22,10 @@ export default function ListsItem(props) {
 
 	const navigation = useNavigation();
 
-	const { id, name, itemCount, isPublic, onDeleteListTapped } = props;
+	const { _id, name, mediaItems = [], isPublic, isDefault, onDeleteListTapped } = props;
 
 	const goToListDetails = () => {
-		navigation.push('ListDetails', {
-			id: id,
-			name: name,
-			itemCount: itemCount,
-			isPublic: isPublic,
-			onDeleteListTapped: onDeleteListTapped
-		});
+		navigation.push('ListDetails', { id: _id });
 	};
 
 	return (
@@ -42,25 +37,25 @@ export default function ListsItem(props) {
 						<Text style={styles.name}>{name}</Text>
 						<View style={styles.metadata}>
 							<Tag
-								text={`${itemCount} elementos`}
+								text={`${mediaItems != null ? mediaItems.length : 0} elementos`}
 								backgroundColor="#E6D72A"
 								paddingHorizontal={6}
 								paddingVertical={3}>
 							</Tag>
-							{isPublic && <Image style={styles.isPrivateIcon} source={LockIcon}></Image>}
+							{!isPublic && <Image style={styles.isPrivateIcon} source={LockIcon}></Image>}
 						</View>
 					</View>
 				</TouchableWithoutFeedback>
 			</View>
 
-			<ButtonWithIcon
+			{!isDefault && <ButtonWithIcon
 				icon={TrashIcon}
 				backgroundColor="#F18D9E"
 				paddingVertical={12}
 				paddingHorizontal={16}
 				marginHorizontal={16}
-				onPress={() => onDeleteListTapped(id, name)}>
-			</ButtonWithIcon>
+				onPress={() => onDeleteListTapped(_id, name)}>
+			</ButtonWithIcon>}
 		</View>
 
 	);

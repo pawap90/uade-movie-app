@@ -21,6 +21,7 @@ import ListDetailsScreen from '../screens/ListDetailsScreen';
 import MediaDetailsScreen from '../screens/MediaDetailsScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import ListCreateScreen from '../screens/ListCreateScreen';
+import MoveMediaItemScreen from '../screens/MoveMediaItemScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -132,8 +133,9 @@ const MyListsStackScreen = () => {
 		<MyListsStack.Navigator screenOptions={() => setStackedScreensOptions(false)}>
 			<MyListsStack.Screen name="MyLists" component={ListsScreen} />
 			<MyListsStack.Screen name="ListDetails" component={ListDetailsScreen} />
-			<HomeStack.Screen name="MediaDetails" component={MediaDetailsScreen} />
+			<MyListsStack.Screen name="MediaDetails" component={MediaDetailsScreen} />
 			<MyListsStack.Screen name="ListCreate" component={ListCreateScreen} />
+			<MyListsStack.Screen name="MoveMediaItem" component={MoveMediaItemScreen} />
 		</MyListsStack.Navigator>
 	);
 };

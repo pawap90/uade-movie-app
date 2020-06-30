@@ -90,11 +90,14 @@ export default function MediaDetailsScreen(props) {
 				<MovieHeader
 					onUserRate={onUserRate}
 					userAlreadyRate={userAlreadyRate}
+					id={media.id}
 					genres={media.genres}
 					title={media.title}
 					releaseDate={media.releaseDate}
 					summary={media.summary}
 					languages={media.languages}
+					mediaType={mediaType}
+					imagePath={media.imageUrl}
 					voteAverage={media.score}
 					voteCount={media.scoreCount}>
 				</MovieHeader>
@@ -126,7 +129,6 @@ const styles = StyleSheet.create({
 		backgroundColor: '#1F2D3D'
 	},
 	image: {
-		width: '100%',
 		height: 300,
 		alignItems: 'flex-end',
 		padding: 10

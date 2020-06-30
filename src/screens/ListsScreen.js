@@ -7,13 +7,19 @@ import plusIcon from '../../assets/plus.png';
 import ListsItem from '../components/ListsItem';
 import ConfirmationModal from '../components/ConfirmationModal';
 import MessageModal from '../components/MessageModal';
-import { useDispatch } from 'react-redux';
-import { showSpinner, hideSpinner } from '../actions/application';
+import { useDispatch, connect } from 'react-redux';
+import { showSpinner, hideSpinner, listsRefreshed } from '../actions/application';
+import ListService from '../services/ListService';
+import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
+import UserError from '../errors/UserError';
 
-export default function ListsScreen() {
+
+const ListsScreen = (props) => {
 
 	const dispatch = useDispatch();
+	const { applicationState } = props;
+
 	const navigation = useNavigation();
 
 	const [myLists, setMyLists] = useState([]);
@@ -36,40 +42,53 @@ export default function ListsScreen() {
 		setDeleteConfirmationModalIsVisible(false);
 	};
 
-	const onConfirmDeleteTapped = () => {
+	const onConfirmDeleteTapped = async () => {
 		setDeleteConfirmationModalIsVisible(false);
 		dispatch(showSpinner);
 
-		// TO-DO Call API to delete list item
-		setTimeout(() => {
-			dispatch(hideSpinner);
+		try {
+			await ListService.deleteListById(selectedItem.id);
 			setDeleteResultModalData(prev => ({
 				...prev,
 				isVisible: true,
 				title: `${selectedItem.name} ha sido eliminada`
 			}));
-		}, 2000);
+			getMyLists();
+
+		}
+		catch (err) {
+			if (err instanceof UserError) {
+				setDeleteResultModalData(prev => ({
+					...prev,
+					isVisible: true,
+					type: 'error',
+					title: err.message
+				}));
+			}
+		}
+		dispatch(hideSpinner);
+
 	};
 
 	const onConfirmResultTapped = () => {
 		setDeleteResultModalData(prev => ({ ...prev, isVisible: false }));
 	};
 
-	const onCreateTapped = () => {
-		navigation.push('ListCreate');
+	const getMyLists = async () => {
+		dispatch(showSpinner);
+		const lists = await ListService.getMyLists();
+		setMyLists(lists);
+		dispatch(hideSpinner);
 	};
 
 	useEffect(() => {
-		const getMyLists = () => {
-			dispatch(showSpinner);
-			// TODO - Load My lists from API
-			setTimeout(() => {
-				setMyLists(DATA);
-				dispatch(hideSpinner);
-			}, 1000);
-		};
 		getMyLists();
-	}, []);
+		dispatch(listsRefreshed);
+	}, [applicationState.listsNeedsRefresh]);
+
+	const onCreateTapped = () => {
+		navigation.push('ListCreate');
+	};
 
 	return (
 		<>
@@ -107,7 +126,24 @@ export default function ListsScreen() {
 			</MessageModal>
 		</>
 	);
-}
+};
+
+ListsScreen.propTypes = {
+	applicationState: {
+		profileNeedsRefresh: PropTypes.object
+	}
+};
+
+const mapStateToProps = (state) => {
+	return {
+		applicationState: {
+			listsNeedsRefresh: state.listsNeedsRefresh
+		}
+	};
+};
+
+export default connect(mapStateToProps)(ListsScreen);
+
 
 const styles = StyleSheet.create({
 	header: {
@@ -121,24 +157,3 @@ const styles = StyleSheet.create({
 		fontSize: 24,
 	}
 });
-
-const DATA = [
-	{
-		id: 1,
-		name: 'Lista general',
-		itemCount: 20,
-		isPublic: true
-	},
-	{
-		id: 2,
-		name: 'Peliculas de terror',
-		itemCount: 10,
-		isPublic: false
-	},
-	{
-		id: 3,
-		name: 'Series de accion',
-		itemCount: 5,
-		isPublic: true
-	},
-];

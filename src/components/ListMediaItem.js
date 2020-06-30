@@ -10,29 +10,44 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
 ListMediaItem.propTypes = {
+	type: PropTypes.string,
 	id: PropTypes.number,
 	title: PropTypes.string,
-	summary: PropTypes.string,
-	imageUrl: PropTypes.string,
+	description: PropTypes.string,
+	imagePath: PropTypes.string,
 	year: PropTypes.number,
 	genres: PropTypes.array,
-	onDeleteListItemTapped: PropTypes.func
+	onDeleteListItemTapped: PropTypes.func,
+	listId: PropTypes.string,
 };
 
 export default function ListMediaItem(props) {
 
-	const { id, title, summary, imageUrl, year, genres, onDeleteListItemTapped } = props;
+	const { type, id, title, description, imagePath, year, genres, onDeleteListItemTapped, listId } = props;
 	const navigation = useNavigation();
 
 	const goToMediaDetails = () => {
-		navigation.push('MediaDetails', {id: id});
+		navigation.push('MediaDetails', {id: id, mediaType: type});
+	};
+
+	const onMoveListItemTapped = (mediaId, name) => {
+		navigation.push('MoveMediaItem', {
+			sourceListId: listId,
+			title: name,
+			mediaType: type,
+			mediaId: mediaId,
+			description: description,
+			imagePath: imagePath,
+			year: year,
+			genres: genres
+		});
 	};
 
 	return (
 		<View style={styles.container}>
 			<View style={{flex: 1}}>
 				<TouchableWithoutFeedback onPress={goToMediaDetails} style={{flexDirection: 'row'}}>
-					<Image source={imageUrl != null ? { uri: imageUrl } : imagePlaceholder} style={styles.image} />
+					<Image source={imagePath != null ? { uri: imagePath } : imagePlaceholder} style={styles.image} />
 					<View style={styles.cardContent}>
 						<View style={styles.header}>
 							<View>
@@ -52,7 +67,7 @@ export default function ListMediaItem(props) {
 							</View>
 						</View>
 						<Text style={styles.year}>{year}</Text>
-						<Text numberOfLines={6} style={styles.summary}>{summary}</Text>
+						<Text numberOfLines={6} style={styles.description}>{description}</Text>
 					</View>
 				</TouchableWithoutFeedback>
 			</View>
@@ -63,7 +78,7 @@ export default function ListMediaItem(props) {
 					paddingVertical={12}
 					paddingHorizontal={16}
 					marginBottom={10}
-					onPress={() => onDeleteListItemTapped(id, title)}>
+					onPress={() => onMoveListItemTapped(id, title)}>
 				</ButtonWithIcon>
 				<ButtonWithIcon
 					icon={TrashIcon}
@@ -86,8 +101,8 @@ const styles = StyleSheet.create({
 		backgroundColor: '#344250'
 	},
 	image: {
-		height: 175,
-		width: 140
+		height: 'auto',
+		width: 140,
 	},
 	cardContent: {
 		padding: 12,
@@ -106,7 +121,7 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		color: '#C1C5C9'
 	},
-	summary: {
+	description: {
 		marginTop: 8,
 		fontSize: 12,
 		color: '#C1C5C9'

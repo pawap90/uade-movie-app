@@ -1,6 +1,7 @@
 const initialState = {
 	isLoading: false,
 	isLoggedIn: false,
+	listsNeedsRefresh: false,
 	profileNeedsRefresh: false
 };
 
@@ -18,6 +19,10 @@ const applicationReducer = (state = initialState, action) => {
 		return { ...state, profileNeedsRefresh: true };
 	case 'PROFILE_REFRESHED':
 		return { ...state, profileNeedsRefresh: false };
+	case 'LISTS_NEEDS_REFRESH':
+		return { ...state, listsNeedsRefresh: true };
+	case 'LISTS_REFRESHED':
+		return { ...state, listsNeedsRefresh: false };
 	default:
 		return state;
 	}

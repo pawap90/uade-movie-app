@@ -46,7 +46,7 @@ export default function ButtonWithIcon(props) {
 					paddingVertical: paddingVertical,
 					marginHorizontal: marginHorizontal,
 					marginBottom: marginBottom,
-					width: grow ? '100%' : 'auto'
+					flex: grow ? 1 : 0
 				}}>
 
 				{icon && <Image style={

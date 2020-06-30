@@ -14,6 +14,18 @@ export const logout = {
 	type: 'LOGGED_OUT'
 };
 
+export const lists = {
+	type: 'LOGGED_IN'
+};
+
+export const listsNeedsRefresh = {
+	type: 'LISTS_NEEDS_REFRESH'
+};
+
+export const listsRefreshed = {
+	type: 'LISTS_REFRESHED'
+};
+
 export const profileNeedsRefresh = {
 	type: 'PROFILE_NEEDS_REFRESH'
 };
