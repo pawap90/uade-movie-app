@@ -4,18 +4,19 @@ import CommentsCarouselItem from './CommentsCarouselItem';
 import PropTypes from 'prop-types';
 
 CommentsCarousel.propTypes = {
-	style: PropTypes.object
+	style: PropTypes.object,
+	comments: PropTypes.array
 };
 
 export default function CommentsCarousel(props) {
-	const { style } = props;
+	const { style, comments = [] } = props;
 
 	return (
 		<View style={[styles.container, style]}>
 			<Text style={styles.title}>Comentarios</Text>
 			<SafeAreaView>
 				<FlatList
-					data={DATA}
+					data={comments}
 					horizontal={true}
 					renderItem={({ item }) => <CommentsCarouselItem {...item} />}
 					keyExtractor={item => item.id}
@@ -32,30 +33,3 @@ const styles = StyleSheet.create({
 		marginBottom: 12
 	}
 });
-
-const DATA = [
-	{
-		id: '1',
-		author: 'Kelly Blankenship',
-		score: 4.1,
-		comment: 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit'
-	},
-	{
-		id: '2',
-		author: 'Tyla Scott',
-		score: 4.6,
-		comment: 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet'
-	},
-	{
-		id: '3',
-		author: 'Jacque Barnard',
-		score: 3.5,
-		comment: 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet'
-	},
-	{
-		id: '4',
-		author: 'Norma Edwards',
-		score: 3,
-		comment: 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet'
-	},
-];
