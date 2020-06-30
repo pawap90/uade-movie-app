@@ -19,7 +19,7 @@ export default function ShareMediaItemButton(props) {
 		const esType = mediaType === 'movie' ? 'película' : 'serie';
 		let message = `Encontré esta ${esType} y creo que te puede interesar: ${title}.`;
 		if (url)
-			message += `\nConocela en: ${url}`
+			message += `\nConocela en: ${url}`;
 
 		const shareOptions = {
 			dialogTitle: `Compartir ${esType}`,

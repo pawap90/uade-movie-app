@@ -84,7 +84,9 @@ MovieHeader.propTypes = {
 	languages: PropTypes.array,
 	isLoggedIn: PropTypes.bool,
 	onUserRate: PropTypes.func,
-	userAlreadyRate: PropTypes.bool
+	userAlreadyRate: PropTypes.bool,
+	voteAverage: PropTypes.number,
+	voteCount: PropTypes.number
 };
 
 const styles = StyleSheet.create({
