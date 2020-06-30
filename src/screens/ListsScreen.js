@@ -11,12 +11,15 @@ import { useDispatch, connect } from 'react-redux';
 import { showSpinner, hideSpinner, listsRefreshed } from '../actions/application';
 import ListService from '../services/ListService';
 import PropTypes from 'prop-types';
+import { useNavigation } from '@react-navigation/native';
+
 
 const ListsScreen = (props) => {
 
 	const dispatch = useDispatch();
 	const { applicationState } = props;
 
+	const navigation = useNavigation();
 
 	const [myLists, setMyLists] = useState([]);
 	const [deleteConfirmationModalIsVisible, setDeleteConfirmationModalIsVisible] = useState(false);
@@ -82,6 +85,10 @@ const ListsScreen = (props) => {
 		dispatch(listsRefreshed)
 	}, [applicationState.listsNeedsRefresh]);
 
+	const onCreateTapped = () => {
+		navigation.push('ListCreate');
+	};
+
 	return (
 		<>
 			<Spinner></Spinner>
@@ -92,7 +99,8 @@ const ListsScreen = (props) => {
 						text="Crear lista"
 						icon={plusIcon}
 						backgroundColor="#E6D72A"
-						color="#1F2D3D">
+						color="#1F2D3D"
+						onPress={onCreateTapped}>
 					</ButtonWithIcon>
 				</View>
 				<FlatList

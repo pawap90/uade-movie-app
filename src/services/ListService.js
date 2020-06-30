@@ -13,6 +13,43 @@ const BASE_ENDPOINT = `${BACKEND_API_BASE_URL}/api/list`;
 export default class ListService {
 
 	/**
+	 * Create a new list
+	 * @param {ListModel} listModel List data
+	 */
+	static async create(listModel) {
+
+		try {
+			if (!(listModel instanceof ListModel))
+				throw new Error('The listModel must be of type ListModel');
+
+			const endpoint = `${BASE_ENDPOINT}`;
+
+			// Request init configuration.
+			const reqInit = {
+				headers: {
+					...await AccountService.getAuthHeader(),
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(listModel),
+				method: 'POST'
+			};
+
+			// Get response.
+			const response = await fetch(endpoint, reqInit);
+
+			if (response.status === 401)
+				throw ErrorHandler.handle('El usuario no fue autorizado', null, response.status);
+			else if (response.status === 400)
+				throw ErrorHandler.handle('Por favor complete todos los datos del formulario', null, response.status);
+			else if (response.status !== 200)
+				throw ErrorHandler.handle('Se produjo un error creando la lista', null, response.status);
+		}
+		catch (err) {
+			throw ErrorHandler.handle('Se produjo un error creando la lista', err, 500);
+		}
+	}
+
+	/**
      * Get user lists.
      */
 	static async getMyLists() {
@@ -35,7 +72,7 @@ export default class ListService {
 				throw ErrorHandler.handle('Se produjo un error al intentar obtener sus listas', null, response.status);
 
 			const responseJson = await response.json();
-            
+
 			// Parse results to model.
 			const lists = responseJson.map(list => new ListModel(list.isDefault, list.name, list.isPublic, list.mediaItems, list._id));
 			return lists;
@@ -67,7 +104,7 @@ export default class ListService {
 				throw ErrorHandler.handle('Se produjo un error al intentar obtener sus listas', null, response.status);
 
 			const responseJson = await response.json();
-            
+
 			return new ListModel(responseJson.isDefault, responseJson.name, responseJson.isPublic, responseJson.mediaItems, responseJson._id);
 		}
 		catch (err) {

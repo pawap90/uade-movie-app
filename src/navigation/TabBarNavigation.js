@@ -20,6 +20,7 @@ import ListsScreen from '../screens/ListsScreen';
 import ListDetailsScreen from '../screens/ListDetailsScreen';
 import MediaDetailsScreen from '../screens/MediaDetailsScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
+import ListCreateScreen from '../screens/ListCreateScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -132,6 +133,7 @@ const MyListsStackScreen = () => {
 			<MyListsStack.Screen name="MyLists" component={ListsScreen} />
 			<MyListsStack.Screen name="ListDetails" component={ListDetailsScreen} />
 			<HomeStack.Screen name="MediaDetails" component={MediaDetailsScreen} />
+			<MyListsStack.Screen name="ListCreate" component={ListCreateScreen} />
 		</MyListsStack.Navigator>
 	);
 };

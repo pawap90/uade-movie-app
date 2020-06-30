@@ -12,22 +12,30 @@ import { ScrollView } from 'react-native-gesture-handler';
 import ButtonWithIcon from '../components/ButtonWithIcon';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { logout, showSpinner, hideSpinner } from '../actions/application';
+import { logout, showSpinner, hideSpinner, profileRefreshed } from '../actions/application';
 import AccountService from '../services/AccountService';
+import { connect } from 'react-redux';
+import AccountModel from '../models/AccountModel';
+import MessageModal from '../components/MessageModal';
+import UserError from '../errors/UserError';
 
-ProfileScreen.propTypes = {
-	navigation: PropTypes.object,
-	route: PropTypes.object
-};
+const ProfileScreen = (props) => {
 
-export default function ProfileScreen() {
 	const navigation = useNavigation();
-	const [user, setUser] = useState({});
 	const dispatch = useDispatch();
 
-	const getUser  = async () => {
+	const [user, setUser] = useState({});
+	const [errorMessage, setErrorMessage] = useState(null);
+
+
+	const { applicationState } = props;
+
+	const getUser = async () => {
+		dispatch(showSpinner);
 		const results = await AccountService.getCurrentUserData();
 		setUser(results);
+		dispatch(profileRefreshed);
+		dispatch(hideSpinner);
 	};
 
 	const onAttributeChange = (attribute, newValue) => {
@@ -37,8 +45,23 @@ export default function ProfileScreen() {
 		});
 	};
 
-	const onSubmit = () => {
-		// TODO CALL API TO SAVE user
+	const onSubmit = async () => {
+		dispatch(showSpinner);
+
+		try {
+			const updatedAccount = new AccountModel(null, user.name, user.lastName, null);
+			await AccountService.update(updatedAccount);
+		}
+		catch (error) {
+			if (error instanceof UserError) {
+				setErrorMessage(error.message);
+			}
+			else {
+				setErrorMessage('Se produjo un error inesperado');
+			}
+		}
+
+		dispatch(hideSpinner);
 	};
 
 	const onLogout = async () => {
@@ -53,7 +76,7 @@ export default function ProfileScreen() {
 
 	useEffect(() => {
 		getUser();
-	}, []);
+	}, [applicationState.profileNeedsRefresh]);
 
 	return (
 		<View style={BaseStyles.container}>
@@ -74,10 +97,19 @@ export default function ProfileScreen() {
 				</ProfileAttribute>
 
 				<ProfileAttribute
+					label="Apellido"
+					name="lastName"
+					value={user.lastName}
+					buttonText="Cambiar"
+					updateProfile={onAttributeChange}>
+				</ProfileAttribute>
+
+				<ProfileAttribute
 					label="Correo electronico"
 					name="email"
 					value={user.email}
 					buttonText="Cambiar"
+					disabled={true}
 					updateProfile={onAttributeChange}>
 				</ProfileAttribute>
 
@@ -115,6 +147,29 @@ export default function ProfileScreen() {
 				marginBottom={16}
 				paddingVertical={12}
 				onPress={onLogout} />
+			<MessageModal
+				title={errorMessage}
+				isVisible={errorMessage != null}
+				onConfirm={() => setErrorMessage(null)}
+			></MessageModal>
 		</View>
 	);
-}
+};
+
+ProfileScreen.propTypes = {
+	navigation: PropTypes.object,
+	route: PropTypes.object,
+	applicationState: {
+		profileNeedsRefresh: PropTypes.object
+	}
+};
+
+const mapStateToProps = (state) => {
+	return {
+		applicationState: {
+			profileNeedsRefresh: state.profileNeedsRefresh
+		}
+	};
+};
+
+export default connect(mapStateToProps)(ProfileScreen);

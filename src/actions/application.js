@@ -25,3 +25,11 @@ export const listsNeedsRefresh = {
 export const listsRefreshed = {
 	type: 'LISTS_REFRESHED'
 };
+
+export const profileNeedsRefresh = {
+	type: 'PROFILE_NEEDS_REFRESH'
+};
+
+export const profileRefreshed = {
+	type: 'PROFILE_REFRESHED'
+};
