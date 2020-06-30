@@ -12,22 +12,23 @@ import { ScrollView } from 'react-native-gesture-handler';
 import ButtonWithIcon from '../components/ButtonWithIcon';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { logout, showSpinner, hideSpinner } from '../actions/application';
+import { logout, showSpinner, hideSpinner, profileRefreshed } from '../actions/application';
 import AccountService from '../services/AccountService';
+import { connect } from 'react-redux';
 
-ProfileScreen.propTypes = {
-	navigation: PropTypes.object,
-	route: PropTypes.object
-};
-
-export default function ProfileScreen() {
+const ProfileScreen = (props) => {
 	const navigation = useNavigation();
 	const [user, setUser] = useState({});
 	const dispatch = useDispatch();
 
-	const getUser  = async () => {
+	const { applicationState } = props;
+
+	const getUser = async () => {
+		dispatch(showSpinner);
 		const results = await AccountService.getCurrentUserData();
 		setUser(results);
+		dispatch(profileRefreshed);
+		dispatch(hideSpinner);
 	};
 
 	const onAttributeChange = (attribute, newValue) => {
@@ -38,7 +39,7 @@ export default function ProfileScreen() {
 	};
 
 	const onSubmit = () => {
-		
+
 	};
 
 	const onLogout = async () => {
@@ -53,7 +54,7 @@ export default function ProfileScreen() {
 
 	useEffect(() => {
 		getUser();
-	}, []);
+	}, [applicationState.profileNeedsRefresh]);
 
 	return (
 		<View style={BaseStyles.container}>
@@ -118,3 +119,18 @@ export default function ProfileScreen() {
 		</View>
 	);
 }
+
+ProfileScreen.propTypes = {
+	navigation: PropTypes.object,
+	route: PropTypes.object
+};
+
+const mapStateToProps = (state) => {
+	return {
+		applicationState: {
+			profileNeedsRefresh: state.profileNeedsRefresh
+		}
+	};
+};
+
+export default connect(mapStateToProps)(ProfileScreen);

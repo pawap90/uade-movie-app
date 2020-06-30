@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import MovieDbService from '../services/MovieDbService';
 import Spinner from '../components/Spinner';
 import { useDispatch } from 'react-redux';
-import { hideSpinner, showSpinner } from '../actions/application';
+import { hideSpinner, showSpinner, profileNeedsRefresh } from '../actions/application';
 import AccountService from '../services/AccountService';
 import AccountModel from '../models/AccountModel';
 
@@ -66,6 +66,7 @@ export default function GenreSelectionScreen(props) {
 		dispatch(showSpinner);
 		const updatedAccount = new AccountModel(null, null, null, selectedGenres);
 		await AccountService.update(updatedAccount);
+		dispatch(profileNeedsRefresh);
 		dispatch(hideSpinner);
 		navigation.pop();
 	};
