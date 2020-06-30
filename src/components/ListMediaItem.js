@@ -17,17 +17,31 @@ ListMediaItem.propTypes = {
 	imagePath: PropTypes.string,
 	year: PropTypes.number,
 	genres: PropTypes.array,
-	onDeleteListItemTapped: PropTypes.func
+	onDeleteListItemTapped: PropTypes.func,
+	listId: PropTypes.string,
 };
 
 export default function ListMediaItem(props) {
 
-	const { type, id, title, description, imagePath, year, genres, onDeleteListItemTapped } = props;
+	const { type, id, title, description, imagePath, year, genres, onDeleteListItemTapped, listId } = props;
 	const navigation = useNavigation();
 
 	const goToMediaDetails = () => {
 		navigation.push('MediaDetails', {id: id, mediaType: type});
 	};
+
+	const onMoveListItemTapped = (mediaId, name) => {
+		navigation.push('MoveMediaItem', {
+			sourceListId: listId,
+			title: name,
+			mediaType: type,
+			mediaId: mediaId,
+			description: description,
+			imagePath: imagePath,
+			year: year,
+			genres: genres
+		})
+	}
 
 	return (
 		<View style={styles.container}>
@@ -64,7 +78,7 @@ export default function ListMediaItem(props) {
 					paddingVertical={12}
 					paddingHorizontal={16}
 					marginBottom={10}
-					onPress={() => onDeleteListItemTapped(id, title)}>
+					onPress={() => onMoveListItemTapped(id, title)}>
 				</ButtonWithIcon>
 				<ButtonWithIcon
 					icon={TrashIcon}

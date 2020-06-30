@@ -84,7 +84,7 @@ export default function ListCreateScreen() {
 					{/* Submit button */}
 					<ButtonWithIcon
 						text="CREAR"
-						backgroundColor="#60C7AC"
+						backgroundColor="#E6D72A"
 						marginBottom={10}
 						color="#000000"
 						paddingVertical={12}

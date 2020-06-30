@@ -21,6 +21,7 @@ import ListDetailsScreen from '../screens/ListDetailsScreen';
 import MediaDetailsScreen from '../screens/MediaDetailsScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import ListCreateScreen from '../screens/ListCreateScreen';
+import MoveMediaItemScreen from '../screens/MoveMediaItemScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -31,12 +32,12 @@ const ProfileStack = createStackNavigator();
 export default function TabBarNavigation(isLoggedIn) {
 	return (
 		<Tab.Navigator screenOptions={setTabBarScreenOptions} tabBarOptions={setTabBarOptions}>
+			<Tab.Screen name="Inicio" component={HomeStackScreen} />
 			<Tab.Screen
 				name="Mis listas"
 				listeners={() => handleAnonymousUsersInteractions(isLoggedIn, 'Debe autenticarse en la app para poder ver sus listas de series y peliculas')}
 				component={MyListsStackScreen}
 			/>
-			<Tab.Screen name="Inicio" component={HomeStackScreen} />
 			<Tab.Screen
 				name="Perfil"
 				listeners={() => handleAnonymousUsersInteractions(isLoggedIn, 'Debe autenticarse en la app para poder ver su perfil de usuario')}
@@ -132,8 +133,9 @@ const MyListsStackScreen = () => {
 		<MyListsStack.Navigator screenOptions={() => setStackedScreensOptions(false)}>
 			<MyListsStack.Screen name="MyLists" component={ListsScreen} />
 			<MyListsStack.Screen name="ListDetails" component={ListDetailsScreen} />
-			<HomeStack.Screen name="MediaDetails" component={MediaDetailsScreen} />
+			<MyListsStack.Screen name="MediaDetails" component={MediaDetailsScreen} />
 			<MyListsStack.Screen name="ListCreate" component={ListCreateScreen} />
+			<MyListsStack.Screen name="MoveMediaItem" component={MoveMediaItemScreen} />
 		</MyListsStack.Navigator>
 	);
 };

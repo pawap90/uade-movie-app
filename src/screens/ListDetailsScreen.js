@@ -90,7 +90,7 @@ const ListDetailsScreen = (props) => {
 				</View>
 				<FlatList
 					data={list.mediaItems}
-					renderItem={({ item }) => <ListMediaItem {...item} onDeleteListItemTapped={() => onDeleteListItemTapped(item.type, item.id, item.title)} />}
+					renderItem={({ item }) => <ListMediaItem {...item} listId={id} onDeleteListItemTapped={() => onDeleteListItemTapped(item.type, item.id, item.title)} />}
 					keyExtractor={item => item.id}
 				/>
 			</View>
