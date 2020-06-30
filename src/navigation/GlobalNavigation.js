@@ -2,6 +2,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useEffect } from 'react';
 import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
 import { connect, useDispatch } from 'react-redux';
 import RequiredLoginScreen from '../screens/RequiredLoginScreen';
 import TabBarNavigation from './TabBarNavigation';
@@ -32,6 +33,7 @@ const GlobalNavigation = (props) => {
 			<Stack.Screen name="TabBar" component={() => TabBarNavigation(isLoggedIn)} />
 			<Stack.Screen name="Login" component={LoginScreen} />
 			<Stack.Screen name="RequiredLogin" options={{ animationEnabled: false }} component={RequiredLoginScreen} />
+			<Stack.Screen name="Register" component={RegisterScreen} />
 		</Stack.Navigator>
 	);
 };

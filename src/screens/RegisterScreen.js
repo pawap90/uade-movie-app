@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import BaseStyles from '../BaseStyles';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
-import LoginBg from '../../assets/login-bg.jpg';
-import Logo from '../../assets/logo.png';
+import BackgroundImage from '../../assets/login-bg.jpg';
 import ButtonWithIcon from '../components/ButtonWithIcon';
 import Spinner from '../components/Spinner';
 import AccountService from '../services/AccountService';
-import LoginModel from '../models/LoginModel';
+import RegisterModel from '../models/RegisterModel';
 import { useDispatch } from 'react-redux';
 import { showSpinner, hideSpinner, login } from '../actions/application';
 import UserError from '../errors/UserError';
 import MessageModal from '../components/MessageModal';
 import { useNavigation } from '@react-navigation/native';
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
 
 	const [form, setForm] = useState({
-		email: null,
-		password: null
+		email: '',
+		password: '',
+		name: '',
+		lastname: ''
 	});
 
 	const [errorMessage, setErrorMessage] = useState(null);
@@ -27,15 +28,14 @@ export default function LoginScreen() {
 	const navigation = useNavigation();
 
 	const onSubmitTapped = async () => {
-		if (form.email === null || form.password === null) {
+		if (!form.email || !form.password || !form.name || !form.lastname) {
 			setErrorMessage('Por favor completa los datos para poder ingresar');
 			return;
 		}
 
-
 		dispatch(showSpinner);
 		try {
-			await AccountService.login(new LoginModel(form.email, form.password));
+			await AccountService.register(new RegisterModel(form.email, form.name, form.lastname, form.password));
 			dispatch(login);
 			navigation.reset({
 				routes: [{ name: 'TabBar' }]
@@ -52,15 +52,9 @@ export default function LoginScreen() {
 		dispatch(hideSpinner);
 	};
 
-	const onContinueAnonymousTapped = () => {
+	const onContinueLoginTapped = () => {
 		navigation.reset({
-			routes: [{ name: 'TabBar' }]
-		});
-	};
-
-	const onRegisterTapped = () => {
-		navigation.reset({
-			routes: [{ name: 'Register' }]
+			routes: [{ name: 'Login' }]
 		});
 	};
 
@@ -74,15 +68,31 @@ export default function LoginScreen() {
 	return (
 		<View style={{ flex: 1 }}>
 			<Spinner></Spinner>
-			<ImageBackground source={LoginBg} style={styles.container}>
+			<ImageBackground source={BackgroundImage} style={styles.container}>
 				<View style={styles.body}>
 					<ScrollView>
-						{/* Logo and App name */}
-						<Image source={Logo} style={styles.logo}></Image>
 						<Text style={styles.title}>MovieApp</Text>
 
-
 						<View style={styles.form}>
+
+							{/* Name label and input */}
+							<Text style={BaseStyles.label}>Nombre</Text>
+							<TextInput
+								value={form.name}
+								style={{ ...BaseStyles.input }}
+								textContentType='name'
+								onChangeText={(text) => onAttributeChange('name', text)}
+							/>
+
+							{/* Lastname label and input */}
+							<Text style={BaseStyles.label}>Apellido</Text>
+							<TextInput
+								value={form.lastname}
+								style={{ ...BaseStyles.input }}
+								textContentType='familyName'
+								onChangeText={(text) => onAttributeChange('lastname', text)}
+							/>
+
 							{/* Email label and input */}
 							<Text style={BaseStyles.label}>Correo electrónico</Text>
 							<TextInput
@@ -102,27 +112,20 @@ export default function LoginScreen() {
 								onChangeText={(text) => onAttributeChange('password', text)}
 							/>
 							<ButtonWithIcon
-								text="Continuar sin autenticarse"
+								text="Ya tengo cuenta, ingresar"
 								marginBottom={30}
-								onPress={onContinueAnonymousTapped}>
+								onPress={onContinueLoginTapped}>
 							</ButtonWithIcon>
 						</View>
 
 						{/* Submit button */}
 						<ButtonWithIcon
-							text="INGRESAR"
+							text="REGISTRARME"
 							backgroundColor="#60C7AC"
 							marginBottom={10}
 							color="#000000"
 							paddingVertical={12}
 							onPress={onSubmitTapped}>
-						</ButtonWithIcon>
-						<ButtonWithIcon
-							text="REGISTRARSE"
-							backgroundColor="#344251"
-							color="#FFFFFF"
-							paddingVertical={12}
-							onPress={onRegisterTapped}>
 						</ButtonWithIcon>
 					</ScrollView>
 				</View>
@@ -133,7 +136,6 @@ export default function LoginScreen() {
 				onConfirm={() => setErrorMessage(null)}
 			></MessageModal>
 		</View>
-
 	);
 }
 
