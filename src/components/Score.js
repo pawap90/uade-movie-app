@@ -4,27 +4,54 @@ import starFull from '../../assets/star-full.png';
 import startHalfFull from '../../assets/star-half-full.png';
 import starEmpty from '../../assets/star-empty.png';
 import PropTypes from 'prop-types';
+import TouchableIcon from './TouchableIcon';
 
 Score.propTypes = {
 	value: PropTypes.number,
 	total: PropTypes.number,
 	showTitle: PropTypes.bool,
-	starSize: PropTypes.number
+	isInteractive: PropTypes.bool,
+	starSize: PropTypes.number,
+	onItemTapped: PropTypes.func
 };
 
 export default function Score(props) {
-	const { value, total, showTitle = true, starSize = 20 } = props;
+	const {
+		value = 3,
+		total,
+		showTitle = true,
+		starSize = 20,
+		isInteractive = false,
+		onItemTapped
+	} = props;
 
 	const starStyles = { ...styles.star, width: starSize, height: starSize };
 
 	const getStar = (targetScore, actualScore) => {
-		if (actualScore >= targetScore)
-			return <Image key={`${targetScore}`} style={starStyles} source={starFull}></Image>;
+		let resource;
+		if (actualScore >= targetScore) {
+			resource = starFull;
+		}
+		else if ((targetScore - actualScore) > 0.5) {
+			resource = starEmpty;
+		}
+		else {
+			resource = startHalfFull;
+		}
 
-		if ((targetScore - actualScore) > 0.5)
-			return <Image key={`${targetScore}`} style={starStyles} source={starEmpty}></Image>;
-
-		return <Image key={`${targetScore}`} style={starStyles} source={startHalfFull}></Image>;
+		if (isInteractive) {
+			return (
+				<TouchableIcon
+					onPress={() => onItemTapped(targetScore)}
+					icon={resource}
+					color="#E6D72A"
+					iconSize={30}>
+				</TouchableIcon>
+			);
+		}
+		else {
+			return <Image key={`${targetScore}`} style={starStyles} source={resource}></Image>;
+		}
 	};
 
 	return (
