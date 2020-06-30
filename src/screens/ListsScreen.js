@@ -12,6 +12,7 @@ import { showSpinner, hideSpinner, listsRefreshed } from '../actions/application
 import ListService from '../services/ListService';
 import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
+import UserError from '../errors/UserError';
 
 
 const ListsScreen = (props) => {
@@ -46,15 +47,16 @@ const ListsScreen = (props) => {
 		dispatch(showSpinner);
 
 		try {
-			await ListService.deleteListById(selectedItem.id)
+			await ListService.deleteListById(selectedItem.id);
 			setDeleteResultModalData(prev => ({
 				...prev,
 				isVisible: true,
 				title: `${selectedItem.name} ha sido eliminada`
 			}));
-			getMyLists()
+			getMyLists();
 
-		} catch (err) {
+		}
+		catch (err) {
 			if (err instanceof UserError) {
 				setDeleteResultModalData(prev => ({
 					...prev,
@@ -74,14 +76,14 @@ const ListsScreen = (props) => {
 
 	const getMyLists = async () => {
 		dispatch(showSpinner);
-		const lists = await ListService.getMyLists()
+		const lists = await ListService.getMyLists();
 		setMyLists(lists);
 		dispatch(hideSpinner);
 	};
 
 	useEffect(() => {
 		getMyLists();
-		dispatch(listsRefreshed)
+		dispatch(listsRefreshed);
 	}, [applicationState.listsNeedsRefresh]);
 
 	const onCreateTapped = () => {
@@ -124,7 +126,7 @@ const ListsScreen = (props) => {
 			</MessageModal>
 		</>
 	);
-}
+};
 
 ListsScreen.propTypes = {
 	applicationState: {
@@ -140,7 +142,7 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps)(ListsScreen)
+export default connect(mapStateToProps)(ListsScreen);
 
 
 const styles = StyleSheet.create({

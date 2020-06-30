@@ -40,8 +40,8 @@ export default function ListMediaItem(props) {
 			imagePath: imagePath,
 			year: year,
 			genres: genres
-		})
-	}
+		});
+	};
 
 	return (
 		<View style={styles.container}>

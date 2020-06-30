@@ -34,13 +34,14 @@ const ListDetailsScreen = (props) => {
 		setDeleteConfirmationModalIsVisible(false);
 		dispatch(showSpinner);
 		try {
-			await ListService.deleteListItem(id, selectedItem.mediaType, selectedItem.id)
+			await ListService.deleteListItem(id, selectedItem.mediaType, selectedItem.id);
 			setDeleteResultModalData(prev => ({
 				...prev,
 				isVisible: true,
 				title: `${selectedItem.title} ha sido eliminada`
 			}));
-		} catch (err) {
+		}
+		catch (err) {
 			if (err instanceof UserError) {
 				setDeleteResultModalData(prev => ({
 					...prev,
@@ -55,15 +56,15 @@ const ListDetailsScreen = (props) => {
 	};
 
 	const onConfirmResultTapped = () => {
-		setSelectedItem(false)
+		setSelectedItem(false);
 		setDeleteResultModalData(prev => ({ ...prev, isVisible: false }));
-		getListById()
-		dispatch(listsNeedsRefresh)
+		getListById();
+		dispatch(listsNeedsRefresh);
 	};
 
 	const getListById = async () => {
-		const result = await ListService.getListById(id)
-		setList(result)
+		const result = await ListService.getListById(id);
+		setList(result);
 	};
 
 	const onDeleteListItemTapped = (mediaType, mediaId, title) => {
@@ -76,9 +77,9 @@ const ListDetailsScreen = (props) => {
 	};
 
 	useEffect(() => {
-		getListById()
-		dispatch(listsRefreshed)
-	}, [applicationState.listsNeedsRefresh])
+		getListById();
+		dispatch(listsRefreshed);
+	}, [applicationState.listsNeedsRefresh]);
 
 	return (
 		<>
@@ -110,7 +111,7 @@ const ListDetailsScreen = (props) => {
 			</MessageModal>
 		</>
 	);
-}
+};
 
 ListDetailsScreen.propTypes = {
 	route: PropTypes.object,
@@ -128,7 +129,7 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps)(ListDetailsScreen)
+export default connect(mapStateToProps)(ListDetailsScreen);
 
 const styles = StyleSheet.create({
 	title: {

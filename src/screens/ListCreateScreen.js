@@ -33,7 +33,7 @@ export default function ListCreateScreen() {
 		dispatch(showSpinner);
 		try {
 			await ListService.create(new ListModel(false, form.name, form.isPublic, null, null));
-			dispatch(listsNeedsRefresh)
+			dispatch(listsNeedsRefresh);
 			navigation.goBack();
 		}
 		catch (error) {

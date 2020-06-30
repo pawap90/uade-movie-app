@@ -36,7 +36,7 @@ const MovieHeader = (props) => {
 	const dispatch = useDispatch();
 
 	const [showRateModal, setShowRateModal] = useState(false);
-	const [showItemAddedToMyListsModal, setShowItemAddedToMyListsModal] = useState(false)
+	const [showItemAddedToMyListsModal, setShowItemAddedToMyListsModal] = useState(false);
 
 	const onAddToMyListsTapped = async () => {
 		if (!isLoggedIn) {
@@ -44,9 +44,9 @@ const MovieHeader = (props) => {
 		}
 		else {
 			// TODO Handle add media to my lists
-			dispatch(showSpinner)
-			let myLists = await ListService.getMyLists()
-			const defaultList = myLists.filter(l => l.isDefault)[0]
+			dispatch(showSpinner);
+			let myLists = await ListService.getMyLists();
+			const defaultList = myLists.filter(l => l.isDefault)[0];
 			await ListService.addItemToList(defaultList._id, {
 				type: mediaType,
 				id: id,
@@ -55,10 +55,10 @@ const MovieHeader = (props) => {
 				imagePath: imagePath,
 				genres: genres,
 				year: new Date(releaseDate).getFullYear()
-			})
-			setShowItemAddedToMyListsModal(true)
-			dispatch(listsNeedsRefresh)
-			dispatch(hideSpinner)
+			});
+			setShowItemAddedToMyListsModal(true);
+			dispatch(listsNeedsRefresh);
+			dispatch(hideSpinner);
 		}
 	};
 
@@ -124,7 +124,10 @@ MovieHeader.propTypes = {
 	onUserRate: PropTypes.func,
 	userAlreadyRate: PropTypes.bool,
 	voteAverage: PropTypes.number,
-	voteCount: PropTypes.number
+	voteCount: PropTypes.number,
+	id: PropTypes.number,
+	mediaType: PropTypes.string,
+	imagePath: PropTypes.string
 };
 
 const styles = StyleSheet.create({
