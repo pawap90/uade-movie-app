@@ -25,12 +25,9 @@ export default function ProfileScreen() {
 	const [user, setUser] = useState({});
 	const dispatch = useDispatch();
 
-	const getUser = () => {
-		setUser({
-			name: 'Jane Doe',
-			email: 'janedoeiam@somemail.com',
-			genres: ['Drama', 'Ciencia Ficcion']
-		});
+	const getUser  = async () => {
+		const results = await AccountService.getCurrentUserData();
+		setUser(results);
 	};
 
 	const onAttributeChange = (attribute, newValue) => {
@@ -89,7 +86,7 @@ export default function ProfileScreen() {
 				<ProfileSection
 					icon={KeyIcon}
 					title="Contraseña"
-					onPress={() => alert('Change Password')}>
+					onPress={() => navigation.push('ChangePassword')}>
 				</ProfileSection>
 
 				<Separator />
