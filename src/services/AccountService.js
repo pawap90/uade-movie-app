@@ -26,9 +26,13 @@ export default class AccountService {
 
 			// Request init configuration.
 			const reqInit = {
-				headers: await this.getAuthHeader()
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': await getAccessToken(),
+				},
+				method: 'GET'
 			};
-
+			
 			// Get response.
 			const response = await fetch(endpoint, reqInit);
 
