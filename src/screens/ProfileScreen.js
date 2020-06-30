@@ -89,7 +89,7 @@ export default function ProfileScreen() {
 				<ProfileSection
 					icon={KeyIcon}
 					title="Contraseña"
-					onPress={() => alert('Change Password')}>
+					onPress={() => navigation.push('ChangePassword')}>
 				</ProfileSection>
 
 				<Separator />
