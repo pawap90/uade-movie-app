@@ -56,7 +56,9 @@ export default function LoginScreen() {
 	};
 
 	const onRegisterTapped = () => {
-		// TODO - Navigate to register screen
+		navigation.reset({
+			routes: [{ name: 'Register' }]
+		});
 	};
 
 	const onAttributeChange = (attribute, newValue) => {
