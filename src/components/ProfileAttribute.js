@@ -11,11 +11,12 @@ ProfileAttribute.propTypes = {
 	value: PropTypes.string,
 	buttonText: PropTypes.string,
 	onButtonClick: PropTypes.func,
-	updateProfile: PropTypes.func
+	updateProfile: PropTypes.func,
+	disabled: PropTypes.bool
 };
 
 export default function ProfileAttribute(props) {
-	const { label, name, value, buttonText, updateProfile } = props;
+	const { label, name, value, buttonText, updateProfile, disabled = false } = props;
 
 	const [isEditing, setIsEditing] = useState(false);
 	const [newValue, setNewValue] = useState(value);
@@ -32,7 +33,7 @@ export default function ProfileAttribute(props) {
 
 	useEffect(() => {
 		setNewValue(value);
-	},[value]);
+	}, [value]);
 
 	return (
 		<View style={styles.container}>
@@ -40,9 +41,9 @@ export default function ProfileAttribute(props) {
 				<Text style={styles.label}>{label}</Text>
 				{!isEditing && <Text style={styles.value}>{value}</Text>}
 
-				{isEditing && <TextInput value={newValue} style={styles.input} onChangeText={setNewValue} />}
+				{!disabled && isEditing && <TextInput value={newValue} style={styles.input} onChangeText={setNewValue} />}
 			</View>
-			{!isEditing &&
+			{!disabled && !isEditing &&
 				<ButtonWithIcon
 					text={buttonText}
 					backgroundColor="#60C7AC"
@@ -50,8 +51,8 @@ export default function ProfileAttribute(props) {
 					onPress={() => setIsEditing(!isEditing)}>
 				</ButtonWithIcon>
 			}
-			{isEditing &&
-				<View style={{flexDirection: 'row'}}>
+			{!disabled && isEditing &&
+				<View style={{ flexDirection: 'row' }}>
 					<ButtonWithIcon
 						text="Cancelar"
 						backgroundColor="#F18D9E"
