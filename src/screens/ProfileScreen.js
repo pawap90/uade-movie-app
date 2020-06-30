@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 import AccountModel from '../models/AccountModel';
 import MessageModal from '../components/MessageModal';
 import UserError from '../errors/UserError';
+import Spinner from '../components/Spinner';
 
 const ProfileScreen = (props) => {
 
@@ -79,80 +80,83 @@ const ProfileScreen = (props) => {
 	}, [applicationState.profileNeedsRefresh]);
 
 	return (
-		<View style={BaseStyles.container}>
+		<>
+			<Spinner></Spinner>
+			<View style={BaseStyles.container}>
 
-			<ScrollView>
-				<ProfileSection
-					icon={UserIcon}
-					title="Datos personales"
-					marginBottom={12}>
-				</ProfileSection>
+				<ScrollView>
+					<ProfileSection
+						icon={UserIcon}
+						title="Datos personales"
+						marginBottom={12}>
+					</ProfileSection>
 
-				<ProfileAttribute
-					label="Nombre"
-					name="name"
-					value={user.name}
-					buttonText="Cambiar"
-					updateProfile={onAttributeChange}>
-				</ProfileAttribute>
+					<ProfileAttribute
+						label="Nombre"
+						name="name"
+						value={user.name}
+						buttonText="Cambiar"
+						updateProfile={onAttributeChange}>
+					</ProfileAttribute>
 
-				<ProfileAttribute
-					label="Apellido"
-					name="lastName"
-					value={user.lastName}
-					buttonText="Cambiar"
-					updateProfile={onAttributeChange}>
-				</ProfileAttribute>
+					<ProfileAttribute
+						label="Apellido"
+						name="lastName"
+						value={user.lastName}
+						buttonText="Cambiar"
+						updateProfile={onAttributeChange}>
+					</ProfileAttribute>
 
-				<ProfileAttribute
-					label="Correo electronico"
-					name="email"
-					value={user.email}
-					buttonText="Cambiar"
-					disabled={true}
-					updateProfile={onAttributeChange}>
-				</ProfileAttribute>
+					<ProfileAttribute
+						label="Correo electronico"
+						name="email"
+						value={user.email}
+						buttonText="Cambiar"
+						disabled={true}
+						updateProfile={onAttributeChange}>
+					</ProfileAttribute>
 
-				<Separator />
+					<Separator />
 
-				<ProfileSection
-					icon={KeyIcon}
-					title="Contraseña"
-					onPress={() => navigation.push('ChangePassword')}>
-				</ProfileSection>
+					<ProfileSection
+						icon={KeyIcon}
+						title="Contraseña"
+						onPress={() => navigation.push('ChangePassword')}>
+					</ProfileSection>
 
-				<Separator />
+					<Separator />
 
-				<ProfileSection
-					title="Géneros preferidos"
-					onPress={() => navigation.push('GenreSelection', { userGenres: user.genres })}
-					marginBottom={12}>
-				</ProfileSection>
+					<ProfileSection
+						title="Géneros preferidos"
+						onPress={() => navigation.push('GenreSelection', { userGenres: user.genres })}
+						marginBottom={12}>
+					</ProfileSection>
 
-				<ProfileGenres genres={user.genres}></ProfileGenres>
+					<ProfileGenres genres={user.genres}></ProfileGenres>
 
-			</ScrollView>
+				</ScrollView>
 
-			<ButtonWithIcon
-				backgroundColor="#E6D72A"
-				text="Guardar cambios"
-				color="#000000"
-				marginBottom={16}
-				paddingVertical={12}
-				onPress={onSubmit} />
-			<ButtonWithIcon
-				backgroundColor="#60C7AC"
-				text="Cerrar sesión"
-				color="#000000"
-				marginBottom={16}
-				paddingVertical={12}
-				onPress={onLogout} />
-			<MessageModal
-				title={errorMessage}
-				isVisible={errorMessage != null}
-				onConfirm={() => setErrorMessage(null)}
-			></MessageModal>
-		</View>
+				<ButtonWithIcon
+					backgroundColor="#E6D72A"
+					text="Guardar cambios"
+					color="#000000"
+					marginBottom={16}
+					paddingVertical={12}
+					onPress={onSubmit} />
+				<ButtonWithIcon
+					backgroundColor="#60C7AC"
+					text="Cerrar sesión"
+					color="#000000"
+					marginBottom={16}
+					paddingVertical={12}
+					onPress={onLogout} />
+				<MessageModal
+					title={errorMessage}
+					isVisible={errorMessage != null}
+					onConfirm={() => setErrorMessage(null)}
+				></MessageModal>
+			</View>
+		</>
 	);
 };
 
