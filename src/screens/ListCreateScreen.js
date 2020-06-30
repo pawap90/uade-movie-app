@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
 	},
 	switch: {
 		marginBottom: 15,
-		alignSelf: "flex-start"
+		alignSelf: 'flex-start'
 	},
 	title: {
 		color: '#60C7AC',
