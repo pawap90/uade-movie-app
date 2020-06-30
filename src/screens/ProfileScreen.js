@@ -83,7 +83,6 @@ const ProfileScreen = (props) => {
 		<>
 			<Spinner></Spinner>
 			<View style={BaseStyles.container}>
-
 				<ScrollView>
 					<ProfileSection
 						icon={UserIcon}
