@@ -8,12 +8,14 @@ import MediaTypeSwitch from '../components/MediaTypeSwitch';
 import Spinner from '../components/Spinner';
 import { useDispatch } from 'react-redux';
 import { showSpinner, hideSpinner } from '../actions/application';
+import { useNavigation } from '@react-navigation/native';
 
 HomeScreen.propTypes = {
 	navigation: PropTypes.object
 };
 
 export default function HomeScreen() {
+	const navigation = useNavigation();
 
 	const dispatch = useDispatch();
 
