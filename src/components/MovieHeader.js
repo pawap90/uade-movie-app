@@ -14,7 +14,7 @@ import RateModal from './RateModal';
 
 const MovieHeader = (props) => {
 
-	const { title, releaseDate, summary, genres = [], languages = [], isLoggedIn, onUserRate, userAlreadyRate = false } = props;
+	const { title, releaseDate, summary, genres = [], languages = [], isLoggedIn, onUserRate, voteAverage, voteCount, userAlreadyRate = false } = props;
 	const navigation = useNavigation();
 
 	const [showRateModal, setShowRateModal] = useState(false);
@@ -61,7 +61,7 @@ const MovieHeader = (props) => {
 					))}
 				</View>
 				<View style={styles.footer}>
-					<Score value={3.4} total={3543}></Score>
+					<Score value={voteAverage} total={voteCount}></Score>
 					{!userAlreadyRate && <ButtonWithIcon text="Calificar" icon={starIcon} onPress={onRateTapped}></ButtonWithIcon>}
 					<ButtonWithIcon text="Mi lista" icon={plusIcon} onPress={onAddToMyListsTapped}></ButtonWithIcon>
 				</View>
@@ -84,7 +84,9 @@ MovieHeader.propTypes = {
 	languages: PropTypes.array,
 	isLoggedIn: PropTypes.bool,
 	onUserRate: PropTypes.func,
-	userAlreadyRate: PropTypes.bool
+	userAlreadyRate: PropTypes.bool,
+	voteAverage: PropTypes.number,
+	voteCount: PropTypes.number
 };
 
 const styles = StyleSheet.create({
