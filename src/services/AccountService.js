@@ -94,13 +94,13 @@ export default class AccountService {
 
 	/**
 	 * Register a new account.
-	 * @param {RegisterModel} accountModel Register data
+	 * @param {RegisterModel} registerModel Register data
 	 */
-	static async register(accountModel) {
+	static async register(registerModel) {
 
 		try {
-			if (!(accountModel instanceof RegisterModel))
-				throw new Error('The accountModel must be of type AccountModel');
+			if (!(registerModel instanceof RegisterModel))
+				throw new Error('The registerModel must be of type RegisterModel');
 
 			const endpoint = `${BASE_ENDPOINT}/register`;
 
@@ -109,7 +109,7 @@ export default class AccountService {
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify(accountModel),
+				body: JSON.stringify(registerModel),
 				method: 'POST'
 			};
 
