@@ -130,11 +130,14 @@ const ProfileScreen = (props) => {
 				onPress={onLogout} />
 		</View>
 	);
-}
+};
 
 ProfileScreen.propTypes = {
 	navigation: PropTypes.object,
-	route: PropTypes.object
+	route: PropTypes.object,
+	applicationState: {
+		profileNeedsRefresh: PropTypes.object
+	}
 };
 
 const mapStateToProps = (state) => {
