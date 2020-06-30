@@ -19,6 +19,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import ListsScreen from '../screens/ListsScreen';
 import ListDetailsScreen from '../screens/ListDetailsScreen';
 import MediaDetailsScreen from '../screens/MediaDetailsScreen';
+import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -140,6 +141,7 @@ const ProfileStackScreen = () => {
 		<ProfileStack.Navigator initialRouteName="Profile" screenOptions={() => setStackedScreensOptions(false)}>
 			<ProfileStack.Screen name="Profile" component={ProfileScreen} />
 			<ProfileStack.Screen name="GenreSelection" component={GenreSelectionScreen} />
+			<ProfileStack.Screen name="ChangePassword" component={ChangePasswordScreen} />
 		</ProfileStack.Navigator>
 	);
 };

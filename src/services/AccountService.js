@@ -4,6 +4,7 @@ import { BACKEND_API_BASE_URL } from 'react-native-dotenv';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import LoginModel from '../models/LoginModel';
+import ChangePasswordModel from '../models/ChangePasswordModel';
 import AccountModel from '../models/AccountModel';
 import RegisterModel from '../models/RegisterModel';
 import ErrorHandler from '../errors/ErrorHandler';
@@ -25,9 +26,13 @@ export default class AccountService {
 
 			// Request init configuration.
 			const reqInit = {
-				headers: await this.getAuthHeader()
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': await getAccessToken(),
+				},
+				method: 'GET'
 			};
-
+			
 			// Get response.
 			const response = await fetch(endpoint, reqInit);
 
@@ -141,6 +146,43 @@ export default class AccountService {
 	}
 
 	/**
+     * Change user current password.
+	 * @param {changePasswordModel} ChangePasswordModel Change Password data
+     */
+	static async changePassword(changePasswordModel) {
+		try {
+			if (!(changePasswordModel instanceof ChangePasswordModel))
+				throw new Error('The ChangePasswordModel must be of type ChangePasswordModel');
+
+			const endpoint = `${BASE_ENDPOINT}/change-password`;
+
+			// Request init configuration.
+			const reqInit = {
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': await getAccessToken(),
+				},
+				body: JSON.stringify(changePasswordModel),
+				method: 'PUT'
+			};
+
+			// Get response.
+			const response = await fetch(endpoint, reqInit);
+
+			if (response.status === 401)
+				throw ErrorHandler.handle('No se pudo autorizar al usuario. Por favor, verifique la contraseña actual', null, response.status);
+			else if (response.status !== 200)
+				throw ErrorHandler.handle('Se produjo un error al cambiar la contraseña', null, response.status);
+
+			const responseJson = await response.json();
+
+			return responseJson;
+		}
+		catch (err) {
+			throw ErrorHandler.handle('Se produjo un error al cambiar la contraseña', err, 500);
+		}
+	}
+	/**
      * Get the authorization header to authorizes the current user.
      */
 	static async getAuthHeader() {
@@ -157,6 +199,8 @@ export default class AccountService {
 		return accessToken != null;
 	}
 }
+
+
 
 /**
  * Get access token from local storage.
