@@ -166,16 +166,16 @@ export default class AccountService {
 			const response = await fetch(endpoint, reqInit);
 
 			if (response.status === 401)
-				throw ErrorHandler.handle('Tuvimos un problema intente mas tarde', null, response.status);
+				throw ErrorHandler.handle('No se pudo autorizar al usuario. Por favor, verifique la contraseña actual', null, response.status);
 			else if (response.status !== 200)
-				throw ErrorHandler.handle('Se produjo un error autorizando al usuario', null, response.status);
+				throw ErrorHandler.handle('Se produjo un error al cambiar la contraseña', null, response.status);
 
 			const responseJson = await response.json();
 
 			return responseJson;
 		}
 		catch (err) {
-			throw ErrorHandler.handle('Se produjo un error autorizando al usuario', err, 500);
+			throw ErrorHandler.handle('Se produjo un error al cambiar la contraseña', err, 500);
 		}
 	}
 	/**
