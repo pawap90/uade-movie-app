@@ -36,7 +36,8 @@ export default class MovieDbService {
 				return sl.name;
 			}),
 			responseJson.vote_average,
-			responseJson.vote_count
+			responseJson.vote_count,
+			responseJson.imdb_id ? `https://www.imdb.com/title/${responseJson.imdb_id}` : null
 		);
 
 		return movie;
@@ -65,7 +66,8 @@ export default class MovieDbService {
 			responseJson.overview,
 			responseJson.languages,
 			responseJson.vote_average,
-			responseJson.vote_count
+			responseJson.vote_count,
+			responseJson.homepage
 		);
 
 		return serie;
@@ -376,7 +378,7 @@ export default class MovieDbService {
 	 * Gets all genres combined by movie or series.
 	 */
 	static async getAllGenres() {
-		const [ movieGenres, seriesGenres ] = await Promise.all([getMovieGenres(), getSeriesGenres()]);
+		const [movieGenres, seriesGenres] = await Promise.all([getMovieGenres(), getSeriesGenres()]);
 
 		const allGenres = [
 			...movieGenres.map(m => `Peliculas-${m.name}`),
