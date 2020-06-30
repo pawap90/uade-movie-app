@@ -10,7 +10,8 @@ import MovieDbService from '../services/MovieDbService';
 import Spinner from '../components/Spinner';
 import { useDispatch } from 'react-redux';
 import { hideSpinner, showSpinner } from '../actions/application';
-import { AccountService } from '../services/AccountService';
+import AccountService from '../services/AccountService';
+import AccountModel from '../models/AccountModel';
 
 GenreSelectionScreen.propTypes = {
 	route: PropTypes.object
@@ -22,7 +23,7 @@ export default function GenreSelectionScreen(props) {
 	const { userGenres } = route.params;
 	const navigation = useNavigation();
 
-	const [selectedGenres, setSelectedGenres] = useState(userGenres, []);
+	const [selectedGenres, setSelectedGenres] = useState(userGenres || [], []);
 	const [allGenres, setAllGenres] = useState([]);
 
 
@@ -32,6 +33,8 @@ export default function GenreSelectionScreen(props) {
 			dispatch(showSpinner);
 			const genres = await MovieDbService.getAllGenres();
 			setAllGenres(genres);
+			const user = await AccountService.getCurrentUserData();
+			setSelectedGenres(user.genres);
 			dispatch(hideSpinner);
 		};
 
@@ -60,8 +63,10 @@ export default function GenreSelectionScreen(props) {
 	};
 
 	const onConfirm = async () => {
-		
-		await AccountService.updateGenres();
+		dispatch(showSpinner);
+		const updatedAccount = new AccountModel(null, null, null, selectedGenres);
+		await AccountService.update(updatedAccount);
+		dispatch(hideSpinner);
 		navigation.pop();
 	};
 

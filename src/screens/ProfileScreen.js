@@ -38,7 +38,7 @@ export default function ProfileScreen() {
 	};
 
 	const onSubmit = () => {
-		// TODO CALL API TO SAVE user
+		
 	};
 
 	const onLogout = async () => {
