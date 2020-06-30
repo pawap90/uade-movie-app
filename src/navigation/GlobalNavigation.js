@@ -9,7 +9,6 @@ import TabBarNavigation from './TabBarNavigation';
 import PropTypes from 'prop-types';
 import AccountService from '../services/AccountService';
 import { login } from '../actions/application';
-import ListCreateScreen from '../screens/ListCreateScreen';
 
 const Stack = createStackNavigator();
 
@@ -35,7 +34,6 @@ const GlobalNavigation = (props) => {
 			<Stack.Screen name="Login" component={LoginScreen} />
 			<Stack.Screen name="RequiredLogin" options={{ animationEnabled: false }} component={RequiredLoginScreen} />
 			<Stack.Screen name="Register" component={RegisterScreen} />
-			<Stack.Screen name="ListCreate" component={ListCreateScreen} />
 		</Stack.Navigator>
 	);
 };
