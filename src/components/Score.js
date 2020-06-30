@@ -55,7 +55,7 @@ export default function Score(props) {
 	};
 
 	if(value ==  0 && total == 0)
-		return null
+		return null;
 
 	return (
 		<View>
