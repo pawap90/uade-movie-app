@@ -12,6 +12,8 @@ import { useDispatch } from 'react-redux';
 import { hideSpinner, showSpinner, profileNeedsRefresh } from '../actions/application';
 import AccountService from '../services/AccountService';
 import AccountModel from '../models/AccountModel';
+import UserError from '../errors/UserError';
+import MessageModal from '../components/MessageModal';
 
 GenreSelectionScreen.propTypes = {
 	route: PropTypes.object
@@ -25,7 +27,7 @@ export default function GenreSelectionScreen(props) {
 
 	const [selectedGenres, setSelectedGenres] = useState(userGenres || [], []);
 	const [allGenres, setAllGenres] = useState([]);
-
+	const [errorMessage, setErrorMessage] = useState(null);
 
 	useEffect(() => {
 
@@ -64,11 +66,24 @@ export default function GenreSelectionScreen(props) {
 
 	const onConfirm = async () => {
 		dispatch(showSpinner);
-		const updatedAccount = new AccountModel(null, null, null, selectedGenres);
-		await AccountService.update(updatedAccount);
-		dispatch(profileNeedsRefresh);
+
+		try {
+			const updatedAccount = new AccountModel(null, null, null, selectedGenres);
+			await AccountService.update(updatedAccount);
+			dispatch(profileNeedsRefresh);
+
+			navigation.pop();
+		}
+		catch (error) {
+			if (error instanceof UserError) {
+				setErrorMessage(error.message);
+			}
+			else {
+				setErrorMessage('Se produjo un error inesperado');
+			}
+		}
+
 		dispatch(hideSpinner);
-		navigation.pop();
 	};
 
 	return (
@@ -95,6 +110,11 @@ export default function GenreSelectionScreen(props) {
 					paddingVertical={12}
 					onPress={onConfirm}>
 				</ButtonWithIcon>
+				<MessageModal
+					title={errorMessage}
+					isVisible={errorMessage != null}
+					onConfirm={() => setErrorMessage(null)}
+				></MessageModal>
 			</View>
 		</>
 	);

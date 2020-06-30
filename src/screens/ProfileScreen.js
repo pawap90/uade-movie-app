@@ -16,11 +16,17 @@ import { logout, showSpinner, hideSpinner, profileRefreshed } from '../actions/a
 import AccountService from '../services/AccountService';
 import { connect } from 'react-redux';
 import AccountModel from '../models/AccountModel';
+import MessageModal from '../components/MessageModal';
+import UserError from '../errors/UserError';
 
 const ProfileScreen = (props) => {
+
 	const navigation = useNavigation();
-	const [user, setUser] = useState({});
 	const dispatch = useDispatch();
+
+	const [user, setUser] = useState({});
+	const [errorMessage, setErrorMessage] = useState(null);
+
 
 	const { applicationState } = props;
 
@@ -41,8 +47,20 @@ const ProfileScreen = (props) => {
 
 	const onSubmit = async () => {
 		dispatch(showSpinner);
-		const updatedAccount = new AccountModel(null, user.name, user.lastName, null);
-		await AccountService.update(updatedAccount);
+
+		try {
+			const updatedAccount = new AccountModel(null, user.name, user.lastName, null);
+			await AccountService.update(updatedAccount);
+		}
+		catch (error) {
+			if (error instanceof UserError) {
+				setErrorMessage(error.message);
+			}
+			else {
+				setErrorMessage('Se produjo un error inesperado');
+			}
+		}
+
 		dispatch(hideSpinner);
 	};
 
@@ -129,6 +147,11 @@ const ProfileScreen = (props) => {
 				marginBottom={16}
 				paddingVertical={12}
 				onPress={onLogout} />
+			<MessageModal
+				title={errorMessage}
+				isVisible={errorMessage != null}
+				onConfirm={() => setErrorMessage(null)}
+			></MessageModal>
 		</View>
 	);
 };
