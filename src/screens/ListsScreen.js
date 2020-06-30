@@ -9,10 +9,12 @@ import ConfirmationModal from '../components/ConfirmationModal';
 import MessageModal from '../components/MessageModal';
 import { useDispatch } from 'react-redux';
 import { showSpinner, hideSpinner } from '../actions/application';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ListsScreen() {
 
 	const dispatch = useDispatch();
+	const navigation = useNavigation();
 
 	const [myLists, setMyLists] = useState([]);
 	const [deleteConfirmationModalIsVisible, setDeleteConfirmationModalIsVisible] = useState(false);
@@ -53,6 +55,10 @@ export default function ListsScreen() {
 		setDeleteResultModalData(prev => ({ ...prev, isVisible: false }));
 	};
 
+	const onCreateTapped = () => {
+		navigation.push('ListCreate');
+	};
+
 	useEffect(() => {
 		const getMyLists = () => {
 			dispatch(showSpinner);
@@ -60,7 +66,7 @@ export default function ListsScreen() {
 			setTimeout(() => {
 				setMyLists(DATA);
 				dispatch(hideSpinner);
-			},1000);
+			}, 1000);
 		};
 		getMyLists();
 	}, []);
@@ -75,7 +81,8 @@ export default function ListsScreen() {
 						text="Crear lista"
 						icon={plusIcon}
 						backgroundColor="#E6D72A"
-						color="#1F2D3D">
+						color="#1F2D3D"
+						onPress={onCreateTapped}>
 					</ButtonWithIcon>
 				</View>
 				<FlatList
