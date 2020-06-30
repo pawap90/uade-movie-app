@@ -61,27 +61,29 @@ export default function RateModal(props) {
 						textAlignVertical="top"
 						multiline={true}
 						placeholder="Ingresá tus comentarios sobre la serie o pelicula que estas calificando..."
-						onChangeText={(text) => setRate({...rate, comments: text})}
+						onChangeText={(text) => setRate({ ...rate, comments: text })}
 						value={rate.comments}>
 					</TextInput>
-					<ButtonWithIcon
-						text="CONFIRMAR"
-						backgroundColor={isFormValid() ? '#E6D72A' : '#FFF57E'}
-						marginBottom={10}
-						color="#000000"
-						grow={true}
-						isEnabled={() => isFormValid()}
-						paddingVertical={12}
-						onPress={() => onConfirm(rate.score, rate.comments)}>
-					</ButtonWithIcon>
-					<ButtonWithIcon
-						text="CANCELAR"
-						backgroundColor="#344251"
-						color="#FFFFFF"
-						paddingVertical={12}
-						grow={true}
-						onPress={onModalCancel}>
-					</ButtonWithIcon>
+					<View style={{display: 'flex', flexDirection: 'row'}}>
+						<ButtonWithIcon
+							text="CONFIRMAR"
+							backgroundColor={isFormValid() ? '#E6D72A' : '#FFF57E'}
+							color="#000000"
+							grow={true}
+							isEnabled={() => isFormValid()}
+							paddingVertical={12}
+							onPress={() => onConfirm(rate.score, rate.comments)}>
+						</ButtonWithIcon>
+						<View style={{width: 10}}></View>
+						<ButtonWithIcon
+							text="CANCELAR"
+							backgroundColor="#344251"
+							color="#FFFFFF"
+							paddingVertical={12}
+							grow={true}
+							onPress={onModalCancel}>
+						</ButtonWithIcon>
+					</View>
 				</View>
 			</View>
 		</Modal>
