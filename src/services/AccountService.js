@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import LoginModel from '../models/LoginModel';
 import AccountModel from '../models/AccountModel';
+import RegisterModel from '../models/RegisterModel';
 import ErrorHandler from '../errors/ErrorHandler';
 import { ACCESS_TOKEN_STORAGE_KEY } from '../Constants';
 
@@ -92,6 +93,47 @@ export default class AccountService {
 		}
 		catch (err) {
 			throw ErrorHandler.handle('Se produjo un error autorizando al usuario', err, 500);
+		}
+	}
+
+	/**
+	 * Register a new account.
+	 * @param {RegisterModel} registerModel Register data
+	 */
+	static async register(registerModel) {
+
+		try {
+			if (!(registerModel instanceof RegisterModel))
+				throw new Error('The registerModel must be of type RegisterModel');
+
+			const endpoint = `${BASE_ENDPOINT}/register`;
+
+			// Request init configuration.
+			const reqInit = {
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(registerModel),
+				method: 'POST'
+			};
+
+			// Get response.
+			const response = await fetch(endpoint, reqInit);
+
+			if (response.status === 400)
+				throw ErrorHandler.handle('El formulario no está completo', null, response.status);
+			else if (response.status === 409)
+				throw ErrorHandler.handle('Un usuario con ese correo ya fue registrado', null, response.status);
+			else if (response.status !== 200)
+				throw ErrorHandler.handle('Se produjo un error registrando al usuario', null, response.status);
+
+			const responseJson = await response.json();
+
+			// Save JWT locally
+			await storeAccessToken(responseJson.access);
+		}
+		catch (err) {
+			throw ErrorHandler.handle('Se produjo un error registrando al usuario', err, 500);
 		}
 	}
 
