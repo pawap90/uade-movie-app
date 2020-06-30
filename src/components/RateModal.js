@@ -8,6 +8,7 @@ import Score from './Score';
 RateModal.propTypes = {
 	isVisible: PropTypes.bool,
 	onConfirm: PropTypes.func,
+	onCancel: PropTypes.func,
 	animationType: PropTypes.string,
 	type: PropTypes.string
 };
@@ -17,25 +18,25 @@ export default function RateModal(props) {
 	const { isVisible, onConfirm, onCancel, animationType = 'none' } = props;
 
 	const isFormValid = () => {
-		return rate.score != null && rate.comments != null && rate.comments != ''
-	}
+		return rate.score != null && rate.comments != null && rate.comments != '';
+	};
 
 	const [rate, setRate] = useState({
 		score: 0,
 		comments: null
-	})
+	});
 
 	const onRateUpdated = (value) => {
-		setRate({ ...rate, score: value })
-	}
+		setRate({ ...rate, score: value });
+	};
 
 	const onModalCancel = () => {
 		setRate({
 			score: 0,
 			comments: null
-		})
-		onCancel()
-	}
+		});
+		onCancel();
+	};
 
 	return (
 		<Modal

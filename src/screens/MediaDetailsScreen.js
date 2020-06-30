@@ -28,29 +28,31 @@ export default function MediaDetailsScreen(props) {
 	const [similarMedia, setSimilarMedia] = useState([]);
 	const [userAlreadyRate, setUserAlreadyRate] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(null);
-	const [comments, setComments] = useState(null)
+	const [comments, setComments] = useState(null);
 	const [similarMediaIsLoaded, setSimilarMediaIsLoaded] = useState(false);
 
 	const getRatesWithComments = async () => {
-		const results = await RateService.getMediaRates(mediaType, id)
-		setUserAlreadyRate(results.map(c => c.ratedByMe).indexOf(true) != -1)
-		setComments(results)
-	}
+		const results = await RateService.getMediaRates(mediaType, id);
+		setUserAlreadyRate(results.map(c => c.ratedByMe).indexOf(true) != -1);
+		setComments(results);
+	};
 
 	const onUserRate = async (score, comments) => {
-		dispatch(showSpinner)
+		dispatch(showSpinner);
 		try {
-			await RateService.rateMedia(new RateModel(mediaType, id, `${score}`, comments))
-			getRatesWithComments()
-		} catch (error) {
+			await RateService.rateMedia(new RateModel(mediaType, id, `${score}`, comments));
+			getRatesWithComments();
+		}
+		catch (error) {
 			if (error instanceof UserError) {
-				setErrorMessage(error.message)
-			} else {
-				setErrorMessage("Ha ocurrido un error inesperado al intentar calificar")
+				setErrorMessage(error.message);
+			}
+			else {
+				setErrorMessage('Ha ocurrido un error inesperado al intentar calificar');
 			}
 		}
-		dispatch(hideSpinner)
-	}
+		dispatch(hideSpinner);
+	};
 
 	useEffect(() => {
 		const getMediaDetails = async () => {
@@ -90,7 +92,7 @@ export default function MediaDetailsScreen(props) {
 					summary={media.summary}
 					languages={media.languages}>
 				</MovieHeader>
-				{comments?.length > 0 && <CommentsCarousel comments={comments} style={styles.carousel} />}
+				{comments != null &&  comments.length > 0 && <CommentsCarousel comments={comments} style={styles.carousel} />}
 				{
 					similarMedia.length > 0 &&
 					<MediaCarousel

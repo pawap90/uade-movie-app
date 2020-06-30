@@ -17,7 +17,7 @@ const MovieHeader = (props) => {
 	const { title, releaseDate, summary, genres = [], languages = [], isLoggedIn, onUserRate, userAlreadyRate = false } = props;
 	const navigation = useNavigation();
 
-	const [showRateModal, setShowRateModal] = useState(false)
+	const [showRateModal, setShowRateModal] = useState(false);
 
 	const onAddToMyListsTapped = () => {
 		if (!isLoggedIn) {
@@ -33,15 +33,15 @@ const MovieHeader = (props) => {
 			navigation.navigate('RequiredLogin', { message: 'Debe autenticarse en la app para poder calificar series o peliculas' });
 		}
 		else {
-			setShowRateModal(true)
+			setShowRateModal(true);
 			// TODO Handle add media to my lists
 		}
 	};
 
 	const onRateConfirmed = (score, comments) => {
-		setShowRateModal(false)
-		onUserRate(score, comments)
-	}
+		setShowRateModal(false);
+		onUserRate(score, comments);
+	};
 
 
 	return (

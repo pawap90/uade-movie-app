@@ -10,7 +10,9 @@ Score.propTypes = {
 	value: PropTypes.number,
 	total: PropTypes.number,
 	showTitle: PropTypes.bool,
-	starSize: PropTypes.number
+	isInteractive: PropTypes.bool,
+	starSize: PropTypes.number,
+	onItemTapped: PropTypes.func
 };
 
 export default function Score(props) {
@@ -26,13 +28,15 @@ export default function Score(props) {
 	const starStyles = { ...styles.star, width: starSize, height: starSize };
 
 	const getStar = (targetScore, actualScore) => {
-		let resource
+		let resource;
 		if (actualScore >= targetScore) {
-			resource = starFull
-		} else if ((targetScore - actualScore) > 0.5) {
-			resource = starEmpty
-		} else {
-			resource = startHalfFull
+			resource = starFull;
+		}
+		else if ((targetScore - actualScore) > 0.5) {
+			resource = starEmpty;
+		}
+		else {
+			resource = startHalfFull;
 		}
 
 		if (isInteractive) {
@@ -43,8 +47,9 @@ export default function Score(props) {
 					color="#E6D72A"
 					iconSize={30}>
 				</TouchableIcon>
-			)
-		} else {
+			);
+		}
+		else {
 			return <Image key={`${targetScore}`} style={starStyles} source={resource}></Image>;
 		}
 	};

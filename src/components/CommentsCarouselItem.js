@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 CommentsCarouselItem.propTypes = {
 	id: PropTypes.string,
 	ratedBy: PropTypes.string,
-	score: PropTypes.number,
+	rating: PropTypes.number,
 	comment: PropTypes.string
 };
 

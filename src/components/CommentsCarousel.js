@@ -4,7 +4,8 @@ import CommentsCarouselItem from './CommentsCarouselItem';
 import PropTypes from 'prop-types';
 
 CommentsCarousel.propTypes = {
-	style: PropTypes.object
+	style: PropTypes.object,
+	comments: PropTypes.array
 };
 
 export default function CommentsCarousel(props) {
