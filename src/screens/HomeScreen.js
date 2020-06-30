@@ -76,15 +76,13 @@ export default function HomeScreen() {
 					mediaType={mediaType}
 					style={styles.carousel}
 					title="Mejor valoradas"
-					items={topRatedMedia}
-					buttonLabel="Ver más +" />
+					items={topRatedMedia} />
 
 				<MediaCarousel
 					mediaType={mediaType}
 					style={styles.carousel}
 					title="Según su popularidad"
 					items={popularMedia}
-					buttonLabel="Ver más +"
 					width={130}
 					height={250} />
 
@@ -93,7 +91,6 @@ export default function HomeScreen() {
 						mediaType={mediaType}
 						title={mediaType === 'movie' ? 'Proximamente' : 'Transmitiéndose hoy'}
 						items={mediaType === 'movie' ? upcomingMovies : airingTodaySeries}
-						buttonLabel="Ver más +"
 						width={130}
 						height={250} />
 				</View>

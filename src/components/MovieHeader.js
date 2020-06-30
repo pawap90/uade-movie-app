@@ -25,6 +25,8 @@ const MovieHeader = (props) => {
 		isLoggedIn,
 		id,
 		onUserRate,
+		voteAverage, 
+		voteCount,
 		userAlreadyRate = false,
 		mediaType,
 		imagePath
@@ -93,7 +95,7 @@ const MovieHeader = (props) => {
 					))}
 				</View>
 				<View style={styles.footer}>
-					<Score value={3.4} total={3543}></Score>
+					<Score value={voteAverage} total={voteCount}></Score>
 					{!userAlreadyRate && <ButtonWithIcon text="Calificar" icon={starIcon} onPress={onRateTapped}></ButtonWithIcon>}
 					<ButtonWithIcon text="Mi lista" icon={plusIcon} onPress={onAddToMyListsTapped}></ButtonWithIcon>
 				</View>
@@ -120,7 +122,9 @@ MovieHeader.propTypes = {
 	languages: PropTypes.array,
 	isLoggedIn: PropTypes.bool,
 	onUserRate: PropTypes.func,
-	userAlreadyRate: PropTypes.bool
+	userAlreadyRate: PropTypes.bool,
+	voteAverage: PropTypes.number,
+	voteCount: PropTypes.number
 };
 
 const styles = StyleSheet.create({

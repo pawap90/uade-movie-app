@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Image, Text } from 'react-native';
+import { ScrollView, StyleSheet, ImageBackground } from 'react-native';
 import PropTypes from 'prop-types';
 import MovieHeader from '../components/MovieHeader';
 import MovieDbService from '../services/MovieDbService';
@@ -13,6 +13,7 @@ import { hideSpinner, showSpinner } from '../actions/application';
 import RateService from '../services/RateService';
 import UserError from '../errors/UserError';
 import RateModel from '../models/RateModel';
+import ShareMediaItemButton from '../components/ShareMediaItemButton';
 
 MediaDetailsScreen.propTypes = {
 	route: PropTypes.object,
@@ -81,8 +82,11 @@ export default function MediaDetailsScreen(props) {
 		<>
 			<Spinner></Spinner>
 			<ScrollView style={styles.container}>
-				<Image style={styles.image} source={media.imageUrl != null ? { uri: media.imageUrl } : imagePlaceholder}></Image>
-				<Text>{id}</Text>
+
+				<ImageBackground style={styles.image} source={media.imageUrl != null ? { uri: media.imageUrl } : imagePlaceholder}>
+					<ShareMediaItemButton mediaType={mediaType} title={media.title} url={media.url}></ShareMediaItemButton>
+
+				</ImageBackground>
 				<MovieHeader
 					onUserRate={onUserRate}
 					userAlreadyRate={userAlreadyRate}
@@ -93,9 +97,11 @@ export default function MediaDetailsScreen(props) {
 					summary={media.summary}
 					languages={media.languages}
 					mediaType={mediaType}
-					imagePath={media.imageUrl}>
+					imagePath={media.imageUrl}
+					voteAverage={media.score}
+					voteCount={media.scoreCount}>
 				</MovieHeader>
-				{comments != null &&  comments.length > 0 && <CommentsCarousel comments={comments} style={styles.carousel} />}
+				{comments != null && comments.length > 0 && <CommentsCarousel comments={comments} style={styles.carousel} />}
 				{
 					similarMedia.length > 0 &&
 					<MediaCarousel
@@ -125,6 +131,8 @@ const styles = StyleSheet.create({
 	image: {
 		width: '100%',
 		height: 300,
+		alignItems: 'flex-end',
+		padding: 10
 	},
 	label: {
 		color: '#FFFFFF'
