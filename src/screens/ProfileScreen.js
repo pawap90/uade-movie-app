@@ -91,6 +91,7 @@ const ProfileScreen = (props) => {
 					name="email"
 					value={user.email}
 					buttonText="Cambiar"
+					disabled={true}
 					updateProfile={onAttributeChange}>
 				</ProfileAttribute>
 
