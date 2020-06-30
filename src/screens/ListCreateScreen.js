@@ -25,7 +25,7 @@ export default function ListCreateScreen() {
 	const navigation = useNavigation();
 
 	const onSubmitTapped = async () => {
-		if (form.name === null) {
+		if (!form.name || form.name.length === 0) {
 			setErrorMessage('Por favor completa los datos para poder ingresar');
 			return;
 		}
@@ -33,6 +33,7 @@ export default function ListCreateScreen() {
 		dispatch(showSpinner);
 		try {
 			await ListService.create(new ListModel(false, form.name, form.isPublic, null, null));
+			navigation.goBack();
 		}
 		catch (error) {
 			if (error instanceof UserError) {
@@ -42,9 +43,7 @@ export default function ListCreateScreen() {
 				setErrorMessage('Se produjo un error inesperado');
 			}
 		}
-		dispatch(hideSpinner);
-
-		navigation.goBack();
+		dispatch(hideSpinner);		
 	};
 
 	const onAttributeChange = (attribute, newValue) => {
