@@ -5,18 +5,18 @@ import PropTypes from 'prop-types';
 
 CommentsCarouselItem.propTypes = {
 	id: PropTypes.string,
-	author: PropTypes.string,
-	score: PropTypes.number,
+	ratedBy: PropTypes.string,
+	rating: PropTypes.number,
 	comment: PropTypes.string
 };
 
 export default function CommentsCarouselItem(props) {
-	const { id, author, score, comment } = props;
+	const { id, ratedBy, rating, comment } = props;
 	return (
 		<View key={id} style={styles.container}>
 			<View style={styles.header}>
-				<Text style={styles.author}>{author}</Text>
-				<Score value={score} showTitle={false} starSize={15} />
+				<Text style={styles.author}>{ratedBy}</Text>
+				<Score value={rating} showTitle={false} starSize={15} />
 			</View>
 			<Text numberOfLines={4} style={styles.comment}>{comment}</Text>
 		</View>

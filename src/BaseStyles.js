@@ -72,7 +72,8 @@ const BaseStyles = StyleSheet.create({
 		paddingHorizontal: 8,
 		paddingVertical: 4,
 		borderRadius: 5,
-		marginBottom: 10
+		marginBottom: 10,
+		width: '100%'
 	}
 });
 
