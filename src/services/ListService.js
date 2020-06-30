@@ -39,7 +39,7 @@ export default class ListService {
 
 			if (response.status === 401)
 				throw ErrorHandler.handle('El usuario no fue autorizado', null, response.status);
-			else if (response.status !== 400)
+			else if (response.status === 400)
 				throw ErrorHandler.handle('Por favor complete todos los datos del formulario', null, response.status);
 			else if (response.status !== 200)
 				throw ErrorHandler.handle('Se produjo un error creando la lista', null, response.status);
