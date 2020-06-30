@@ -25,18 +25,18 @@ export default function ListMediaItem(props) {
 	const navigation = useNavigation();
 
 	const goToMediaDetails = () => {
-		navigation.push('MediaDetails', {id: id});
+		navigation.push('MediaDetails', { id: id });
 	};
 
 	return (
 		<View style={styles.container}>
-			<View style={{flex: 1}}>
-				<TouchableWithoutFeedback onPress={goToMediaDetails} style={{flexDirection: 'row'}}>
+			<View style={{ flex: 1 }}>
+				<TouchableWithoutFeedback onPress={goToMediaDetails} style={{ flexDirection: 'row' }}>
 					<Image source={imageUrl != null ? { uri: imageUrl } : imagePlaceholder} style={styles.image} />
 					<View style={styles.cardContent}>
 						<View style={styles.header}>
 							<View>
-								<View style={styles.genres}>
+								{genres && <View style={styles.genres}>
 									{genres.map((genre) => (
 										<Tag
 											key={genre}
@@ -47,7 +47,7 @@ export default function ListMediaItem(props) {
 											backgroundColor="#E6D53F"
 											color="#34424F" />
 									))}
-								</View>
+								</View>}
 								<Text numberOfLines={2} style={styles.title}>{title}</Text>
 							</View>
 						</View>
@@ -56,7 +56,7 @@ export default function ListMediaItem(props) {
 					</View>
 				</TouchableWithoutFeedback>
 			</View>
-			<View style={styles.actionButtonsContainer}>
+			{onDeleteListItemTapped && <View style={styles.actionButtonsContainer}>
 				<ButtonWithIcon
 					icon={ChangeIcon}
 					backgroundColor="#1F2D3D"
@@ -73,6 +73,7 @@ export default function ListMediaItem(props) {
 					onPress={() => onDeleteListItemTapped(id, title)}>
 				</ButtonWithIcon>
 			</View>
+			}
 		</View>
 	);
 }

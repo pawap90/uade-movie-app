@@ -5,6 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { logout, showSpinner, hideSpinner } from '../actions/application';
+import MovieDbService from '../services/MovieDbService';
+import ListMediaItem from '../components/ListMediaItem';
+
 
 MediaListScreen.propTypes = {
     navigation: PropTypes.object,
@@ -21,42 +24,50 @@ export default function MediaListScreen() {
     /* 
         const { mediaType } = route.params;
         const { mediaSearch } = route.params;
+        const { title } = route.params;
     */
     const mediaType = 'movie';
     const mediaSearch = 'top';
+    const title = "Mejor valoradas";
 
     useEffect(() => {
+        searchData(1);
+    }, []);
 
-        dispatch(showSpinner);
+    const searchData = async (page) => {
         if (mediaSearch === 'top') {
             const getTopRatedMedia = async () => {
-                const results = mediaType === 'movie' ? await MovieDbService.getTopRatedMovies() : await MovieDbService.getTopRatedSeries();
+                const results = mediaType === 'movie' ? await MovieDbService.getTopRatedMovies(page) : await MovieDbService.getTopRatedSeries(page);
                 setListMedia(results);
+                dispatch(hideSpinner);
             };
             getTopRatedMedia();
         } else if (mediaSearch === 'popular') {
             const getPopularMedia = async () => {
-                const results = mediaType === 'movie' ? await MovieDbService.getPopularMovies() : await MovieDbService.getPopularSeries();
+                const results = mediaType === 'movie' ? await MovieDbService.getPopularMovies(page) : await MovieDbService.getPopularSeries(page);
                 setListMedia(results);
+                dispatch(hideSpinner);
             };
             getPopularMedia();
         } else if (mediaSearch === 'next') {
             const getNextMedia = async () => {
-                const results = mediaType === 'movie' ? await MovieDbService.getUpcomingMovies() : await MovieDbService.getAiringTodaySeries();
+                const results = mediaType === 'movie' ? await MovieDbService.getUpcomingMovies(page) : await MovieDbService.getAiringTodaySeries(page);
                 setListMedia(results);
+                dispatch(hideSpinner);
             };
             getNextMedia();
         }
-    }, [mediaType]);
+        dispatch(showSpinner);
+    };
 
     return (
         <View style={BaseStyles.container}>
             <View style={styles.header}>
-                <Text style={styles.title}>Title</Text>
+                <Text style={styles.title}>{title}</Text>
             </View>
             <FlatList
                 data={listMedia}
-                renderItem={({ item }) => <ListMediaItem {...item} onDeleteListItemTapped={onDeleteListItemTapped} />}
+                renderItem={({ item }) => <ListMediaItem {...item} />}
                 keyExtractor={item => item.id}
             />
         </View>

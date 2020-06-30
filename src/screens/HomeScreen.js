@@ -80,7 +80,7 @@ export default function HomeScreen() {
 					title="Mejor valoradas"
 					items={topRatedMedia}
 					buttonLabel="Ver más +"
-					onPressLabel={() => navigation.push('MediaList', { mediaType: mediaType, mediaSearch: 'top' })} />
+					onPressLabel={() => navigation.push('MediaList', { mediaType: mediaType, mediaSearch: 'top', title: 'Mejor valoradas' })} />
 
 				<MediaCarousel
 					mediaType={mediaType}
@@ -89,8 +89,8 @@ export default function HomeScreen() {
 					items={popularMedia}
 					buttonLabel="Ver más +"
 					width={130}
-					height={250} 
-					onPressLabel={() => navigation.push('MediaList', { mediaType: mediaType, mediaSearch: 'popular' })} />
+					height={250}
+					onPressLabel={() => navigation.push('MediaList', { mediaType: mediaType, mediaSearch: 'popular', title: "Según su popularidad" })} />
 
 
 				<View style={{ marginBottom: 40 }}>
@@ -100,8 +100,8 @@ export default function HomeScreen() {
 						items={mediaType === 'movie' ? upcomingMovies : airingTodaySeries}
 						buttonLabel="Ver más +"
 						width={130}
-						height={250} 
-						onPressLabel={() => navigation.push('MediaList', { mediaType: mediaType, mediaSearch: 'next' })} />
+						height={250}
+						onPressLabel={() => navigation.push('MediaList', { mediaType: mediaType, mediaSearch: 'next', title: (mediaType === 'movie' ? 'Proximamente' : 'Transmitiéndose hoy') })} />
 
 				</View>
 			</ScrollView>
