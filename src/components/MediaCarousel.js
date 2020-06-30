@@ -11,17 +11,18 @@ MediaCarousel.propTypes = {
 	height: PropTypes.number,
 	items: PropTypes.array,
 	mediaType: PropTypes.string,
-	style: PropTypes.object
+	style: PropTypes.object,
+	onPressLabel: PropTypes.func
 };
 
 export default function MediaCarousel(props) {
-	const { mediaType, title, buttonLabel, items, style, width = 175, height = 300 } = props;
+	const { mediaType, title, buttonLabel, items, style, width = 175, height = 300, onPressLabel } = props;
     
 	return (
 		<View style={[styles.container, style]}>
 			<View style={styles.header}>
 				<Text style={styles.title}>{title}</Text>
-				{buttonLabel && <Text style={BaseStyles.actionButton}>{buttonLabel}</Text>}
+				{buttonLabel && <Text style={BaseStyles.actionButton} onPress={onPressLabel}>{buttonLabel}</Text>}
 			</View>
 			<SafeAreaView>
 				<FlatList

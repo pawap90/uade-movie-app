@@ -77,7 +77,8 @@ export default function HomeScreen() {
 					style={styles.carousel}
 					title="Mejor valoradas"
 					items={topRatedMedia}
-					buttonLabel="Ver más +" />
+					buttonLabel="Ver más +"
+					onPressLabel={() => navigation.push('MediaList', { mediaType: mediaType, mediaSearch: 'top' })} />
 
 				<MediaCarousel
 					mediaType={mediaType}
@@ -86,7 +87,9 @@ export default function HomeScreen() {
 					items={popularMedia}
 					buttonLabel="Ver más +"
 					width={130}
-					height={250} />
+					height={250} 
+					onPressLabel={() => navigation.push('MediaList', { mediaType: mediaType, mediaSearch: 'popular' })} />
+
 
 				<View style={{ marginBottom: 40 }}>
 					<MediaCarousel
@@ -95,7 +98,9 @@ export default function HomeScreen() {
 						items={mediaType === 'movie' ? upcomingMovies : airingTodaySeries}
 						buttonLabel="Ver más +"
 						width={130}
-						height={250} />
+						height={250} 
+						onPressLabel={() => navigation.push('MediaList', { mediaType: mediaType, mediaSearch: 'next' })} />
+
 				</View>
 			</ScrollView>
 		</>

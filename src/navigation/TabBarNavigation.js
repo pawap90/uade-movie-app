@@ -19,6 +19,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import ListsScreen from '../screens/ListsScreen';
 import ListDetailsScreen from '../screens/ListDetailsScreen';
 import MediaDetailsScreen from '../screens/MediaDetailsScreen';
+import MediaListScreen from '../screens/MediaListScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 
 
@@ -122,6 +123,7 @@ const HomeStackScreen = () => {
 			<HomeStack.Screen name="Home" component={HomeScreen} />
 			<HomeStack.Screen name="MediaDetails" component={MediaDetailsScreen} />
 			<HomeStack.Screen name="Search" component={SearchScreen} />
+			<HomeStack.Screen name="MediaList" component={MediaListScreen} />
 		</HomeStack.Navigator>
 	);
 };
