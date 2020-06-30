@@ -13,3 +13,11 @@ export const login = {
 export const logout = {
 	type: 'LOGGED_OUT'
 };
+
+export const profileNeedsRefresh = {
+	type: 'PROFILE_NEEDS_REFRESH'
+};
+
+export const profileRefreshed = {
+	type: 'PROFILE_REFRESHED'
+};

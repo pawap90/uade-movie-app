@@ -371,6 +371,20 @@ export default class MovieDbService {
 
 		return `${configuration.images.base_url}${size}/${path}`;
 	}
+
+	/**
+	 * Gets all genres combined by movie or series.
+	 */
+	static async getAllGenres() {
+		const [ movieGenres, seriesGenres ] = await Promise.all([getMovieGenres(), getSeriesGenres()]);
+
+		const allGenres = [
+			...movieGenres.map(m => `Peliculas-${m.name}`),
+			...seriesGenres.map(m => `TV-${m.name}`)
+		];
+
+		return allGenres;
+	}
 }
 
 /**
