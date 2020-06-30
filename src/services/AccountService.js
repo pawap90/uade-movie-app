@@ -142,7 +142,7 @@ export default class AccountService {
 	}
 
 	/**
-     * Login user and get access token.
+     * Change user current password.
 	 * @param {changePasswordModel} ChangePasswordModel Change Password data
      */
 	static async changePassword(changePasswordModel) {
@@ -166,7 +166,7 @@ export default class AccountService {
 			const response = await fetch(endpoint, reqInit);
 
 			if (response.status === 401)
-				throw ErrorHandler.handle('Las credenciales ingresadas son incorrectas', null, response.status);
+				throw ErrorHandler.handle('Tuvimos un problema intente mas tarde', null, response.status);
 			else if (response.status !== 200)
 				throw ErrorHandler.handle('Se produjo un error autorizando al usuario', null, response.status);
 

@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Class to manage the login data.
+ * Class to manage the password data.
  */
 export default class ChangePasswordModel {
 	/**

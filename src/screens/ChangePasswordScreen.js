@@ -9,6 +9,7 @@ import ChangePasswordModel from '../models/ChangePasswordModel';
 import { useDispatch } from 'react-redux';
 import { showSpinner, hideSpinner } from '../actions/application';
 import MessageModal from '../components/MessageModal';
+import UserError from '../errors/UserError';
 
 ChangePasswordScreen.propTypes = {
 	route: PropTypes.object
@@ -38,7 +39,9 @@ export default function ChangePasswordScreen() {
 			setErrorMessage('Contraseña cambiada con exito');
 		}
 		catch (error) {
-			setErrorMessage(error.message);
+			if (error instanceof UserError) {
+				setErrorMessage(error.message);
+			}
 		}
 		dispatch(hideSpinner);
 	};
@@ -49,19 +52,19 @@ export default function ChangePasswordScreen() {
 				<ProfileSection title="Cambiar contraseña"></ProfileSection>
 				<Text style={styles.label}>Contraseña actual</Text>
 				<TextInput 
-					style={styles.input}
+					style={BaseStyles.input}
 					onChangeText={text => onChangeCurrentText(text)}
 					value={valueCurrent}>
 				</TextInput>
 				<Text style={styles.label}>Nueva contraseña</Text>
 				<TextInput 
-					style={styles.input}
+					style={BaseStyles.input}
 					onChangeText={text => onChangeNewText(text)}
 					value={valueNew}>
 				</TextInput>
 				<Text style={styles.label}>Vuelve a escribir la contraseña</Text>
 				<TextInput 
-					style={styles.input}
+					style={BaseStyles.input}
 					onChangeText={text => onChangeRepeatText(text)}
 					value={valueRepeat}>
 				</TextInput>
