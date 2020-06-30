@@ -32,7 +32,7 @@ export default class AccountService {
 				},
 				method: 'GET'
 			};
-			
+
 			// Get response.
 			const response = await fetch(endpoint, reqInit);
 
@@ -135,6 +135,39 @@ export default class AccountService {
 		}
 		catch (err) {
 			throw ErrorHandler.handle('Se produjo un error registrando al usuario', err, 500);
+		}
+	}
+
+	/**
+	 * Update current user's account.
+	 * @param {AccountModel} accountModel Account data
+	 */
+	static async update(accountModel) {
+
+		try {
+			if (!(accountModel instanceof AccountModel))
+				throw new Error('The accountModel must be of type AccountModel');
+
+			const endpoint = `${BASE_ENDPOINT}`;
+
+			// Request init configuration.
+			const reqInit = {
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': await getAccessToken()
+				},
+				body: JSON.stringify(accountModel),
+				method: 'PUT'
+			};
+
+			// Get response.
+			const response = await fetch(endpoint, reqInit);
+
+			if (response.status !== 200)
+				throw ErrorHandler.handle('Se produjo un error actualizando al usuario', null, response.status);
+		}
+		catch (err) {
+			throw ErrorHandler.handle('Se produjo un error actualizando al usuario', err, 500);
 		}
 	}
 

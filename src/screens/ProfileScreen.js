@@ -12,22 +12,24 @@ import { ScrollView } from 'react-native-gesture-handler';
 import ButtonWithIcon from '../components/ButtonWithIcon';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { logout, showSpinner, hideSpinner } from '../actions/application';
+import { logout, showSpinner, hideSpinner, profileRefreshed } from '../actions/application';
 import AccountService from '../services/AccountService';
+import { connect } from 'react-redux';
+import AccountModel from '../models/AccountModel';
 
-ProfileScreen.propTypes = {
-	navigation: PropTypes.object,
-	route: PropTypes.object
-};
-
-export default function ProfileScreen() {
+const ProfileScreen = (props) => {
 	const navigation = useNavigation();
 	const [user, setUser] = useState({});
 	const dispatch = useDispatch();
 
-	const getUser  = async () => {
+	const { applicationState } = props;
+
+	const getUser = async () => {
+		dispatch(showSpinner);
 		const results = await AccountService.getCurrentUserData();
 		setUser(results);
+		dispatch(profileRefreshed);
+		dispatch(hideSpinner);
 	};
 
 	const onAttributeChange = (attribute, newValue) => {
@@ -37,8 +39,11 @@ export default function ProfileScreen() {
 		});
 	};
 
-	const onSubmit = () => {
-		// TODO CALL API TO SAVE user
+	const onSubmit = async () => {
+		dispatch(showSpinner);
+		const updatedAccount = new AccountModel(null, user.name, user.lastName, null);
+		await AccountService.update(updatedAccount);
+		dispatch(hideSpinner);
 	};
 
 	const onLogout = async () => {
@@ -53,7 +58,7 @@ export default function ProfileScreen() {
 
 	useEffect(() => {
 		getUser();
-	}, []);
+	}, [applicationState.profileNeedsRefresh]);
 
 	return (
 		<View style={BaseStyles.container}>
@@ -69,6 +74,14 @@ export default function ProfileScreen() {
 					label="Nombre"
 					name="name"
 					value={user.name}
+					buttonText="Cambiar"
+					updateProfile={onAttributeChange}>
+				</ProfileAttribute>
+
+				<ProfileAttribute
+					label="Apellido"
+					name="lastName"
+					value={user.lastName}
 					buttonText="Cambiar"
 					updateProfile={onAttributeChange}>
 				</ProfileAttribute>
@@ -117,4 +130,22 @@ export default function ProfileScreen() {
 				onPress={onLogout} />
 		</View>
 	);
-}
+};
+
+ProfileScreen.propTypes = {
+	navigation: PropTypes.object,
+	route: PropTypes.object,
+	applicationState: {
+		profileNeedsRefresh: PropTypes.object
+	}
+};
+
+const mapStateToProps = (state) => {
+	return {
+		applicationState: {
+			profileNeedsRefresh: state.profileNeedsRefresh
+		}
+	};
+};
+
+export default connect(mapStateToProps)(ProfileScreen);
