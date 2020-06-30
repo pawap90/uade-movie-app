@@ -11,10 +11,10 @@ export default class AccountModel {
      * @param {String} lastname User lastname
      * @param {Array<String>} genres User favorite genres
      */
-	constructor(email, name, lastname, genres) {
+	constructor(email, name, lastName, genres) {
 		this.email = email;
 		this.name = name;
-		this.lastname = lastname;
+		this.lastName = lastName;
 		this.genres = genres;
 	}
 }

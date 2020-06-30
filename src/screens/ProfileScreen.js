@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import { logout, showSpinner, hideSpinner, profileRefreshed } from '../actions/application';
 import AccountService from '../services/AccountService';
 import { connect } from 'react-redux';
+import AccountModel from '../models/AccountModel';
 
 const ProfileScreen = (props) => {
 	const navigation = useNavigation();
@@ -38,8 +39,11 @@ const ProfileScreen = (props) => {
 		});
 	};
 
-	const onSubmit = () => {
-
+	const onSubmit = async () => {
+		dispatch(showSpinner);
+		const updatedAccount = new AccountModel(null, user.name, user.lastName, null);
+		await AccountService.update(updatedAccount);
+		dispatch(hideSpinner);
 	};
 
 	const onLogout = async () => {
@@ -70,6 +74,14 @@ const ProfileScreen = (props) => {
 					label="Nombre"
 					name="name"
 					value={user.name}
+					buttonText="Cambiar"
+					updateProfile={onAttributeChange}>
+				</ProfileAttribute>
+
+				<ProfileAttribute
+					label="Apellido"
+					name="lastName"
+					value={user.lastName}
 					buttonText="Cambiar"
 					updateProfile={onAttributeChange}>
 				</ProfileAttribute>
