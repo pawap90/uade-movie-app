@@ -54,6 +54,9 @@ export default function Score(props) {
 		}
 	};
 
+	if(value ==  0 && total == 0)
+		return null
+
 	return (
 		<View>
 			{showTitle && <Text style={styles.title}>IMDB</Text>}
