@@ -45,6 +45,9 @@ export default function RegisterScreen() {
 			if (error instanceof UserError) {
 				setErrorMessage(error.message);
 			}
+			else {
+				setErrorMessage('Se produjo un error inesperado');
+			}
 		}
 		dispatch(hideSpinner);
 	};

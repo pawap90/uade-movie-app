@@ -27,7 +27,7 @@ export default function LoginScreen() {
 	const navigation = useNavigation();
 
 	const onSubmitTapped = async () => {
-		if(form.email === null || form.password === null) {
+		if (form.email === null || form.password === null) {
 			setErrorMessage('Por favor completa los datos para poder ingresar');
 			return;
 		}
@@ -44,6 +44,9 @@ export default function LoginScreen() {
 		catch (error) {
 			if (error instanceof UserError) {
 				setErrorMessage(error.message);
+			}
+			else {
+				setErrorMessage('Se produjo un error inesperado');
 			}
 		}
 		dispatch(hideSpinner);
