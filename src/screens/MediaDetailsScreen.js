@@ -86,11 +86,14 @@ export default function MediaDetailsScreen(props) {
 				<MovieHeader
 					onUserRate={onUserRate}
 					userAlreadyRate={userAlreadyRate}
+					id={media.id}
 					genres={media.genres}
 					title={media.title}
 					releaseDate={media.releaseDate}
 					summary={media.summary}
-					languages={media.languages}>
+					languages={media.languages}
+					mediaType={mediaType}
+					imagePath={media.imageUrl}>
 				</MovieHeader>
 				{comments != null &&  comments.length > 0 && <CommentsCarousel comments={comments} style={styles.carousel} />}
 				{

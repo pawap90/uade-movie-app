@@ -164,4 +164,36 @@ export default class ListService {
 			throw ErrorHandler.handle('Se produjo un error inesperado', err, 500);
 		}
 	}
+
+	static async addItemToList(listId, item) {
+
+		try {
+			
+
+			const endpoint = `${BASE_ENDPOINT}/${listId}/item`;
+
+			// Request init configuration.
+			const reqInit = {
+				headers: {
+					...await AccountService.getAuthHeader(),
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(item),
+				method: 'POST'
+			};
+
+			// Get response.
+			const response = await fetch(endpoint, reqInit);
+
+			if (response.status === 401)
+				throw ErrorHandler.handle('El usuario no fue autorizado', null, response.status);
+			else if (response.status !== 200)
+				throw ErrorHandler.handle('Se produjo un error agregando una serie o pelicula a la lista por defecto', null, response.status);
+		}
+		catch (err) {
+			throw ErrorHandler.handle('Se produjo un error agregando una serie o pelicula a la lista por defecto', err, 500);
+		}
+	}
+
+
 }

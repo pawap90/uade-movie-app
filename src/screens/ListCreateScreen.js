@@ -6,7 +6,7 @@ import ButtonWithIcon from '../components/ButtonWithIcon';
 import Spinner from '../components/Spinner';
 import ListModel from '../models/ListModel';
 import { useDispatch } from 'react-redux';
-import { showSpinner, hideSpinner } from '../actions/application';
+import { showSpinner, hideSpinner, listsNeedsRefresh } from '../actions/application';
 import UserError from '../errors/UserError';
 import MessageModal from '../components/MessageModal';
 import { useNavigation } from '@react-navigation/native';
@@ -33,6 +33,7 @@ export default function ListCreateScreen() {
 		dispatch(showSpinner);
 		try {
 			await ListService.create(new ListModel(false, form.name, form.isPublic, null, null));
+			dispatch(listsNeedsRefresh)
 			navigation.goBack();
 		}
 		catch (error) {

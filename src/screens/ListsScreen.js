@@ -64,7 +64,6 @@ const ListsScreen = (props) => {
 				}));
 			}
 		}
-		setSelectedItem(null)
 		dispatch(hideSpinner);
 
 	};

@@ -87,8 +87,8 @@ const styles = StyleSheet.create({
 		backgroundColor: '#344250'
 	},
 	image: {
-		height: 175,
-		width: 140
+		height: 'auto',
+		width: 140,
 	},
 	cardContent: {
 		padding: 12,

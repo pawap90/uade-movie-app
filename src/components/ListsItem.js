@@ -37,7 +37,7 @@ export default function ListsItem(props) {
 						<Text style={styles.name}>{name}</Text>
 						<View style={styles.metadata}>
 							<Tag
-								text={`${mediaItems?.length} elementos`}
+								text={`${mediaItems != null ? mediaItems.length : 0} elementos`}
 								backgroundColor="#E6D72A"
 								paddingHorizontal={6}
 								paddingVertical={3}>
@@ -54,7 +54,7 @@ export default function ListsItem(props) {
 				paddingVertical={12}
 				paddingHorizontal={16}
 				marginHorizontal={16}
-				onPress={() => onDeleteListTapped(id, name)}>
+				onPress={() => onDeleteListTapped(_id, name)}>
 			</ButtonWithIcon>}
 		</View>
 

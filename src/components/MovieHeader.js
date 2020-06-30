@@ -7,24 +7,56 @@ import ButtonWithIcon from './ButtonWithIcon';
 import plusIcon from '../../assets/plus.png';
 import starIcon from '../../assets/star-full.png';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import RateModal from './RateModal';
-
+import MessageModal from './MessageModal';
+import { showSpinner, hideSpinner, listsNeedsRefresh } from '../actions/application';
+import ListService from '../services/ListService';
 
 const MovieHeader = (props) => {
 
-	const { title, releaseDate, summary, genres = [], languages = [], isLoggedIn, onUserRate, userAlreadyRate = false } = props;
+	const {
+		title,
+		releaseDate,
+		summary,
+		genres = [],
+		languages = [],
+		isLoggedIn,
+		id,
+		onUserRate,
+		userAlreadyRate = false,
+		mediaType,
+		imagePath
+	} = props;
+
 	const navigation = useNavigation();
+	const dispatch = useDispatch();
 
 	const [showRateModal, setShowRateModal] = useState(false);
+	const [showItemAddedToMyListsModal, setShowItemAddedToMyListsModal] = useState(false)
 
-	const onAddToMyListsTapped = () => {
+	const onAddToMyListsTapped = async () => {
 		if (!isLoggedIn) {
 			navigation.navigate('RequiredLogin', { message: 'Debe autenticarse en la app para poder agregar series o peliculas a sus listas' });
 		}
 		else {
 			// TODO Handle add media to my lists
+			dispatch(showSpinner)
+			let myLists = await ListService.getMyLists()
+			const defaultList = myLists.filter(l => l.isDefault)[0]
+			await ListService.addItemToList(defaultList._id, {
+				type: mediaType,
+				id: id,
+				title: title,
+				description: summary,
+				imagePath: imagePath,
+				genres: genres,
+				year: new Date(releaseDate).getFullYear()
+			})
+			setShowItemAddedToMyListsModal(true)
+			dispatch(listsNeedsRefresh)
+			dispatch(hideSpinner)
 		}
 	};
 
@@ -70,8 +102,12 @@ const MovieHeader = (props) => {
 				isVisible={showRateModal}
 				onConfirm={onRateConfirmed}
 				onCancel={() => setShowRateModal(false)}>
-
 			</RateModal>
+			<MessageModal
+				isVisible={showItemAddedToMyListsModal}
+				onConfirm={() => setShowItemAddedToMyListsModal(false)}
+				title={`la ${mediaType == 'movie' ? 'pelicula' : 'serie'} '${title}' ha sido agregada a tu lista general`}>
+			</MessageModal>
 		</>
 	);
 };

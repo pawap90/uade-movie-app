@@ -1,24 +1,19 @@
 import React, {  useState, useEffect } from 'react';
-import { showSpinner, hideSpinner, listsNeedsRefresh } from '../actions/application';
+import { showSpinner, hideSpinner, listsNeedsRefresh, listsRefreshed } from '../actions/application';
 import ConfirmationModal from '../components/ConfirmationModal';
 import MessageModal from '../components/MessageModal';
 import { View, Text, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Spinner from '../components/Spinner';
 import ListMediaItem from '../components/ListMediaItem';
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
 import ListService from '../services/ListService';
 import UserError from '../errors/UserError';
 
-ListDetailsScreen.propTypes = {
-	route: PropTypes.object,
-	params: PropTypes.object
-};
-
-export default function ListDetailsScreen(props) {
-	const { route } = props;
+const ListDetailsScreen = (props) => {
+	const { route, applicationState } = props;
 	const { id } = route.params;
 
 	const dispatch = useDispatch();
@@ -68,7 +63,6 @@ export default function ListDetailsScreen(props) {
 
 	const getListById = async () => {
 		const result = await ListService.getListById(id)
-		// alert(JSON.stringify(result))
 		setList(result)
 	};
 
@@ -83,7 +77,8 @@ export default function ListDetailsScreen(props) {
 
 	useEffect(() => {
 		getListById()
-	}, [])
+		dispatch(listsRefreshed)
+	}, [applicationState.listsNeedsRefresh])
 
 	return (
 		<>
@@ -116,6 +111,24 @@ export default function ListDetailsScreen(props) {
 		</>
 	);
 }
+
+ListDetailsScreen.propTypes = {
+	route: PropTypes.object,
+	params: PropTypes.object,
+	applicationState: {
+		profileNeedsRefresh: PropTypes.object
+	}
+};
+
+const mapStateToProps = (state) => {
+	return {
+		applicationState: {
+			listsNeedsRefresh: state.listsNeedsRefresh
+		}
+	};
+};
+
+export default connect(mapStateToProps)(ListDetailsScreen)
 
 const styles = StyleSheet.create({
 	title: {
