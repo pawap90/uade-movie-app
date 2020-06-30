@@ -13,6 +13,7 @@ import { hideSpinner, showSpinner } from '../actions/application';
 import RateService from '../services/RateService';
 import UserError from '../errors/UserError';
 import RateModel from '../models/RateModel';
+import ShareMediaItemButton from '../components/ShareMediaItemButton';
 
 MediaDetailsScreen.propTypes = {
 	route: PropTypes.object,
@@ -81,8 +82,8 @@ export default function MediaDetailsScreen(props) {
 		<>
 			<Spinner></Spinner>
 			<ScrollView style={styles.container}>
+				<ShareMediaItemButton mediaType={mediaType} title={media.title} url={media.url}></ShareMediaItemButton>
 				<Image style={styles.image} source={media.imageUrl != null ? { uri: media.imageUrl } : imagePlaceholder}></Image>
-				<Text>{id}</Text>
 				<MovieHeader
 					onUserRate={onUserRate}
 					userAlreadyRate={userAlreadyRate}

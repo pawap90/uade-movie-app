@@ -16,7 +16,7 @@ export default class MediaModel {
      * @param {Number} score Score
      * @param {Number} scoreCount Score count
      */
-	constructor(id, title, imageUrl, genres, releaseDate, summary, languages, score, scoreCount) {
+	constructor(id, title, imageUrl, genres, releaseDate, summary, languages, score, scoreCount, url) {
 		this.id = id;
 		this.title = title;
 		this.imageUrl = imageUrl;
@@ -26,5 +26,6 @@ export default class MediaModel {
 		this.languages = languages;
 		this.score = score / 2;
 		this.scoreCount = scoreCount;
+		this.url = url;
 	}
 }
