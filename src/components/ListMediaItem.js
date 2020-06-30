@@ -10,10 +10,11 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
 ListMediaItem.propTypes = {
+	type: PropTypes.string,
 	id: PropTypes.number,
 	title: PropTypes.string,
-	summary: PropTypes.string,
-	imageUrl: PropTypes.string,
+	description: PropTypes.string,
+	imagePath: PropTypes.string,
 	year: PropTypes.number,
 	genres: PropTypes.array,
 	onDeleteListItemTapped: PropTypes.func
@@ -21,18 +22,18 @@ ListMediaItem.propTypes = {
 
 export default function ListMediaItem(props) {
 
-	const { id, title, summary, imageUrl, year, genres, onDeleteListItemTapped } = props;
+	const { type, id, title, description, imagePath, year, genres, onDeleteListItemTapped } = props;
 	const navigation = useNavigation();
 
 	const goToMediaDetails = () => {
-		navigation.push('MediaDetails', {id: id});
+		navigation.push('MediaDetails', {id: id, mediaType: type});
 	};
 
 	return (
 		<View style={styles.container}>
 			<View style={{flex: 1}}>
 				<TouchableWithoutFeedback onPress={goToMediaDetails} style={{flexDirection: 'row'}}>
-					<Image source={imageUrl != null ? { uri: imageUrl } : imagePlaceholder} style={styles.image} />
+					<Image source={imagePath != null ? { uri: imagePath } : imagePlaceholder} style={styles.image} />
 					<View style={styles.cardContent}>
 						<View style={styles.header}>
 							<View>
@@ -52,7 +53,7 @@ export default function ListMediaItem(props) {
 							</View>
 						</View>
 						<Text style={styles.year}>{year}</Text>
-						<Text numberOfLines={6} style={styles.summary}>{summary}</Text>
+						<Text numberOfLines={6} style={styles.description}>{description}</Text>
 					</View>
 				</TouchableWithoutFeedback>
 			</View>
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		color: '#C1C5C9'
 	},
-	summary: {
+	description: {
 		marginTop: 8,
 		fontSize: 12,
 		color: '#C1C5C9'

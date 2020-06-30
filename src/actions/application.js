@@ -13,3 +13,15 @@ export const login = {
 export const logout = {
 	type: 'LOGGED_OUT'
 };
+
+export const lists = {
+	type: 'LOGGED_IN'
+};
+
+export const listsNeedsRefresh = {
+	type: 'LISTS_NEEDS_REFRESH'
+};
+
+export const listsRefreshed = {
+	type: 'LISTS_REFRESHED'
+};

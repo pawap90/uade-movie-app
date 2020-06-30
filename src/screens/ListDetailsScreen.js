@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { showSpinner, hideSpinner } from '../actions/application';
+import React, {  useState, useEffect } from 'react';
+import { showSpinner, hideSpinner, listsNeedsRefresh } from '../actions/application';
 import ConfirmationModal from '../components/ConfirmationModal';
 import MessageModal from '../components/MessageModal';
 import { View, Text, StyleSheet } from 'react-native';
@@ -9,6 +9,8 @@ import ListMediaItem from '../components/ListMediaItem';
 import { useDispatch } from 'react-redux';
 import BaseStyles from '../BaseStyles';
 import PropTypes from 'prop-types';
+import ListService from '../services/ListService';
+import UserError from '../errors/UserError';
 
 ListDetailsScreen.propTypes = {
 	route: PropTypes.object,
@@ -21,8 +23,8 @@ export default function ListDetailsScreen(props) {
 
 	const dispatch = useDispatch();
 
-	const [list, setList] = useState({});
 	const [selectedItem, setSelectedItem] = useState({});
+	const [list, setList] = useState({});
 	const [deleteConfirmationModalIsVisible, setDeleteConfirmationModalIsVisible] = useState(false);
 	const [deleteResultModalData, setDeleteResultModalData] = useState({
 		type: 'success',
@@ -33,70 +35,55 @@ export default function ListDetailsScreen(props) {
 		setDeleteConfirmationModalIsVisible(false);
 	};
 
-	const onConfirmDeleteTapped = () => {
+	const onConfirmDeleteTapped = async () => {
 		setDeleteConfirmationModalIsVisible(false);
 		dispatch(showSpinner);
-
-		// TO-DO Call API to delete list item
-		setTimeout(() => {
-			dispatch(hideSpinner);
+		try {
+			await ListService.deleteListItem(id, selectedItem.mediaType, selectedItem.id)
 			setDeleteResultModalData(prev => ({
 				...prev,
 				isVisible: true,
-				title: `${selectedItem.name} ha sido eliminada`
+				title: `${selectedItem.title} ha sido eliminada`
 			}));
-		}, 2000);
+		} catch (err) {
+			if (err instanceof UserError) {
+				setDeleteResultModalData(prev => ({
+					...prev,
+					isVisible: true,
+					type: 'error',
+					title: err.message
+				}));
+			}
+		}
+		dispatch(hideSpinner);
+
 	};
 
 	const onConfirmResultTapped = () => {
+		setSelectedItem(false)
 		setDeleteResultModalData(prev => ({ ...prev, isVisible: false }));
+		getListById()
+		dispatch(listsNeedsRefresh)
 	};
 
-	const onDeleteListItemTapped = (id, name) => {
+	const getListById = async () => {
+		const result = await ListService.getListById(id)
+		// alert(JSON.stringify(result))
+		setList(result)
+	};
+
+	const onDeleteListItemTapped = (mediaType, mediaId, title) => {
 		setSelectedItem({
-			id: id,
-			name: name
+			id: mediaId,
+			title: title,
+			mediaType: mediaType
 		});
 		setDeleteConfirmationModalIsVisible(true);
 	};
 
 	useEffect(() => {
-		const getListDetail = () => {
-			setList({
-				id: id,
-				name: 'Peliculas de terror',
-				itemCount: 10,
-				isPublic: false,
-				items: [
-					{
-						id: 1,
-						title: 'Jurassic Park',
-						summary: 'Lorem ipsum dolor sit amet',
-						imageUrl: 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/1r8TWaAExHbFRzyqT3Vcbq1XZQb.jpg',
-						year: 1993,
-						genres: ['Accion', 'Aventura']
-					},
-					{
-						id: 2,
-						title: 'Jurassic Park',
-						summary: 'Lorem ipsum dolor sit amet',
-						imageUrl: 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/1r8TWaAExHbFRzyqT3Vcbq1XZQb.jpg',
-						year: 1993,
-						genres: ['Accion', 'Aventura']
-					},
-					{
-						id: 3,
-						title: 'Jurassic Park',
-						summary: 'Lorem ipsum dolor sit amet',
-						imageUrl: 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/1r8TWaAExHbFRzyqT3Vcbq1XZQb.jpg',
-						year: 1993,
-						genres: ['Accion', 'Aventura']
-					},
-				]
-			});
-		};
-		getListDetail();
-	}, []);
+		getListById()
+	}, [])
 
 	return (
 		<>
@@ -104,11 +91,11 @@ export default function ListDetailsScreen(props) {
 			<View style={BaseStyles.container}>
 				<View style={styles.header}>
 					<Text style={styles.title}>{list.name}</Text>
-					<Text style={styles.itemCount}>{list.itemCount} elementos</Text>
+					{list.mediaItems != null && <Text style={styles.itemCount}>{list.mediaItems.length} elementos</Text>}
 				</View>
 				<FlatList
-					data={list.items}
-					renderItem={({ item }) => <ListMediaItem {...item} onDeleteListItemTapped={onDeleteListItemTapped} />}
+					data={list.mediaItems}
+					renderItem={({ item }) => <ListMediaItem {...item} onDeleteListItemTapped={() => onDeleteListItemTapped(item.type, item.id, item.title)} />}
 					keyExtractor={item => item.id}
 				/>
 			</View>
@@ -117,7 +104,7 @@ export default function ListDetailsScreen(props) {
 				onCancel={onCancelDeleteTapped}
 				onConfirm={onConfirmDeleteTapped}
 				isVisible={deleteConfirmationModalIsVisible}
-				title={`¿Está seguro que desea eliminar ${selectedItem.name}?`}>
+				title={`¿Está seguro que desea eliminar ${selectedItem.title}?`}>
 			</ConfirmationModal>
 			<MessageModal
 				type={deleteResultModalData.type}

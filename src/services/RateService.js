@@ -1,3 +1,5 @@
+'use strict';
+
 import { BACKEND_API_BASE_URL } from 'react-native-dotenv';
 import ErrorHandler from '../errors/ErrorHandler';
 import RateModel from '../models/RateModel';

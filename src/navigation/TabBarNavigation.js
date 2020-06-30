@@ -30,12 +30,12 @@ const ProfileStack = createStackNavigator();
 export default function TabBarNavigation(isLoggedIn) {
 	return (
 		<Tab.Navigator screenOptions={setTabBarScreenOptions} tabBarOptions={setTabBarOptions}>
-			<Tab.Screen name="Inicio" component={HomeStackScreen} />
 			<Tab.Screen
 				name="Mis listas"
 				listeners={() => handleAnonymousUsersInteractions(isLoggedIn, 'Debe autenticarse en la app para poder ver sus listas de series y peliculas')}
 				component={MyListsStackScreen}
 			/>
+			<Tab.Screen name="Inicio" component={HomeStackScreen} />
 			<Tab.Screen
 				name="Perfil"
 				listeners={() => handleAnonymousUsersInteractions(isLoggedIn, 'Debe autenticarse en la app para poder ver su perfil de usuario')}
